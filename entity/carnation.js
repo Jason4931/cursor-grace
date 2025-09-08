@@ -9,8 +9,10 @@ export function setup(host, { fadeOut = true } = {}) {
   const mouse = { x: 0, y: 0 };
   function onMouseMove(e) {
     const rect = host.canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
+    const scaleX = host.canvas.width / rect.width;
+    const scaleY = host.canvas.height / rect.height;
+    mouse.x = (e.clientX - rect.left) * scaleX;
+    mouse.y = (e.clientY - rect.top) * scaleY;
 
     const centerX = host.canvas.width / 2;
     const centerY = host.canvas.height / 2;

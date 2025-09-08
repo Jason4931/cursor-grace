@@ -86,10 +86,23 @@
         justify-content: center;
         background-color: white;
       }
+      #timer {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        font-family: monospace;
+        font-size: 24px;
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 5px 10px;
+        border-radius: 5px;
+        z-index: 999;
+      }
     </style>
   </head>
   <body>
     <canvas id="screen" width="1280" height="720"></canvas>
+    <div id="timer">00:00</div>
     <div id="white"></div>
     <div id="death">
       <img src="./GenesisNew.png" />

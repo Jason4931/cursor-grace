@@ -89,21 +89,40 @@ async function RUN() {
       }
     }, delay);
   }
+  function runSlight() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(async () => {
+      if (!death) {
+        const modSlight = await import("./entity/slight.js");
+        modSlight.setup(hostAPI);
+        setTimeout(() => {
+          runSlight();
+        }, 10000);
+      }
+    }, delay);
+  }
 
   runCarnation();
   setTimeout(() => {
     runGoatman();
-  }, 90000);
+  }, 60000);
+  setTimeout(() => {
+    runSlight();
+  }, 120000);
 }
 RUN();
 
 let mouse = { x: 0, y: 0 };
 canvas.addEventListener("mousemove", (e) => {
   const rect = canvas.getBoundingClientRect();
-  mouse.x = e.clientX - rect.left;
-  mouse.y = e.clientY - rect.top;
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  mouse.x = (e.clientX - rect.left) * scaleX;
+  mouse.y = (e.clientY - rect.top) * scaleY;
 });
-const targetColors = ["#ea0075", "#fbff08"];
+const targetColors = ["#ea0075", "#fbff08", "#1304d1"];
 function onColorTouched(hexColor) {
   if (death) return;
   death = true;
@@ -128,8 +147,18 @@ function checkPixelUnderCursor() {
   if (death) return;
   const pixel = ctx.getImageData(mouse.x, mouse.y, 1, 1).data;
   const hex = rgbaToHex(pixel[0], pixel[1], pixel[2], pixel[3]);
-  console.log(hex);
+  // console.log(hex);
   if (targetColors.includes(hex.slice(0, 7)) && pixel[3] >= 229) {
     onColorTouched(hex);
   }
 }
+
+let seconds = 0;
+function updateTimer() {
+  if (death) return;
+  seconds++;
+  const mins = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const secs = String(seconds % 60).padStart(2, "0");
+  document.getElementById("timer").textContent = `${mins}:${secs}`;
+}
+setInterval(updateTimer, 1000);
