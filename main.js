@@ -131,6 +131,20 @@ async function RUN() {
       }
     }, delay);
   }
+  function runHeed() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(async () => {
+      if (!death) {
+        const modHeed = await import("./entity/heed.js");
+        modHeed.setup(hostAPI);
+        setTimeout(() => {
+          runHeed();
+        }, 10000);
+      }
+    }, delay);
+  }
 
   runCarnation();
   setTimeout(() => {
@@ -143,11 +157,15 @@ async function RUN() {
     runSlugfish();
     runElkman();
   }, 180000);
+  setTimeout(() => {
+    runHeed();
+  }, 240000);
   // runCarnation();
   // runGoatman();
   // runSlight();
   // runSlugfish();
   // runElkman();
+  // runHeed();
 }
 RUN();
 
@@ -159,7 +177,14 @@ canvas.addEventListener("mousemove", (e) => {
   mouse.x = (e.clientX - rect.left) * scaleX;
   mouse.y = (e.clientY - rect.top) * scaleY;
 });
-const targetColors = ["#cf0693", "#fbff08", "#1304d1", "#808080", "#ffffff"];
+const targetColors = [
+  "#cf0693",
+  "#fbff08",
+  "#1304d1",
+  "#808080",
+  "#ffffff",
+  "#fe0102",
+];
 function onColorTouched(hexColor) {
   if (death) return;
   death = true;

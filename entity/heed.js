@@ -8,7 +8,7 @@ export function setup(host, { fadeOut = true } = {}) {
     maxRadius2: 50,
     ogMaxRadius2: 50,
     delay: true,
-    die: 200,
+    die: 100,
     life: 10,
     fade: 1,
   };
@@ -48,15 +48,15 @@ export function setup(host, { fadeOut = true } = {}) {
     }
 
     if (Math.hypot(mouse.x - state.x, mouse.y - state.y) <= state.radius1) {
-      state.maxRadius2 += 200 * dt;
+      state.maxRadius2 -= 200 * dt;
+      if (state.maxRadius2 < state.ogMaxRadius2)
+        state.maxRadius2 = state.ogMaxRadius2;
     } else {
       if (state.maxRadius2 > state.maxRadius1) {
         state.maxRadius2 += state.die * dt;
-        state.die += 100;
+        state.die += 50;
       } else {
-        state.maxRadius2 -= 100 * dt;
-        if (state.maxRadius2 < state.ogMaxRadius2)
-          state.maxRadius2 = state.ogMaxRadius2;
+        state.maxRadius2 += 100 * dt;
       }
     }
   }
@@ -69,13 +69,13 @@ export function setup(host, { fadeOut = true } = {}) {
 
     //setup
     ctx.globalAlpha = 0.3 * state.fade;
-    ctx.fillStyle = "#1304d1";
+    ctx.fillStyle = "#fe0102";
     ctx.beginPath();
     ctx.arc(state.x, state.y, state.radius1, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.globalAlpha = state.fade;
-    ctx.fillStyle = "#1304d1";
+    ctx.fillStyle = "#fe0102";
     ctx.beginPath();
     ctx.arc(state.x, state.y, state.radius2, 0, Math.PI * 2);
     ctx.fill();
