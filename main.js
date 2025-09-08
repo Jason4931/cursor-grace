@@ -117,6 +117,20 @@ async function RUN() {
       }
     }, delay);
   }
+  function runElkman() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(async () => {
+      if (!death) {
+        const modElkman = await import("./entity/elkman.js");
+        modElkman.setup(hostAPI);
+        setTimeout(() => {
+          runElkman();
+        }, 10000);
+      }
+    }, delay);
+  }
 
   runCarnation();
   setTimeout(() => {
@@ -127,11 +141,13 @@ async function RUN() {
   }, 120000);
   setTimeout(() => {
     runSlugfish();
+    runElkman();
   }, 180000);
   // runCarnation();
   // runGoatman();
   // runSlight();
   // runSlugfish();
+  // runElkman();
 }
 RUN();
 
@@ -143,7 +159,7 @@ canvas.addEventListener("mousemove", (e) => {
   mouse.x = (e.clientX - rect.left) * scaleX;
   mouse.y = (e.clientY - rect.top) * scaleY;
 });
-const targetColors = ["#cf0693", "#fbff08", "#1304d1", "#808080"];
+const targetColors = ["#cf0693", "#fbff08", "#1304d1", "#808080", "#ffffff"];
 function onColorTouched(hexColor) {
   if (death) return;
   death = true;
