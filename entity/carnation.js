@@ -3,7 +3,7 @@ export function setup(host, { fadeOut = true } = {}) {
     inset: 0,
     growth: 50,
     life: 10,
-    fade: 0.5,
+    fade: 0.3,
   };
 
   const mouse = { x: 0, y: 0 };
@@ -14,13 +14,8 @@ export function setup(host, { fadeOut = true } = {}) {
     mouse.x = (e.clientX - rect.left) * scaleX;
     mouse.y = (e.clientY - rect.top) * scaleY;
 
-    const centerX = host.canvas.width / 2;
-    const centerY = host.canvas.height / 2;
-    const dist = Math.hypot(mouse.x - centerX, mouse.y - centerY);
-    const maxDist = Math.min(host.canvas.width, host.canvas.height) / 2;
-    if (dist < maxDist) {
+    if (Math.random() < 0.8) {
       state.inset -= 1;
-      if (state.inset > maxDist) state.inset = maxDist;
     }
   }
   host.canvas.addEventListener("mousemove", onMouseMove);
@@ -52,7 +47,7 @@ export function setup(host, { fadeOut = true } = {}) {
     const h = host.canvas.height;
 
     //setup
-    ctx.fillStyle = "#ea0075";
+    ctx.fillStyle = "#cf0693";
     ctx.beginPath();
     ctx.rect(0, 0, w, h);
     ctx.rect(

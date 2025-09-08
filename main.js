@@ -103,6 +103,20 @@ async function RUN() {
       }
     }, delay);
   }
+  function runSlugfish() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(async () => {
+      if (!death) {
+        const modSlugfish = await import("./entity/slugfish.js");
+        modSlugfish.setup(hostAPI);
+        setTimeout(() => {
+          runSlugfish();
+        }, 5000);
+      }
+    }, delay);
+  }
 
   runCarnation();
   setTimeout(() => {
@@ -111,6 +125,13 @@ async function RUN() {
   setTimeout(() => {
     runSlight();
   }, 120000);
+  setTimeout(() => {
+    runSlugfish();
+  }, 180000);
+  // runCarnation();
+  // runGoatman();
+  // runSlight();
+  // runSlugfish();
 }
 RUN();
 
@@ -122,7 +143,7 @@ canvas.addEventListener("mousemove", (e) => {
   mouse.x = (e.clientX - rect.left) * scaleX;
   mouse.y = (e.clientY - rect.top) * scaleY;
 });
-const targetColors = ["#ea0075", "#fbff08", "#1304d1"];
+const targetColors = ["#cf0693", "#fbff08", "#1304d1", "#808080"];
 function onColorTouched(hexColor) {
   if (death) return;
   death = true;
@@ -130,9 +151,9 @@ function onColorTouched(hexColor) {
     setTimeout(() => {
       document.getElementById("death").style.display = "flex";
       document.getElementById("white").style.display = "none";
-    }, 150);
+    }, 100);
     document.getElementById("white").style.display = "flex";
-  }, 200);
+  }, 150);
 }
 function rgbaToHex(r, g, b, a = 255) {
   return (

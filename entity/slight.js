@@ -35,16 +35,10 @@ export function setup(host, { fadeOut = true } = {}) {
     }
 
     //process
-    // if (state.radius1 < state.maxRadius1) {
-    //   state.radius1 += 100 * dt;
-    //   if (state.radius1 > state.maxRadius1) state.radius1 = state.maxRadius1;
-    // }
-    {
-      const diff1 = state.maxRadius1 - state.radius1;
-      const ease1 = 3;
-      state.radius1 += diff1 * ease1 * dt;
-      if (Math.abs(diff1) < 0.1) state.radius1 = state.maxRadius1;
-    }
+    const diff1 = state.maxRadius1 - state.radius1;
+    const ease1 = 3;
+    state.radius1 += diff1 * ease1 * dt;
+    if (Math.abs(diff1) < 0.1) state.radius1 = state.maxRadius1;
     if (!state.delay) {
       const diff = state.maxRadius2 - state.radius2;
       const ease = 5;
@@ -74,7 +68,7 @@ export function setup(host, { fadeOut = true } = {}) {
     const h = host.canvas.height;
 
     //setup
-    ctx.globalAlpha = 0.5 * state.fade;
+    ctx.globalAlpha = 0.3 * state.fade;
     ctx.fillStyle = "#1304d1";
     ctx.beginPath();
     ctx.arc(state.x, state.y, state.radius1, 0, Math.PI * 2);
