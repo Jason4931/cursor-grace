@@ -70,8 +70,30 @@ async function RUN() {
       }
     }, delay);
   }
+  function runGoatman() {
+    let delay = Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(async () => {
+      if (!death) {
+        let chance = Math.random() < 0.2;
+        if (chance) {
+          goatman = true;
+          const modGoatman = await import("./entity/goatman.js");
+          modGoatman.setup(hostAPI);
+        }
+        setTimeout(() => {
+          if (chance) {
+            goatman = false;
+          }
+          runGoatman();
+        }, 20000);
+      }
+    }, delay);
+  }
 
   runCarnation();
+  setTimeout(() => {
+    runGoatman();
+  }, 90000);
 }
 RUN();
 
@@ -81,7 +103,7 @@ canvas.addEventListener("mousemove", (e) => {
   mouse.x = e.clientX - rect.left;
   mouse.y = e.clientY - rect.top;
 });
-const targetColors = ["#ea0075"];
+const targetColors = ["#ea0075", "#fbff08"];
 function onColorTouched(hexColor) {
   if (death) return;
   death = true;
