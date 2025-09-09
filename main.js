@@ -75,6 +75,7 @@ setInterval(() => {
 
 let death = false;
 let goatman = false;
+let eyes = false;
 async function RUN() {
   hostAPI.clearAll();
   function runCarnation() {
@@ -95,18 +96,17 @@ async function RUN() {
     let delay = Math.floor(Math.random() * 10000) + 10000;
     setTimeout(async () => {
       if (!death) {
-        let chance = Math.random() < 0.2;
-        if (chance) {
+        if (Math.random() < 0.2) {
           goatman = true;
           const modGoatman = await import("./entity/goatman.js");
           modGoatman.setup(hostAPI);
-        }
-        setTimeout(() => {
-          if (chance) {
+          setTimeout(() => {
             goatman = false;
-          }
+            runGoatman();
+          }, 20000);
+        } else {
           runGoatman();
-        }, 20000);
+        }
       }
     }, delay);
   }
@@ -116,11 +116,17 @@ async function RUN() {
       : Math.floor(Math.random() * 10000) + 10000;
     setTimeout(async () => {
       if (!death) {
-        const modSlight = await import("./entity/slight.js");
-        modSlight.setup(hostAPI);
-        setTimeout(() => {
+        if (!eyes || Math.random() < 0.2) {
+          eyes = true;
+          const modSlight = await import("./entity/slight.js");
+          modSlight.setup(hostAPI);
+          setTimeout(() => {
+            eyes = false;
+            runSlight();
+          }, 10000);
+        } else {
           runSlight();
-        }, 10000);
+        }
       }
     }, delay);
   }
@@ -158,11 +164,17 @@ async function RUN() {
       : Math.floor(Math.random() * 10000) + 10000;
     setTimeout(async () => {
       if (!death) {
-        const modHeed = await import("./entity/heed.js");
-        modHeed.setup(hostAPI);
-        setTimeout(() => {
+        if (!eyes || Math.random() < 0.2) {
+          eyes = true;
+          const modHeed = await import("./entity/heed.js");
+          modHeed.setup(hostAPI);
+          setTimeout(() => {
+            eyes = false;
+            runHeed();
+          }, 10000);
+        } else {
           runHeed();
-        }, 10000);
+        }
       }
     }, delay);
   }
@@ -198,23 +210,28 @@ async function RUN() {
   runCarnation();
   entitySpawnInfo("Carnation", "#cf0693");
   setTimeout(() => {
+    if (death) return;
     runGoatman();
     entitySpawnInfo("Goatman", "#fbff08");
   }, 60000);
   setTimeout(() => {
+    if (death) return;
     runSlight();
     entitySpawnInfo("Slight", "#1304d1");
   }, 120000);
   setTimeout(() => {
+    if (death) return;
     runSlugfish();
     runElkman();
     entitySpawnInfo("Slugfish", "#808080", "Elkman", "#ffffff");
   }, 180000);
   setTimeout(() => {
+    if (death) return;
     runHeed();
     entitySpawnInfo("Heed", "#fe0102");
   }, 240000);
   setTimeout(() => {
+    if (death) return;
     runDozer();
     runSorrow();
     entitySpawnInfo("Dozer", "#f4ea37", "Sorrow", "#b30000");
