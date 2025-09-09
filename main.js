@@ -52,6 +52,27 @@ function loop(now) {
 }
 requestAnimationFrame(loop);
 
+let op = 0;
+function entitySpawnInfo(entity, color, entity2 = "", color2 = "") {
+  document.getElementById("info").innerHTML = `${entity} appears.`;
+  document.getElementById("info").style.color = `${color}`;
+  if (entity2 && color2) {
+    document.getElementById("info2").innerHTML = `${entity2} appears.`;
+    document.getElementById("info2").style.color = `${color2}`;
+  } else {
+    document.getElementById("info2").innerHTML = "";
+  }
+  op = 1;
+}
+setInterval(() => {
+  document.getElementById("info").style.opacity = `${op}`;
+  document.getElementById("info2").style.opacity = `${op}`;
+  op -= 0.01;
+  if (op < 0) {
+    op = 0;
+  }
+}, 100);
+
 let death = false;
 let goatman = false;
 async function RUN() {
@@ -145,27 +166,51 @@ async function RUN() {
       }
     }, delay);
   }
+  function runDozer() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(async () => {
+      if (!death) {
+        const modDozer = await import("./entity/dozer.js");
+        modDozer.setup(hostAPI);
+        setTimeout(() => {
+          runDozer();
+        }, 5000);
+      }
+    }, delay);
+  }
 
   runCarnation();
+  entitySpawnInfo("Carnation", "#cf0693");
   setTimeout(() => {
     runGoatman();
+    entitySpawnInfo("Goatman", "#fbff08");
   }, 60000);
   setTimeout(() => {
     runSlight();
+    entitySpawnInfo("Slight", "#1304d1");
   }, 120000);
   setTimeout(() => {
     runSlugfish();
     runElkman();
+    entitySpawnInfo("Slugfish", "#808080", "Elkman", "#ffffff");
   }, 180000);
   setTimeout(() => {
     runHeed();
+    entitySpawnInfo("Heed", "#fe0102");
   }, 240000);
+  setTimeout(() => {
+    runDozer();
+    entitySpawnInfo("Dozer", "#f4ea37");
+  }, 300000);
   // runCarnation();
   // runGoatman();
   // runSlight();
   // runSlugfish();
   // runElkman();
   // runHeed();
+  // runDozer();
 }
 RUN();
 
@@ -184,6 +229,7 @@ const targetColors = [
   "#808080",
   "#ffffff",
   "#fe0102",
+  "#f4ea37",
 ];
 function onColorTouched(hexColor) {
   if (death) return;

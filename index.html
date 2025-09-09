@@ -98,10 +98,40 @@
         border-radius: 5px;
         z-index: 999;
       }
+      #info {
+        position: absolute;
+        bottom: 35px;
+        left: 10px;
+        font-family: monospace;
+        font-size: 18px;
+        color: white;
+        padding: 5px 1px;
+        border-radius: 5px;
+        text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+          1px 1px 0 black;
+        z-index: 999;
+        opacity: 0;
+      }
+      #info2 {
+        position: absolute;
+        bottom: 55px;
+        left: 10px;
+        font-family: monospace;
+        font-size: 18px;
+        color: white;
+        padding: 5px 1px;
+        border-radius: 5px;
+        text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+          1px 1px 0 black;
+        z-index: 999;
+        opacity: 0;
+      }
     </style>
   </head>
   <body>
     <canvas id="screen" width="1280" height="720"></canvas>
+    <p id="info">Entity appears.</p>
+    <p id="info2"></p>
     <div id="timer">00:00</div>
     <div id="white"></div>
     <div id="death">
