@@ -1,0 +1,69 @@
+00:00 - Carnation
+Spawn: 10-20s
+Duration: 10s (slow)
+Indicator: Pink border
+Location: Screen edge
+Dont stop moving and stay away from border
+
+01:00 - Goatman
+Spawn: 10-20s
+Chance Spawn: 20%
+Duration: 20s (very slow-relative)
+Indicator: Flashing background
+Location: None
+Click 20 times before the timer ran out
+
+02:00 - Slight
+Spawn: 10-20s
+Chance Spawn when Heed active: 20%
+Duration: 10s (slow)
+Indicator: Blue circle
+Location: Random
+Dont be inside for too long or touch it
+
+03:00 - Slugfish
+Spawn: 10-20s
+Duration: 5s (fast)
+Indicator: White circle
+Location: Random
+Get out of the circle before it went off
+
+03:00 - Elkman
+Spawn: 10-20s
+Duration: 5s (fast-relative)
+Indicator: Black square
+Location: Left/Right
+Try to not be near or get out of blur area
+
+04:00 - Heed
+Spawn: 10-20s
+Chance Spawn when Slight active: 20%
+Duration: 10s (slow)
+Indicator: Red circle
+Location: Random
+Try to not go outside the circle for long
+
+05:00 - Dozer
+Spawn: 10-20s
+Duration: 5s (fast)
+Indicator: Yellow circle
+Location: Cursor
+Do not move your cursor when it went off
+
+05:00 - Sorrow
+Spawn: 10-20s
+Duration: 5s (fast)
+Indicator: Red rain
+Location: Up/Down
+Get out of the rain before it went off
+
+-- 06:00 until 13:00 -- (random)
+
+Litany -?-
+Doppel -?-
+Kookoo -?-
+Doombringer -?-
+Rue -?-
+Drain -?-
+Ire -?-
+Mime -?-

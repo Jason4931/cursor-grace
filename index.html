@@ -120,6 +120,27 @@
         z-index: 999;
         opacity: 0;
       }
+      #paper-btn {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        width: 40px;
+        height: 50px;
+        background: #fff1;
+        border: 1px solid #ccc1;
+        border-radius: 4px;
+        font-size: 24px;
+        text-align: center;
+        line-height: 50px;
+        text-decoration: none;
+        color: black;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        transition: transform 0.1s ease;
+      }
+      #paper-btn:hover {
+        transform: scale(1.1);
+      }
     </style>
   </head>
   <body>
@@ -130,6 +151,7 @@
     <div id="white"></div>
     <div id="death">
       <img src="./GenesisNew.png" />
+      <a id="paper-btn" href="./paper.txt" download="paper.txt">📄</a>
     </div>
     <script type="module" src="./main.js"></script>
   </body>
