@@ -53,14 +53,17 @@ function loop(now) {
 requestAnimationFrame(loop);
 
 let op = 0;
+let runned = [];
 function entitySpawnInfo(entity, color, entity2 = "", color2 = "") {
   document.getElementById("info").innerHTML = `${entity} appears.`;
   document.getElementById("info").style.color = `${color}`;
   if (entity2 && color2) {
     document.getElementById("info2").innerHTML = `${entity2} appears.`;
     document.getElementById("info2").style.color = `${color2}`;
+    runned = [...runned, entity, entity2];
   } else {
     document.getElementById("info2").innerHTML = "";
+    runned = [...runned, entity];
   }
   op = 1;
 }
@@ -209,41 +212,69 @@ async function RUN() {
 
   runCarnation();
   entitySpawnInfo("Carnation", "#cf0693");
-  setTimeout(() => {
+  let goatmanTimeout = setTimeout(() => {
     if (death) return;
     runGoatman();
     entitySpawnInfo("Goatman", "#fbff08");
   }, 60000);
-  setTimeout(() => {
+  let slightTimeout = setTimeout(() => {
     if (death) return;
     runSlight();
     entitySpawnInfo("Slight", "#1304d1");
   }, 120000);
-  setTimeout(() => {
+  let slugfishElkmanTimeout = setTimeout(() => {
     if (death) return;
     runSlugfish();
     runElkman();
     entitySpawnInfo("Slugfish", "#808080", "Elkman", "#ffffff");
   }, 180000);
-  setTimeout(() => {
+  let heedTimeout = setTimeout(() => {
     if (death) return;
     runHeed();
     entitySpawnInfo("Heed", "#fe0102");
   }, 240000);
-  setTimeout(() => {
+  let dozerSorrowTimeout = setTimeout(() => {
     if (death) return;
     runDozer();
     runSorrow();
     entitySpawnInfo("Dozer", "#f4ea37", "Sorrow", "#b30000");
   }, 300000);
-  // runCarnation();
-  // runGoatman();
-  // runSlight();
-  // runSlugfish();
-  // runElkman();
-  // runHeed();
-  // runDozer();
-  // runSorrow();
+
+  let upPressCount = 0;
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowUp") {
+      upPressCount++;
+      if (upPressCount >= 10) {
+        if (!runned.includes("Goatman")) {
+          clearTimeout(goatmanTimeout);
+          runGoatman();
+          entitySpawnInfo("Goatman", "#fbff08");
+        }
+        if (!runned.includes("Slight")) {
+          clearTimeout(slightTimeout);
+          runSlight();
+          entitySpawnInfo("Slight", "#1304d1");
+        }
+        if (!runned.includes("Slugfish")) {
+          clearTimeout(slugfishElkmanTimeout);
+          runSlugfish();
+          runElkman();
+          entitySpawnInfo("Slugfish", "#808080", "Elkman", "#ffffff");
+        }
+        if (!runned.includes("Heed")) {
+          clearTimeout(heedTimeout);
+          runHeed();
+          entitySpawnInfo("Heed", "#fe0102");
+        }
+        if (!runned.includes("Dozer")) {
+          clearTimeout(dozerSorrowTimeout);
+          runDozer();
+          runSorrow();
+          entitySpawnInfo("Dozer", "#f4ea37", "Sorrow", "#b30000");
+        }
+      }
+    }
+  });
 }
 RUN();
 
