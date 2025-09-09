@@ -17,13 +17,13 @@ export function setup(host, { fadeOut = true } = {}) {
     }
     if (fadeOut && state.life < 1) {
       state.fade = Math.max(0, state.life / 1);
-    } else if (state.life < 1.25) {
+    } else if (state.life < 1.1) {
       state.fade = 0.3;
-    } else if (state.life < 1.5) {
+    } else if (state.life < 1.2) {
       state.fade = 0.5;
-    } else if (state.life < 1.75) {
+    } else if (state.life < 1.3) {
       state.fade = 0.3;
-    } else if (state.life < 2) {
+    } else if (state.life < 1.4) {
       state.fade = 0.5;
     }
 
