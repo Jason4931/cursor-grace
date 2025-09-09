@@ -180,6 +180,20 @@ async function RUN() {
       }
     }, delay);
   }
+  function runSorrow() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(async () => {
+      if (!death) {
+        const modSorrow = await import("./entity/sorrow.js");
+        modSorrow.setup(hostAPI);
+        setTimeout(() => {
+          runSorrow();
+        }, 5000);
+      }
+    }, delay);
+  }
 
   runCarnation();
   entitySpawnInfo("Carnation", "#cf0693");
@@ -202,7 +216,8 @@ async function RUN() {
   }, 240000);
   setTimeout(() => {
     runDozer();
-    entitySpawnInfo("Dozer", "#f4ea37");
+    runSorrow();
+    entitySpawnInfo("Dozer", "#f4ea37", "Sorrow", "#b30000");
   }, 300000);
   // runCarnation();
   // runGoatman();
@@ -211,6 +226,7 @@ async function RUN() {
   // runElkman();
   // runHeed();
   // runDozer();
+  // runSorrow();
 }
 RUN();
 
@@ -230,6 +246,7 @@ const targetColors = [
   "#ffffff",
   "#fe0102",
   "#f4ea37",
+  "#b30000",
 ];
 function onColorTouched(hexColor) {
   if (death) return;
