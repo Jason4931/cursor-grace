@@ -30,6 +30,14 @@ export function setup(host, { fadeOut = true } = {}) {
     if (fadeOut && state.life < 1) {
       state.fade = 1;
       state.stop = true;
+    } else if (state.life < 1.25) {
+      state.fade = 0.3;
+    } else if (state.life < 1.5) {
+      state.fade = 0.5;
+    } else if (state.life < 1.75) {
+      state.fade = 0.3;
+    } else if (state.life < 2) {
+      state.fade = 0.5;
     }
 
     //process

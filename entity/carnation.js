@@ -14,7 +14,7 @@ export function setup(host, { fadeOut = true } = {}) {
     mouse.x = (e.clientX - rect.left) * scaleX;
     mouse.y = (e.clientY - rect.top) * scaleY;
 
-    if (Math.random() < 0.8) {
+    if (Math.random() < 0.9) {
       state.inset -= 1;
     }
   }

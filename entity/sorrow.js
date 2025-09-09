@@ -3,7 +3,7 @@ export function setup(host, { fadeOut = true } = {}) {
   const state = {
     x: 0,
     y: rand ? 0 : host.canvas.height,
-    targetY: rand ? 0.75 * host.canvas.height : 0.25 * host.canvas.height,
+    targetY: rand ? 0.7 * host.canvas.height : 0.3 * host.canvas.height,
     life: 5,
     fade: 0.1,
     grain: 1000,
@@ -17,6 +17,14 @@ export function setup(host, { fadeOut = true } = {}) {
     }
     if (fadeOut && state.life < 1) {
       state.fade = Math.max(0, state.life / 1);
+    } else if (state.life < 1.25) {
+      state.fade = 0.5;
+    } else if (state.life < 1.5) {
+      state.fade = 0.4;
+    } else if (state.life < 1.75) {
+      state.fade = 0.3;
+    } else if (state.life < 2) {
+      state.fade = 0.2;
     }
 
     //process
@@ -41,7 +49,7 @@ export function setup(host, { fadeOut = true } = {}) {
       ctx.fillRect(0, state.y, w, h - state.y);
     }
 
-    ctx.globalAlpha = 10 * state.fade;
+    ctx.globalAlpha = Math.max(10 * state.fade, 1);
     if (rand) {
       for (let i = 0; i < state.grain; i++) {
         const x = Math.random() * w;
