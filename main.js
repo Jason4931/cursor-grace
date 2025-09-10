@@ -245,6 +245,7 @@ async function RUN() {
     if (e.key === "ArrowUp") {
       upPressCount++;
       if (upPressCount >= 10) {
+        upPressCount = 0;
         if (!runned.includes("Goatman")) {
           clearTimeout(goatmanTimeout);
           runGoatman();
@@ -272,6 +273,7 @@ async function RUN() {
           runSorrow();
           entitySpawnInfo("Dozer", "#f4ea37", "Sorrow", "#b30000");
         }
+        entitySpawnInfo("Everyone", "#fff");
       }
     }
   });

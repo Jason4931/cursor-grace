@@ -8,6 +8,7 @@ export function setup(host, { fadeOut = true } = {}) {
     life: 5,
     fade: 0.3,
     stop: false,
+    mouse: false,
   };
 
   const mouse = { x: 100000, y: 100000 };
@@ -41,15 +42,21 @@ export function setup(host, { fadeOut = true } = {}) {
     }
 
     //process
-    if (!state.stop) {
-      state.x = mouse.x;
-      state.y = mouse.y;
+    if (mouse.x != 100000 && mouse.y != 100000) {
+      state.mouse = true;
     }
 
-    const diff = state.minRadius - state.radius;
-    const ease = 1;
-    state.radius += diff * ease * dt;
-    if (Math.abs(diff) < 0.1) state.radius = state.minRadius;
+    if (state.mouse) {
+      if (!state.stop) {
+        state.x = mouse.x;
+        state.y = mouse.y;
+      }
+
+      const diff = state.minRadius - state.radius;
+      const ease = 1;
+      state.radius += diff * ease * dt;
+      if (Math.abs(diff) < 0.1) state.radius = state.minRadius;
+    }
   }
 
   function draw(ctx) {
@@ -60,11 +67,20 @@ export function setup(host, { fadeOut = true } = {}) {
     const h = host.canvas.height;
 
     //setup
-    ctx.fillStyle = "#f4ea37";
-    ctx.beginPath();
-    ctx.arc(state.x, state.y, state.outerRadius, 0, Math.PI * 2);
-    ctx.arc(state.x, state.y, Math.max(0, state.radius), 0, Math.PI * 2, true);
-    ctx.fill("evenodd");
+    if (state.mouse) {
+      ctx.fillStyle = "#f4ea37";
+      ctx.beginPath();
+      ctx.arc(state.x, state.y, state.outerRadius, 0, Math.PI * 2);
+      ctx.arc(
+        state.x,
+        state.y,
+        Math.max(0, state.radius),
+        0,
+        Math.PI * 2,
+        true
+      );
+      ctx.fill("evenodd");
+    }
 
     ctx.restore();
   }
