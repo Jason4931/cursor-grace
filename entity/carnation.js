@@ -42,11 +42,11 @@ export function setup(host, { fadeOut = true } = {}) {
   function draw(ctx) {
     if (state.life <= 0) return;
     ctx.save();
-    ctx.globalAlpha = state.fade;
     const w = host.canvas.width;
     const h = host.canvas.height;
 
     //setup
+    ctx.globalAlpha = state.fade;
     ctx.fillStyle = "#cf0693";
     ctx.beginPath();
     ctx.rect(0, 0, w, h);
@@ -57,6 +57,52 @@ export function setup(host, { fadeOut = true } = {}) {
       h - state.inset * 2
     );
     ctx.fill("evenodd");
+
+    ctx.globalAlpha = Math.min(
+      1,
+      (state.inset / (Math.min(host.canvas.width, host.canvas.height) / 2)) *
+        state.fade *
+        2
+    );
+    const limbCount = 30;
+    const segmentLength = 8;
+    const maxSegments = 15;
+    const time = performance.now() * 0.003;
+
+    for (let i = 0; i < limbCount; i++) {
+      let x = Math.random() < 0.5 ? 0 : host.canvas.width;
+      let y = Math.random() * host.canvas.height;
+      if (Math.random() < 0.5) {
+        x = Math.random() * host.canvas.width;
+        y = Math.random() < 0.5 ? 0 : host.canvas.height;
+      }
+
+      let angle = Math.random() * Math.PI * 2;
+
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+
+      for (let j = 0; j < maxSegments; j++) {
+        angle += (Math.random() - 0.5) * 0.5;
+        x += Math.cos(angle) * segmentLength;
+        y += Math.sin(angle) * segmentLength;
+
+        if (
+          x > state.inset &&
+          x < host.canvas.width - state.inset &&
+          y > state.inset &&
+          y < host.canvas.height - state.inset
+        ) {
+          break;
+        }
+
+        ctx.lineTo(x, y);
+      }
+
+      ctx.strokeStyle = "#cf0693";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
 
     ctx.restore();
   }

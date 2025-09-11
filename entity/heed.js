@@ -11,6 +11,7 @@ export function setup(host, { fadeOut = true } = {}) {
     die: 100,
     life: 10,
     fade: 1,
+    radiusBlack: 0,
   };
 
   const mouse = { x: 0, y: 0 };
@@ -32,9 +33,18 @@ export function setup(host, { fadeOut = true } = {}) {
     }
     if (fadeOut && state.life < 1) {
       state.fade = Math.max(0, state.life / 1);
+      state.maxRadius1 = 0;
+      state.maxRadius2 = 0;
     }
 
     //process
+    const speed =
+      state.radius2 < 100 ? (state.radius2 / 4) ** 2 : (state.radius2 / 6) ** 2;
+    state.radiusBlack -= speed * dt;
+    if (state.radiusBlack < 0) {
+      state.radiusBlack = state.radius2 + 20;
+    }
+
     const diff1 = state.maxRadius1 - state.radius1;
     const ease1 = 3;
     state.radius1 += diff1 * ease1 * dt;
@@ -82,9 +92,44 @@ export function setup(host, { fadeOut = true } = {}) {
     ctx.arc(state.x, state.y, state.radius2, 0, Math.PI * 2);
     ctx.fill();
 
+    if (!state.delay) {
+      const tipWidth = state.radius2 / 2;
+      const tipHeight = state.radius2 / 1.5;
+      const offset = state.radius2 / 4;
+      ctx.beginPath();
+      ctx.moveTo(state.x, state.y - state.radius2 - tipWidth + offset);
+      ctx.lineTo(state.x - tipHeight, state.y - state.radius2 + offset);
+      ctx.lineTo(state.x + tipHeight, state.y - state.radius2 + offset);
+      ctx.closePath();
+      ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(state.x, state.y + state.radius2 + tipWidth - offset);
+      ctx.lineTo(state.x - tipHeight, state.y + state.radius2 - offset);
+      ctx.lineTo(state.x + tipHeight, state.y + state.radius2 - offset);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(state.x, state.y, state.radius2, 0, Math.PI * 2);
+    ctx.clip();
+
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = Math.min(state.radiusBlack, 20);
+    ctx.beginPath();
+    ctx.arc(
+      state.x,
+      state.y,
+      Math.max(0, state.radiusBlack - Math.min(state.radiusBlack, 20) / 2),
+      0,
+      Math.PI * 2
+    );
+    ctx.stroke();
+
     setTimeout(() => {
       state.delay = false;
-    }, 2000);
+    }, 1000);
 
     ctx.restore();
   }

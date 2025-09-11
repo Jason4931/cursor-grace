@@ -2,13 +2,15 @@ export function setup(host, { fadeOut = true } = {}) {
   const state = {
     x: 0,
     y: 0,
-    radius: 100,
-    outerRadius: 100,
+    radius: 80,
+    outerRadius: 80,
     minRadius: 15,
     life: 5,
     fade: 0.3,
     stop: false,
     mouse: false,
+    polygonRotation: Math.random() * Math.PI * 2,
+    polygonRotation2: Math.random() * Math.PI * 2,
   };
 
   const mouse = { x: 100000, y: 100000 };
@@ -80,6 +82,38 @@ export function setup(host, { fadeOut = true } = {}) {
         true
       );
       ctx.fill("evenodd");
+      if (Math.random() < 0.2) {
+        state.polygonRotation = Math.random() * Math.PI * 2;
+      }
+      const radius1 = state.outerRadius + 10;
+      ctx.strokeStyle = "#fff";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let i = 0; i <= 10; i++) {
+        const angle = (i / 10) * Math.PI * 2 + state.polygonRotation;
+        const px = state.x + radius1 * Math.cos(angle);
+        const py = state.y + radius1 * Math.sin(angle);
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.stroke();
+      if (Math.random() < 0.2) {
+        state.polygonRotation2 = Math.random() * Math.PI * 2;
+      }
+      const radius2 = state.outerRadius + 20;
+      ctx.strokeStyle = "#fff";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let i = 0; i <= 10; i++) {
+        const angle = (i / 10) * Math.PI * 2 + state.polygonRotation2;
+        const px = state.x + radius2 * Math.cos(angle);
+        const py = state.y + radius2 * Math.sin(angle);
+        if (i === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.stroke();
     }
 
     ctx.restore();

@@ -87,7 +87,9 @@ async function RUN() {
       : Math.floor(Math.random() * 10000) + 10000;
     setTimeout(async () => {
       if (!death) {
-        const modCarnation = await import("./entity/carnation.js");
+        const modCarnation = await import(
+          `./entity/carnation.js?cacheBust=${Date.now()}`
+        );
         modCarnation.setup(hostAPI);
         setTimeout(() => {
           runCarnation();
@@ -101,7 +103,9 @@ async function RUN() {
       if (!death) {
         if (Math.random() < 0.2) {
           goatman = true;
-          const modGoatman = await import("./entity/goatman.js");
+          const modGoatman = await import(
+            `./entity/goatman.js?cacheBust=${Date.now()}`
+          );
           modGoatman.setup(hostAPI);
           setTimeout(() => {
             goatman = false;
@@ -121,7 +125,9 @@ async function RUN() {
       if (!death) {
         if (!eyes || Math.random() < 0.2) {
           eyes = true;
-          const modSlight = await import("./entity/slight.js");
+          const modSlight = await import(
+            `./entity/slight.js?cacheBust=${Date.now()}`
+          );
           modSlight.setup(hostAPI);
           setTimeout(() => {
             eyes = false;
@@ -139,7 +145,9 @@ async function RUN() {
       : Math.floor(Math.random() * 10000) + 10000;
     setTimeout(async () => {
       if (!death) {
-        const modSlugfish = await import("./entity/slugfish.js");
+        const modSlugfish = await import(
+          `./entity/slugfish.js?cacheBust=${Date.now()}`
+        );
         modSlugfish.setup(hostAPI);
         setTimeout(() => {
           runSlugfish();
@@ -153,7 +161,9 @@ async function RUN() {
       : Math.floor(Math.random() * 10000) + 10000;
     setTimeout(async () => {
       if (!death) {
-        const modElkman = await import("./entity/elkman.js");
+        const modElkman = await import(
+          `./entity/elkman.js?cacheBust=${Date.now()}`
+        );
         modElkman.setup(hostAPI);
         setTimeout(() => {
           runElkman();
@@ -169,7 +179,9 @@ async function RUN() {
       if (!death) {
         if (!eyes || Math.random() < 0.2) {
           eyes = true;
-          const modHeed = await import("./entity/heed.js");
+          const modHeed = await import(
+            `./entity/heed.js?cacheBust=${Date.now()}`
+          );
           modHeed.setup(hostAPI);
           setTimeout(() => {
             eyes = false;
@@ -187,7 +199,9 @@ async function RUN() {
       : Math.floor(Math.random() * 10000) + 10000;
     setTimeout(async () => {
       if (!death) {
-        const modDozer = await import("./entity/dozer.js");
+        const modDozer = await import(
+          `./entity/dozer.js?cacheBust=${Date.now()}`
+        );
         modDozer.setup(hostAPI);
         setTimeout(() => {
           runDozer();
@@ -201,7 +215,9 @@ async function RUN() {
       : Math.floor(Math.random() * 10000) + 10000;
     setTimeout(async () => {
       if (!death) {
-        const modSorrow = await import("./entity/sorrow.js");
+        const modSorrow = await import(
+          `./entity/sorrow.js?cacheBust=${Date.now()}`
+        );
         modSorrow.setup(hostAPI);
         setTimeout(() => {
           runSorrow();
