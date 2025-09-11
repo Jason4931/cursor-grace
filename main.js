@@ -226,6 +226,14 @@ async function RUN() {
     }, delay);
   }
 
+  /*
+  TODO:
+  Bug dozer mousemove
+  Elkman design change
+  Carnation longer death(?)
+  LITANY
+  */
+
   // const modDoppel = await import("./entity/doppel.js");
   // modDoppel.setup(hostAPI);
   runCarnation();

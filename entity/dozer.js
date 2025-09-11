@@ -4,8 +4,8 @@ export function setup(host, { fadeOut = true } = {}) {
     y: 0,
     radius: 80,
     outerRadius: 80,
-    minRadius: 15,
-    life: 5,
+    minRadius: 10,
+    life: 4,
     fade: 0.3,
     stop: false,
     mouse: false,
@@ -55,7 +55,7 @@ export function setup(host, { fadeOut = true } = {}) {
       }
 
       const diff = state.minRadius - state.radius;
-      const ease = 1;
+      const ease = 1.5;
       state.radius += diff * ease * dt;
       if (Math.abs(diff) < 0.1) state.radius = state.minRadius;
     }
