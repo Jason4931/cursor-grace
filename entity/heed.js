@@ -47,16 +47,18 @@ export function setup(host, { fadeOut = true } = {}) {
       if (Math.abs(diff) < 0.1) state.radius2 = state.maxRadius2;
     }
 
-    if (Math.hypot(mouse.x - state.x, mouse.y - state.y) <= state.radius1) {
-      state.maxRadius2 -= 200 * dt;
-      if (state.maxRadius2 < state.ogMaxRadius2)
-        state.maxRadius2 = state.ogMaxRadius2;
-    } else {
-      if (state.maxRadius2 > state.maxRadius1) {
-        state.maxRadius2 += state.die * dt;
-        state.die += 50;
+    if (!state.delay) {
+      if (Math.hypot(mouse.x - state.x, mouse.y - state.y) <= state.radius1) {
+        state.maxRadius2 -= 200 * dt;
+        if (state.maxRadius2 < state.ogMaxRadius2)
+          state.maxRadius2 = state.ogMaxRadius2;
       } else {
-        state.maxRadius2 += 100 * dt;
+        if (state.maxRadius2 > state.maxRadius1) {
+          state.maxRadius2 += state.die * dt;
+          state.die += 50;
+        } else {
+          state.maxRadius2 += 100 * dt;
+        }
       }
     }
   }

@@ -210,6 +210,8 @@ async function RUN() {
     }, delay);
   }
 
+  // const modDoppel = await import("./entity/doppel.js");
+  // modDoppel.setup(hostAPI);
   runCarnation();
   entitySpawnInfo("Carnation", "#cf0693");
   let goatmanTimeout = setTimeout(() => {

@@ -57,7 +57,7 @@ Indicator: Red rain
 Location: Up/Down
 Get out of the rain before it went off
 
--- 06:00 until 13:00 -- (random)
+-- 07:00 until 14:00 -- (random)
 
 Litany -?-
 Doppel -?-
