@@ -67,7 +67,7 @@ export function setup(host, { fadeOut = true } = {}) {
           state.maxRadius2 += state.die * dt;
           state.die += 50;
         } else {
-          state.maxRadius2 += 100 * dt;
+          state.maxRadius2 += 50 * dt;
         }
       }
     }
