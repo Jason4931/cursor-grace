@@ -45,7 +45,7 @@ Try to not go outside the circle for long
 
 05:00 - Dozer
 Spawn: 10-20s
-Duration: 5s (fast)
+Duration: 4s (fast)
 Indicator: Yellow circle
 Location: Cursor
 Do not move your cursor when it went off
@@ -59,8 +59,20 @@ Get out of the rain before it went off
 
 -- 07:00 until 14:00 -- (random)
 
-Litany -?-
-Doppel -?-
+Litany
+Spawn: 10-20s
+Duration: 10s (slow)
+Indicator: Gray ring
+Location: Cursor (delayed)
+Dont move too fast until it goes 3 times
+
+Doppel
+Spawn: 10-20s
+Duration: 20s (very slow)
+Indicator: Cursor shape
+Location: Cursor (delayed)
+Try to move and dont touch the fake cursor
+
 Kookoo -?-
 Doombringer -?-
 Rue -?-

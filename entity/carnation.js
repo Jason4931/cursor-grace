@@ -28,7 +28,7 @@ export function setup(host, { fadeOut = true } = {}) {
       return;
     }
     if (fadeOut && state.life < 1) {
-      state.fade = Math.max(0, state.life / 1);
+      state.fade = Math.max(0, state.life * 2);
     }
 
     //process
@@ -62,12 +62,11 @@ export function setup(host, { fadeOut = true } = {}) {
       1,
       (state.inset / (Math.min(host.canvas.width, host.canvas.height) / 2)) *
         state.fade *
-        2
+        1.5
     );
     const limbCount = 30;
     const segmentLength = 8;
     const maxSegments = 15;
-    const time = performance.now() * 0.003;
 
     for (let i = 0; i < limbCount; i++) {
       let x = Math.random() < 0.5 ? 0 : host.canvas.width;

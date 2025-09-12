@@ -76,166 +76,232 @@ setInterval(() => {
   }
 }, 100);
 
+function shuffle(array) {
+  let currentIndex = array.length;
+  while (currentIndex != 0) {
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+}
+
 let death = false;
 let goatman = false;
 let eyes = false;
+let absoluteNoDelay = false;
 async function RUN() {
   hostAPI.clearAll();
   function runCarnation() {
     let delay = goatman
       ? Math.floor(Math.random() * 5000) + 5000
       : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(async () => {
-      if (!death) {
-        const modCarnation = await import(
-          `./entity/carnation.js?cacheBust=${Date.now()}`
-        );
-        modCarnation.setup(hostAPI);
-        setTimeout(() => {
-          runCarnation();
-        }, 10000);
-      }
-    }, delay);
+    setTimeout(
+      async () => {
+        if (!death) {
+          const modCarnation = await import(
+            `./entity/carnation.js?cacheBust=${Date.now()}`
+          );
+          modCarnation.setup(hostAPI);
+          setTimeout(() => {
+            runCarnation();
+          }, 10000);
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
   }
   function runGoatman() {
     let delay = Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(async () => {
-      if (!death) {
-        if (Math.random() < 0.2) {
-          goatman = true;
-          const modGoatman = await import(
-            `./entity/goatman.js?cacheBust=${Date.now()}`
-          );
-          modGoatman.setup(hostAPI);
-          setTimeout(() => {
-            goatman = false;
+    setTimeout(
+      async () => {
+        if (!death) {
+          if (Math.random() < 0.2) {
+            goatman = true;
+            const modGoatman = await import(
+              `./entity/goatman.js?cacheBust=${Date.now()}`
+            );
+            modGoatman.setup(hostAPI);
+            setTimeout(() => {
+              goatman = false;
+              runGoatman();
+            }, 20000);
+          } else {
             runGoatman();
-          }, 20000);
-        } else {
-          runGoatman();
+          }
         }
-      }
-    }, delay);
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
   }
   function runSlight() {
     let delay = goatman
       ? Math.floor(Math.random() * 5000) + 5000
       : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(async () => {
-      if (!death) {
-        if (!eyes || Math.random() < 0.2) {
-          eyes = true;
-          const modSlight = await import(
-            `./entity/slight.js?cacheBust=${Date.now()}`
-          );
-          modSlight.setup(hostAPI);
-          setTimeout(() => {
-            eyes = false;
+    setTimeout(
+      async () => {
+        if (!death) {
+          if (!eyes || Math.random() < 0.2) {
+            eyes = true;
+            const modSlight = await import(
+              `./entity/slight.js?cacheBust=${Date.now()}`
+            );
+            modSlight.setup(hostAPI);
+            setTimeout(() => {
+              eyes = false;
+              runSlight();
+            }, 10000);
+          } else {
             runSlight();
-          }, 10000);
-        } else {
-          runSlight();
+          }
         }
-      }
-    }, delay);
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
   }
   function runSlugfish() {
     let delay = goatman
       ? Math.floor(Math.random() * 5000) + 5000
       : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(async () => {
-      if (!death) {
-        const modSlugfish = await import(
-          `./entity/slugfish.js?cacheBust=${Date.now()}`
-        );
-        modSlugfish.setup(hostAPI);
-        setTimeout(() => {
-          runSlugfish();
-        }, 5000);
-      }
-    }, delay);
+    setTimeout(
+      async () => {
+        if (!death) {
+          const modSlugfish = await import(
+            `./entity/slugfish.js?cacheBust=${Date.now()}`
+          );
+          modSlugfish.setup(hostAPI);
+          setTimeout(() => {
+            runSlugfish();
+          }, 5000);
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
   }
   function runElkman() {
     let delay = goatman
       ? Math.floor(Math.random() * 5000) + 5000
       : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(async () => {
-      if (!death) {
-        const modElkman = await import(
-          `./entity/elkman.js?cacheBust=${Date.now()}`
-        );
-        modElkman.setup(hostAPI);
-        setTimeout(() => {
-          runElkman();
-        }, 10000);
-      }
-    }, delay);
+    setTimeout(
+      async () => {
+        if (!death) {
+          const modElkman = await import(
+            `./entity/elkman.js?cacheBust=${Date.now()}`
+          );
+          modElkman.setup(hostAPI);
+          setTimeout(() => {
+            runElkman();
+          }, 10000);
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
   }
   function runHeed() {
     let delay = goatman
       ? Math.floor(Math.random() * 5000) + 5000
       : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(async () => {
-      if (!death) {
-        if (!eyes || Math.random() < 0.2) {
-          eyes = true;
-          const modHeed = await import(
-            `./entity/heed.js?cacheBust=${Date.now()}`
-          );
-          modHeed.setup(hostAPI);
-          setTimeout(() => {
-            eyes = false;
+    setTimeout(
+      async () => {
+        if (!death) {
+          if (!eyes || Math.random() < 0.2) {
+            eyes = true;
+            const modHeed = await import(
+              `./entity/heed.js?cacheBust=${Date.now()}`
+            );
+            modHeed.setup(hostAPI);
+            setTimeout(() => {
+              eyes = false;
+              runHeed();
+            }, 10000);
+          } else {
             runHeed();
-          }, 10000);
-        } else {
-          runHeed();
+          }
         }
-      }
-    }, delay);
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
   }
   function runDozer() {
     let delay = goatman
       ? Math.floor(Math.random() * 5000) + 5000
       : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(async () => {
-      if (!death) {
-        const modDozer = await import(
-          `./entity/dozer.js?cacheBust=${Date.now()}`
-        );
-        modDozer.setup(hostAPI);
-        setTimeout(() => {
-          runDozer();
-        }, 5000);
-      }
-    }, delay);
+    setTimeout(
+      async () => {
+        if (!death) {
+          const modDozer = await import(
+            `./entity/dozer.js?cacheBust=${Date.now()}`
+          );
+          modDozer.setup(hostAPI);
+          setTimeout(() => {
+            runDozer();
+          }, 5000);
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
   }
   function runSorrow() {
     let delay = goatman
       ? Math.floor(Math.random() * 5000) + 5000
       : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(async () => {
-      if (!death) {
-        const modSorrow = await import(
-          `./entity/sorrow.js?cacheBust=${Date.now()}`
-        );
-        modSorrow.setup(hostAPI);
-        setTimeout(() => {
-          runSorrow();
-        }, 5000);
-      }
-    }, delay);
+    setTimeout(
+      async () => {
+        if (!death) {
+          const modSorrow = await import(
+            `./entity/sorrow.js?cacheBust=${Date.now()}`
+          );
+          modSorrow.setup(hostAPI);
+          setTimeout(() => {
+            runSorrow();
+          }, 5000);
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
+  }
+  function runLitany() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(
+      async () => {
+        if (!death) {
+          const modLitany = await import(
+            `./entity/litany.js?cacheBust=${Date.now()}`
+          );
+          modLitany.setup(hostAPI);
+          setTimeout(() => {
+            runLitany();
+          }, 10000);
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
+  }
+  function runDoppel() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(
+      async () => {
+        if (!death) {
+          const modDoppel = await import(
+            `./entity/doppel.js?cacheBust=${Date.now()}`
+          );
+          modDoppel.setup(hostAPI);
+          setTimeout(() => {
+            runDoppel();
+          }, 20000);
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
   }
 
-  /*
-  TODO:
-  Bug dozer mousemove
-  Elkman design change
-  Carnation longer death(?)
-  LITANY
-  */
-
-  // const modDoppel = await import("./entity/doppel.js");
-  // modDoppel.setup(hostAPI);
+  // absoluteNoDelay = true;
   runCarnation();
   entitySpawnInfo("Carnation", "#cf0693");
   let goatmanTimeout = setTimeout(() => {
@@ -266,6 +332,28 @@ async function RUN() {
     entitySpawnInfo("Dozer", "#f4ea37", "Sorrow", "#b30000");
   }, 300000);
 
+  let arrayTime = [
+    420000, 480000,
+    // 540000,
+    // 600000,
+    // 660000,
+    // 720000,
+    // 780000,
+    // 840000,
+  ];
+  shuffle(arrayTime);
+  let litanyTimeout = setTimeout(() => {
+    if (death) return;
+    runLitany();
+    entitySpawnInfo("Litany", "#808080");
+  }, arrayTime.pop());
+  let doppelTimeout = setTimeout(() => {
+    if (death) return;
+    runDoppel();
+    entitySpawnInfo("Doppel", "#ffffff");
+  }, arrayTime.pop());
+
+  let basic = true;
   let upPressCount = 0;
   document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowUp") {
@@ -299,7 +387,20 @@ async function RUN() {
           runSorrow();
           entitySpawnInfo("Dozer", "#f4ea37", "Sorrow", "#b30000");
         }
+        if (!basic) {
+          if (!runned.includes("Litany")) {
+            clearTimeout(litanyTimeout);
+            runLitany();
+            entitySpawnInfo("Litany", "#808080");
+          }
+          if (!runned.includes("Doppel")) {
+            clearTimeout(doppelTimeout);
+            runDoppel();
+            entitySpawnInfo("Doppel", "#ffffff");
+          }
+        }
         entitySpawnInfo("Everyone", "#fff");
+        basic = false;
       }
     }
   });

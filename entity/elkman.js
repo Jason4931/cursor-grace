@@ -109,9 +109,9 @@ export function setup(host, { fadeOut = true } = {}) {
     const cy = state.y + state.size / 2;
     ctx.translate(cx, cy);
     ctx.rotate(state.rotation);
-    ctx.fillStyle = "black";
+    ctx.fillStyle = Math.random() < 0.9 ? "black" : "gray";
     ctx.fillRect(-state.size / 2, -state.size / 2, state.size, state.size);
-    ctx.strokeStyle = "white";
+    ctx.strokeStyle = Math.random() < 0.9 ? "white" : "black";
     ctx.lineWidth = 2;
     ctx.strokeRect(-state.size / 2, -state.size / 2, state.size, state.size);
 

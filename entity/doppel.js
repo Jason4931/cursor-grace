@@ -2,10 +2,11 @@ export function setup(host, { fadeOut = true } = {}) {
   const state = {
     x: 0,
     y: 0,
-    radius: 10,
+    radius: 50,
     life: 20,
     fade: 0,
     mouse: false,
+    flashed: false,
   };
 
   const mouseHistory = [];
@@ -21,12 +22,28 @@ export function setup(host, { fadeOut = true } = {}) {
     mouseHistory.push({ x, y, time: performance.now() });
   }
   host.canvas.addEventListener("mousemove", onMouseMove);
+  function onMouseClick(e) {
+    const rect = host.canvas.getBoundingClientRect();
+    const scaleX = host.canvas.width / rect.width;
+    const scaleY = host.canvas.height / rect.height;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
+    const dist = Math.hypot(x - state.x, y - state.y);
+    if (dist < state.radius && !state.flashed) {
+      state.flashed = true;
+      setTimeout(() => {
+        state.flashed = false;
+      }, 1000);
+    }
+  }
+  host.canvas.addEventListener("click", onMouseClick);
 
   function update(dt) {
-    state.life -= dt;
+    if (state.mouse) state.life -= dt;
     if (state.life <= 0) {
       unregister();
       host.canvas.removeEventListener("mousemove", onMouseMove);
+      host.canvas.removeEventListener("click", onMouseClick);
       return;
     }
     if (fadeOut && state.life < 1) {
@@ -38,6 +55,10 @@ export function setup(host, { fadeOut = true } = {}) {
     }
 
     //process
+    if (mouse.x != 100000 && mouse.y != 100000) {
+      state.mouse = true;
+    }
+
     const now = performance.now();
     const delay = 1000;
 
@@ -51,7 +72,6 @@ export function setup(host, { fadeOut = true } = {}) {
     }
 
     if (delayedPoint && Math.random() < 0.2) {
-      state.mouse = true;
       state.x = delayedPoint.x;
       state.y = delayedPoint.y;
       const index = mouseHistory.indexOf(delayedPoint);
@@ -68,7 +88,13 @@ export function setup(host, { fadeOut = true } = {}) {
 
     //setup
     if (state.mouse) {
-      ctx.fillStyle = Math.random() < 0.6 ? "#fff" : "#000";
+      ctx.fillStyle = !state.flashed
+        ? Math.random() < 0.6
+          ? "#fff"
+          : "#000"
+        : Math.random() < 0.5
+        ? "#80008080"
+        : "#000";
       ctx.beginPath();
 
       let x = state.x - 2;

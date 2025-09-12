@@ -24,7 +24,7 @@ export function setup(host, { fadeOut = true } = {}) {
   host.canvas.addEventListener("mousemove", onMouseMove);
 
   function update(dt) {
-    state.life -= dt;
+    if (state.mouse) state.life -= dt;
     if (state.life <= 0) {
       unregister();
       host.canvas.removeEventListener("mousemove", onMouseMove);
