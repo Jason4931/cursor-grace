@@ -30,16 +30,16 @@ export function setup(host, { fadeOut = true } = {}) {
       host.canvas.removeEventListener("mousemove", onMouseMove);
       return;
     }
-    if (fadeOut && state.life < 1) {
+    if (fadeOut && state.life < 0.5) {
       state.fade = 1;
       state.stop = true;
-    } else if (state.life < 1.1) {
+    } else if (state.life < 0.6) {
       state.fade = 0.3;
-    } else if (state.life < 1.2) {
+    } else if (state.life < 0.7) {
       state.fade = 0.5;
-    } else if (state.life < 1.3) {
+    } else if (state.life < 0.8) {
       state.fade = 0.3;
-    } else if (state.life < 1.4) {
+    } else if (state.life < 0.9) {
       state.fade = 0.5;
     }
 
