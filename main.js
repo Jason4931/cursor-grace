@@ -265,7 +265,7 @@ async function RUN() {
             setTimeout(() => {
               combos--;
               runDozer();
-            }, 5000);
+            }, 4000);
           } else {
             runDozer();
           }
