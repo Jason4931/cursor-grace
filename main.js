@@ -405,7 +405,7 @@ async function RUN() {
   let basic = true;
   let upPressCount = 0;
   document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowUp") {
+    if (e.key === "/") {
       upPressCount++;
       if (upPressCount >= 10) {
         upPressCount = 0;
@@ -448,7 +448,9 @@ async function RUN() {
             entitySpawnInfo("Doppel", "#ffffff");
           }
         }
-        entitySpawnInfo("Everyone", "#fff");
+        basic
+          ? entitySpawnInfo("Every Normal Entity", "#fff")
+          : entitySpawnInfo("Every Modifier Entity", "#fff");
         basic = false;
       }
     }
