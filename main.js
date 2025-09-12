@@ -92,6 +92,7 @@ let death = false;
 let goatman = false;
 let eyes = false;
 let absoluteNoDelay = false;
+let combos = 0;
 async function RUN() {
   hostAPI.clearAll();
   function runCarnation() {
@@ -101,13 +102,19 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          const modCarnation = await import(
-            `./entity/carnation.js?cacheBust=${Date.now()}`
-          );
-          modCarnation.setup(hostAPI);
-          setTimeout(() => {
+          if (combos <= 5) {
+            const modCarnation = await import(
+              `./entity/carnation.js?cacheBust=${Date.now()}`
+            );
+            modCarnation.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+              runCarnation();
+            }, 10000);
+          } else {
             runCarnation();
-          }, 10000);
+          }
         }
       },
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
@@ -118,13 +125,15 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          if (Math.random() < 0.2) {
+          if (Math.random() < 0.2 && combos <= 5) {
             goatman = true;
             const modGoatman = await import(
               `./entity/goatman.js?cacheBust=${Date.now()}`
             );
             modGoatman.setup(hostAPI);
+            combos++;
             setTimeout(() => {
+              combos--;
               goatman = false;
               runGoatman();
             }, 20000);
@@ -143,13 +152,15 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          if (!eyes || Math.random() < 0.2) {
+          if ((!eyes || Math.random() < 0.2) && combos <= 5) {
             eyes = true;
             const modSlight = await import(
               `./entity/slight.js?cacheBust=${Date.now()}`
             );
             modSlight.setup(hostAPI);
+            combos++;
             setTimeout(() => {
+              combos--;
               eyes = false;
               runSlight();
             }, 10000);
@@ -168,13 +179,19 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          const modSlugfish = await import(
-            `./entity/slugfish.js?cacheBust=${Date.now()}`
-          );
-          modSlugfish.setup(hostAPI);
-          setTimeout(() => {
+          if (combos <= 5) {
+            const modSlugfish = await import(
+              `./entity/slugfish.js?cacheBust=${Date.now()}`
+            );
+            modSlugfish.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+              runSlugfish();
+            }, 5000);
+          } else {
             runSlugfish();
-          }, 5000);
+          }
         }
       },
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
@@ -187,13 +204,19 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          const modElkman = await import(
-            `./entity/elkman.js?cacheBust=${Date.now()}`
-          );
-          modElkman.setup(hostAPI);
-          setTimeout(() => {
+          if (combos <= 5) {
+            const modElkman = await import(
+              `./entity/elkman.js?cacheBust=${Date.now()}`
+            );
+            modElkman.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+              runElkman();
+            }, 10000);
+          } else {
             runElkman();
-          }, 10000);
+          }
         }
       },
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
@@ -206,13 +229,15 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          if (!eyes || Math.random() < 0.2) {
+          if ((!eyes || Math.random() < 0.2) && combos <= 5) {
             eyes = true;
             const modHeed = await import(
               `./entity/heed.js?cacheBust=${Date.now()}`
             );
             modHeed.setup(hostAPI);
+            combos++;
             setTimeout(() => {
+              combos--;
               eyes = false;
               runHeed();
             }, 10000);
@@ -231,13 +256,19 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          const modDozer = await import(
-            `./entity/dozer.js?cacheBust=${Date.now()}`
-          );
-          modDozer.setup(hostAPI);
-          setTimeout(() => {
+          if (combos <= 5) {
+            const modDozer = await import(
+              `./entity/dozer.js?cacheBust=${Date.now()}`
+            );
+            modDozer.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+              runDozer();
+            }, 5000);
+          } else {
             runDozer();
-          }, 5000);
+          }
         }
       },
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
@@ -250,13 +281,19 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          const modSorrow = await import(
-            `./entity/sorrow.js?cacheBust=${Date.now()}`
-          );
-          modSorrow.setup(hostAPI);
-          setTimeout(() => {
+          if (combos <= 5) {
+            const modSorrow = await import(
+              `./entity/sorrow.js?cacheBust=${Date.now()}`
+            );
+            modSorrow.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+              runSorrow();
+            }, 5000);
+          } else {
             runSorrow();
-          }, 5000);
+          }
         }
       },
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
@@ -269,13 +306,19 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          const modLitany = await import(
-            `./entity/litany.js?cacheBust=${Date.now()}`
-          );
-          modLitany.setup(hostAPI);
-          setTimeout(() => {
+          if (combos <= 5) {
+            const modLitany = await import(
+              `./entity/litany.js?cacheBust=${Date.now()}`
+            );
+            modLitany.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+              runLitany();
+            }, 10000);
+          } else {
             runLitany();
-          }, 10000);
+          }
         }
       },
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
@@ -288,13 +331,19 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          const modDoppel = await import(
-            `./entity/doppel.js?cacheBust=${Date.now()}`
-          );
-          modDoppel.setup(hostAPI);
-          setTimeout(() => {
+          if (combos <= 5) {
+            const modDoppel = await import(
+              `./entity/doppel.js?cacheBust=${Date.now()}`
+            );
+            modDoppel.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+              runDoppel();
+            }, 20000);
+          } else {
             runDoppel();
-          }, 20000);
+          }
         }
       },
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
