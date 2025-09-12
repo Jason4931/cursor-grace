@@ -33,7 +33,7 @@ export function setup(host, { fadeOut = true } = {}) {
       state.flashed = true;
       setTimeout(() => {
         state.flashed = false;
-      }, 1000);
+      }, 2000);
     }
   }
   host.canvas.addEventListener("click", onMouseClick);

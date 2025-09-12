@@ -3,7 +3,7 @@ export function setup(host, { fadeOut = true } = {}) {
     x: 100 + Math.random() * (host.canvas.width - 200),
     y: 100 + Math.random() * (host.canvas.height - 200),
     radius1: 0,
-    maxRadius1: 250,
+    maxRadius1: 300,
     radius2: 0,
     maxRadius2: 50,
     ogMaxRadius2: 50,
