@@ -55,7 +55,11 @@ requestAnimationFrame(loop);
 let op = 0;
 let runned = [];
 function entitySpawnInfo(entity, color, entity2 = "", color2 = "") {
-  document.getElementById("info").innerHTML = `${entity} appears.`;
+  if (entity == "HARD MODE ENABLED") {
+    document.getElementById("info").innerHTML = `${entity}.`;
+  } else {
+    document.getElementById("info").innerHTML = `${entity} appears.`;
+  }
   document.getElementById("info").style.color = `${color}`;
   if (entity2 && color2) {
     document.getElementById("info2").innerHTML = `${entity2} appears.`;
@@ -375,7 +379,6 @@ async function RUN() {
     );
   }
 
-  // absoluteNoDelay = true;
   runCarnation();
   entitySpawnInfo("Carnation", "#cf0693");
   let goatmanTimeout = setTimeout(() => {
@@ -432,6 +435,7 @@ async function RUN() {
   }, arrayTime.pop());
 
   let basic = true;
+  let absoluteSpeed = false;
   let upPressCount = 0;
   document.addEventListener("keydown", (e) => {
     if (e.key === "/") {
@@ -484,7 +488,11 @@ async function RUN() {
         }
         basic
           ? entitySpawnInfo("Every Normal Entity", "#fff")
-          : entitySpawnInfo("Every Modifier Entity", "#fff");
+          : !absoluteSpeed
+          ? entitySpawnInfo("Every Modifier Entity", "#fff")
+          : ((absoluteNoDelay = true),
+            entitySpawnInfo("HARD MODE ENABLED", "#f00"));
+        if (!basic) absoluteSpeed = true;
         basic = false;
       }
     }
