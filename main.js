@@ -436,11 +436,12 @@ async function RUN() {
 
   let basic = true;
   let absoluteSpeed = false;
+  let limit = false;
   let upPressCount = 0;
   document.addEventListener("keydown", (e) => {
     if (e.key === "/") {
       upPressCount++;
-      if (upPressCount >= 10) {
+      if (upPressCount >= 5 && !limit) {
         upPressCount = 0;
         if (!runned.includes("Goatman")) {
           clearTimeout(goatmanTimeout);
@@ -484,6 +485,9 @@ async function RUN() {
             clearTimeout(kookooTimeout);
             runKookoo();
             entitySpawnInfo("Kookoo", "#0000fd");
+          }
+          if (absoluteSpeed) {
+            limit = true;
           }
         }
         basic
