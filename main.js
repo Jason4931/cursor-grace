@@ -349,6 +349,31 @@ async function RUN() {
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
     );
   }
+  function runKookoo() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(
+      async () => {
+        if (!death) {
+          if (combos <= 5) {
+            const modKookoo = await import(
+              `./entity/kookoo.js?cacheBust=${Date.now()}`
+            );
+            modKookoo.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+              runKookoo();
+            }, 20000);
+          } else {
+            runKookoo();
+          }
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
+  }
 
   // absoluteNoDelay = true;
   runCarnation();
@@ -382,8 +407,7 @@ async function RUN() {
   }, 300000);
 
   let arrayTime = [
-    420000, 480000,
-    // 540000,
+    420000, 480000, 540000,
     // 600000,
     // 660000,
     // 720000,
@@ -400,6 +424,11 @@ async function RUN() {
     if (death) return;
     runDoppel();
     entitySpawnInfo("Doppel", "#ffffff");
+  }, arrayTime.pop());
+  let kookooTimeout = setTimeout(() => {
+    if (death) return;
+    runKookoo();
+    entitySpawnInfo("Kookoo", "#0000fd");
   }, arrayTime.pop());
 
   let basic = true;
@@ -447,6 +476,11 @@ async function RUN() {
             runDoppel();
             entitySpawnInfo("Doppel", "#ffffff");
           }
+          if (!runned.includes("Kookoo")) {
+            clearTimeout(kookooTimeout);
+            runKookoo();
+            entitySpawnInfo("Kookoo", "#0000fd");
+          }
         }
         basic
           ? entitySpawnInfo("Every Normal Entity", "#fff")
@@ -475,6 +509,7 @@ const targetColors = [
   "#fe0102",
   "#f4ea37",
   "#b30000",
+  "#0000fd",
 ];
 function onColorTouched(hexColor) {
   if (death) return;
