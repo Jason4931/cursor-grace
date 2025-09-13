@@ -8,7 +8,7 @@ Dont stop moving and stay away from border
 01:00 - Goatman
 Spawn: 10-20s
 Chance Spawn: 20%
-Duration: 20s (very slow-relative)
+Duration: -20s (very slow-relative)
 Indicator: Flashing background
 Location: None
 Click 20 times before the timer ran out
@@ -30,7 +30,7 @@ Get out of the circle before it went off
 
 03:00 - Elkman
 Spawn: 10-20s
-Duration: 5s (fast-relative)
+Duration: -5s+ (fast-relative)
 Indicator: Black square
 Location: Left/Right
 Try to not be near or get out of blur area
@@ -73,7 +73,14 @@ Indicator: Cursor shape
 Location: Cursor (delayed)
 Try to move and dont touch the fake cursor
 
-Kookoo -?-
+Kookoo
+Spawn: 10-20s
+Duration: 7s-16s (relative)
+Indicator: Blue clock
+Location: None
+Dont click on the number shown at beginning
+
+
 Doombringer -?-
 Rue -?-
 Drain -?-

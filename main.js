@@ -365,7 +365,7 @@ async function RUN() {
             setTimeout(() => {
               combos--;
               runKookoo();
-            }, 20000);
+            }, 16000);
           } else {
             runKookoo();
           }
