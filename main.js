@@ -491,7 +491,7 @@ async function RUN() {
           }
         }
         basic
-          ? entitySpawnInfo("Every Normal Entity", "#fff")
+          ? entitySpawnInfo("Every Main Entity", "#fff")
           : !absoluteSpeed
           ? entitySpawnInfo("Every Modifier Entity", "#fff")
           : ((absoluteNoDelay = true),
