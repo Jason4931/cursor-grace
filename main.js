@@ -412,6 +412,31 @@ async function RUN() {
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
     );
   }
+  function runRue() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(
+      async () => {
+        if (!death) {
+          if (combos <= 5) {
+            const modRue = await import(
+              `./entity/rue.js?cacheBust=${Date.now()}`
+            );
+            modRue.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+              runRue();
+            }, 10000);
+          } else {
+            runRue();
+          }
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
+  }
 
   runCarnation();
   entitySpawnInfo("Carnation", "#cf0693");
@@ -444,11 +469,10 @@ async function RUN() {
   }, 300000);
 
   let arrayTime = [
-    420000, 480000, 540000, 600000,
+    360000, 420000, 480000, 540000, 600000,
     // 660000,
     // 720000,
     // 780000,
-    // 840000,
   ];
   shuffle(arrayTime);
   let litanyTimeout = setTimeout(() => {
@@ -470,6 +494,11 @@ async function RUN() {
     if (death) return;
     runDoombringer();
     entitySpawnInfo("Doombringer", "#808080");
+  }, arrayTime.pop());
+  let rueTimeout = setTimeout(() => {
+    if (death) return;
+    runRue();
+    entitySpawnInfo("Rue", "#ffffff");
   }, arrayTime.pop());
 
   let basic = true;
@@ -528,6 +557,11 @@ async function RUN() {
             clearTimeout(doombringerTimeout);
             runDoombringer();
             entitySpawnInfo("Doombringer", "#808080");
+          }
+          if (!runned.includes("Rue")) {
+            clearTimeout(rueTimeout);
+            runRue();
+            entitySpawnInfo("Rue", "#ffffff");
           }
           if (absoluteSpeed) {
             limit = true;

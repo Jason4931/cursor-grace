@@ -58,7 +58,7 @@ Indicator: Red rain
 Location: Up/Down
 Get out of the rain before it went off
 
--- 07:00 until 14:00 -- (random)
+-- 06:00 until 13:00 -- (random)
 
 Litany
 Spawn: 10-20s
@@ -89,7 +89,13 @@ Indicator: Rising pulses
 Location: None
 Just click once and pay attention to background
 
-Rue -?-
+Rue
+Spawn: 10-20s
+Duration: 10s+ (slow-relative)
+Indicator: White-Red circle
+Location: Center
+Click when the circle is red or delay it at center
+
 Drain -?-
 Ire -?-
 Mime -?-

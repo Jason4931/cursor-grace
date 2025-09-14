@@ -57,7 +57,7 @@ export function setup(host, { fadeOut = true } = {}) {
 
     state.pulses.forEach((p) => {
       p.r += p.growth * dt;
-      p.alpha -= dt * 0.5;
+      p.alpha -= dt * 0.6;
     });
 
     state.pulses = state.pulses.filter((p) => p.alpha > 0);
