@@ -37,6 +37,25 @@ function loop(now) {
   }
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (extraLife) {
+    if (!extraLifeBroken) {
+      ctx.globalAlpha = 0.3;
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, 10, 0, 2 * Math.PI);
+      ctx.strokeStyle = "#0f0";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    } else {
+      ctx.globalAlpha = Math.random() * 0.15 + 0.225;
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, Math.random() * 5 + 7.5, 0, 2 * Math.PI);
+      ctx.strokeStyle = "#f00";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+  }
 
   for (const draw of registry.drawers) {
     try {
@@ -97,6 +116,8 @@ let goatman = false;
 let joey = false;
 let eyes = false;
 let absoluteNoDelay = false;
+let extraLife = false;
+let extraLifeBroken = false;
 let combos = 0;
 async function RUN() {
   hostAPI.clearAll();
@@ -438,6 +459,10 @@ async function RUN() {
     );
   }
 
+  setInterval(() => {
+    extraLife = true;
+  }, 300000);
+
   runCarnation();
   entitySpawnInfo("Carnation", "#cf0693");
   let goatmanTimeout = setTimeout(() => {
@@ -602,14 +627,21 @@ const targetColors = [
 ];
 function onColorTouched(hexColor) {
   if (death) return;
-  death = true;
-  setTimeout(() => {
+  if (!extraLife) {
+    death = true;
     setTimeout(() => {
-      document.getElementById("death").style.display = "flex";
-      document.getElementById("white").style.display = "none";
-    }, 100);
-    document.getElementById("white").style.display = "flex";
-  }, 150);
+      setTimeout(() => {
+        document.getElementById("death").style.display = "flex";
+        document.getElementById("white").style.display = "none";
+      }, 100);
+      document.getElementById("white").style.display = "flex";
+    }, 150);
+  }
+  extraLifeBroken = true;
+  setTimeout(() => {
+    extraLife = false;
+    extraLifeBroken = false;
+  }, 1000);
 }
 function rgbaToHex(r, g, b, a = 255) {
   return (
