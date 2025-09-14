@@ -8,6 +8,7 @@ Dont stop moving and stay away from border
 01:00 - Goatman
 Spawn: 10-20s
 Chance Spawn: 20%
+Chance Spawn when Doombringer active: 4%
 Duration: -20s (very slow-relative)
 Indicator: Flashing background
 Location: None
@@ -80,8 +81,14 @@ Indicator: Blue clock
 Location: None
 Dont click on the number shown at beginning
 
+Doombringer
+Spawn: 5-15s
+Chance Spawn when Goatman active: 20%
+Duration: -5s (fast-relative)
+Indicator: Rising pulses
+Location: None
+Just click once and pay attention to background
 
-Doombringer -?-
 Rue -?-
 Drain -?-
 Ire -?-

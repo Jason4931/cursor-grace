@@ -94,6 +94,7 @@ function shuffle(array) {
 
 let death = false;
 let goatman = false;
+let joey = false;
 let eyes = false;
 let absoluteNoDelay = false;
 let combos = 0;
@@ -129,7 +130,12 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          if (Math.random() < 0.2 && combos <= 5) {
+          if (
+            (!joey || Math.random() < 0.2) &&
+            Math.random() < 0.2 &&
+            combos <= 5
+          ) {
+            joey = true;
             goatman = true;
             const modGoatman = await import(
               `./entity/goatman.js?cacheBust=${Date.now()}`
@@ -138,6 +144,7 @@ async function RUN() {
             combos++;
             setTimeout(() => {
               combos--;
+              joey = false;
               goatman = false;
               runGoatman();
             }, 20000);
@@ -378,6 +385,33 @@ async function RUN() {
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
     );
   }
+  function runDoombringer() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 2500
+      : Math.floor(Math.random() * 10000) + 5000;
+    setTimeout(
+      async () => {
+        if (!death) {
+          if ((!joey || Math.random() < 0.2) && combos <= 5) {
+            joey = true;
+            const modDoombringer = await import(
+              `./entity/doombringer.js?cacheBust=${Date.now()}`
+            );
+            modDoombringer.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+              joey = false;
+              runDoombringer();
+            }, 5000);
+          } else {
+            runDoombringer();
+          }
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
+  }
 
   runCarnation();
   entitySpawnInfo("Carnation", "#cf0693");
@@ -410,8 +444,7 @@ async function RUN() {
   }, 300000);
 
   let arrayTime = [
-    420000, 480000, 540000,
-    // 600000,
+    420000, 480000, 540000, 600000,
     // 660000,
     // 720000,
     // 780000,
@@ -432,6 +465,11 @@ async function RUN() {
     if (death) return;
     runKookoo();
     entitySpawnInfo("Kookoo", "#0000fd");
+  }, arrayTime.pop());
+  let doombringerTimeout = setTimeout(() => {
+    if (death) return;
+    runDoombringer();
+    entitySpawnInfo("Doombringer", "#808080");
   }, arrayTime.pop());
 
   let basic = true;
@@ -485,6 +523,11 @@ async function RUN() {
             clearTimeout(kookooTimeout);
             runKookoo();
             entitySpawnInfo("Kookoo", "#0000fd");
+          }
+          if (!runned.includes("Doombringer")) {
+            clearTimeout(doombringerTimeout);
+            runDoombringer();
+            entitySpawnInfo("Doombringer", "#808080");
           }
           if (absoluteSpeed) {
             limit = true;
