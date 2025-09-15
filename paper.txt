@@ -94,8 +94,15 @@ Spawn: 10-20s
 Duration: 10s+ (slow-relative)
 Indicator: White-Red circle
 Location: Center
-Click when the circle is red or delay it at center
+Click when the circle is red or delay at center
 
 Drain -?-
-Ire -?-
+
+Ire
+Spawn: 10-20s
+Duration: 5s (fast)
+Indicator: Black eye
+Location: Cursor
+Get out of the circle before it opens fully
+
 Mime -?-

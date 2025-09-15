@@ -458,6 +458,33 @@ async function RUN() {
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
     );
   }
+  // drain
+  function runIre() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(
+      async () => {
+        if (!death) {
+          if (combos <= 5) {
+            const modIre = await import(
+              `./entity/ire.js?cacheBust=${Date.now()}`
+            );
+            modIre.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+              runIre();
+            }, 5000);
+          } else {
+            runIre();
+          }
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
+  }
+  // mime
 
   setInterval(() => {
     extraLife = true;
@@ -494,8 +521,7 @@ async function RUN() {
   }, 300000);
 
   let arrayTime = [
-    360000, 420000, 480000, 540000, 600000,
-    // 660000,
+    360000, 420000, 480000, 540000, 600000, 660000,
     // 720000,
     // 780000,
   ];
@@ -525,6 +551,13 @@ async function RUN() {
     runRue();
     entitySpawnInfo("Rue", "#ffffff");
   }, arrayTime.pop());
+  // drain
+  let ireTimeout = setTimeout(() => {
+    if (death) return;
+    runIre();
+    entitySpawnInfo("Ire", "#ffffff");
+  }, arrayTime.pop());
+  // mime
 
   let basic = true;
   let absoluteSpeed = false;
@@ -588,6 +621,13 @@ async function RUN() {
             runRue();
             entitySpawnInfo("Rue", "#ffffff");
           }
+          // drain
+          if (!runned.includes("Ire")) {
+            clearTimeout(ireTimeout);
+            runIre();
+            entitySpawnInfo("Ire", "#ffffff");
+          }
+          // mime
           if (absoluteSpeed) {
             limit = true;
           }
