@@ -830,6 +830,96 @@ async function RUN() {
             );
             modMime.setup(hostAPI);
           }, 500);
+        } else if (value == "s.goatman") {
+          if (!runned.includes("Goatman")) {
+            clearTimeout(goatmanTimeout);
+            runGoatman();
+            entitySpawnInfo("Goatman", "#fbff08");
+          }
+        } else if (value == "s.slight") {
+          if (!runned.includes("Slight")) {
+            clearTimeout(slightTimeout);
+            runSlight();
+            entitySpawnInfo("Slight", "#1304d1");
+          }
+        } else if (value == "s.slugfish") {
+          if (!runned.includes("Slugfish")) {
+            clearTimeout(slugfishElkmanTimeout);
+            runSlugfish();
+            entitySpawnInfo("Slugfish", "#808080");
+          }
+        } else if (value == "s.elkman") {
+          if (!runned.includes("Elkman")) {
+            clearTimeout(slugfishElkmanTimeout);
+            runElkman();
+            entitySpawnInfo("Elkman", "#ffffff");
+          }
+        } else if (value == "s.heed") {
+          if (!runned.includes("Heed")) {
+            clearTimeout(heedTimeout);
+            runHeed();
+            entitySpawnInfo("Heed", "#fe0102");
+          }
+        } else if (value == "s.dozer") {
+          if (!runned.includes("Dozer")) {
+            clearTimeout(dozerSorrowTimeout);
+            runDozer();
+            entitySpawnInfo("Dozer", "#f4ea37");
+          }
+        } else if (value == "s.sorrow") {
+          if (!runned.includes("Sorrow")) {
+            clearTimeout(dozerSorrowTimeout);
+            runSorrow();
+            entitySpawnInfo("Sorrow", "#b30000");
+          }
+        } else if (value == "s.litany") {
+          if (!runned.includes("Litany")) {
+            clearTimeout(litanyTimeout);
+            runLitany();
+            entitySpawnInfo("Litany", "#808080");
+          }
+        } else if (value == "s.doppel") {
+          if (!runned.includes("Doppel")) {
+            clearTimeout(doppelTimeout);
+            runDoppel();
+            entitySpawnInfo("Doppel", "#ffffff");
+          }
+        } else if (value == "s.kookoo") {
+          if (!runned.includes("Kookoo")) {
+            clearTimeout(kookooTimeout);
+            runKookoo();
+            entitySpawnInfo("Kookoo", "#0000fd");
+          }
+        } else if (value == "s.doombringer") {
+          if (!runned.includes("Doombringer")) {
+            clearTimeout(doombringerTimeout);
+            runDoombringer();
+            entitySpawnInfo("Doombringer", "#808080");
+          }
+        } else if (value == "s.rue") {
+          if (!runned.includes("Rue")) {
+            clearTimeout(rueTimeout);
+            runRue();
+            entitySpawnInfo("Rue", "#ffffff");
+          }
+        } else if (value == "s.drain") {
+          if (!runned.includes("Drain")) {
+            clearTimeout(drainTimeout);
+            runDrain();
+            entitySpawnInfo("Drain", "#808080");
+          }
+        } else if (value == "s.ire") {
+          if (!runned.includes("Ire")) {
+            clearTimeout(ireTimeout);
+            runIre();
+            entitySpawnInfo("Ire", "#ffffff");
+          }
+        } else if (value == "s.mime") {
+          if (!runned.includes("Mime")) {
+            clearTimeout(mimeTimeout);
+            runMime();
+            entitySpawnInfo("Mime", "#ffffff");
+          }
         }
       }
     }
