@@ -338,7 +338,7 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          if (combos <= 5) {
+          if (combos <= 5 && Math.random() < 0.9) {
             const modLitany = await import(
               `./entity/litany.js?cacheBust=${Date.now()}`
             );
@@ -363,7 +363,7 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          if (combos <= 5) {
+          if (combos <= 5 && Math.random() < 0.9) {
             const modDoppel = await import(
               `./entity/doppel.js?cacheBust=${Date.now()}`
             );
@@ -388,7 +388,7 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          if (combos <= 5) {
+          if (combos <= 5 && Math.random() < 0.9) {
             const modKookoo = await import(
               `./entity/kookoo.js?cacheBust=${Date.now()}`
             );
@@ -413,7 +413,11 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          if ((!joey || Math.random() < 0.2) && combos <= 5) {
+          if (
+            (!joey || Math.random() < 0.2) &&
+            combos <= 5 &&
+            Math.random() < 0.9
+          ) {
             joey = true;
             const modDoombringer = await import(
               `./entity/doombringer.js?cacheBust=${Date.now()}`
@@ -440,7 +444,7 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          if (combos <= 5) {
+          if (combos <= 5 && Math.random() < 0.9) {
             const modRue = await import(
               `./entity/rue.js?cacheBust=${Date.now()}`
             );
@@ -466,7 +470,7 @@ async function RUN() {
     setTimeout(
       async () => {
         if (!death) {
-          if (combos <= 5) {
+          if (combos <= 5 && Math.random() < 0.9) {
             const modIre = await import(
               `./entity/ire.js?cacheBust=${Date.now()}`
             );
