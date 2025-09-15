@@ -96,7 +96,12 @@ Indicator: White-Red circle
 Location: Center
 Click when the circle is red or delay at center
 
-Drain -?-
+Drain
+Spawn: 10-20s
+Duration: -5s+ (fast-relative)
+Indicator: Black rectangle
+Location: Screen edge
+Dont be near and click before getting caught
 
 Ire
 Spawn: 10-20s

@@ -462,7 +462,31 @@ async function RUN() {
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
     );
   }
-  // drain
+  function runDrain() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(
+      async () => {
+        if (!death) {
+          if (combos <= 5 && Math.random() < 0.9) {
+            const modDrain = await import(
+              `./entity/drain.js?cacheBust=${Date.now()}`
+            );
+            modDrain.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+              runDrain();
+            }, 10000);
+          } else {
+            runDrain();
+          }
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
+  }
   function runIre() {
     let delay = goatman
       ? Math.floor(Math.random() * 5000) + 5000
@@ -548,8 +572,7 @@ async function RUN() {
   }, 300000);
 
   let arrayTime = [
-    360000, 420000, 480000, 540000, 600000, 660000, 720000,
-    // 780000,
+    360000, 420000, 480000, 540000, 600000, 660000, 720000, 780000,
   ];
   shuffle(arrayTime);
   let litanyTimeout = setTimeout(() => {
@@ -577,7 +600,11 @@ async function RUN() {
     runRue();
     entitySpawnInfo("Rue", "#ffffff");
   }, arrayTime.pop());
-  // drain
+  let drainTimeout = setTimeout(() => {
+    if (death) return;
+    runDrain();
+    entitySpawnInfo("Drain", "#808080");
+  }, arrayTime.pop());
   let ireTimeout = setTimeout(() => {
     if (death) return;
     runIre();
@@ -651,7 +678,11 @@ async function RUN() {
             runRue();
             entitySpawnInfo("Rue", "#ffffff");
           }
-          // drain
+          if (!runned.includes("Drain")) {
+            clearTimeout(drainTimeout);
+            runDrain();
+            entitySpawnInfo("Drain", "#808080");
+          }
           if (!runned.includes("Ire")) {
             clearTimeout(ireTimeout);
             runIre();
