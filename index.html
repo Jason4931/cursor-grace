@@ -141,10 +141,25 @@
       #paper-btn:hover {
         transform: scale(1.1);
       }
+      input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 10%;
+        background: rgba(0, 0, 0, 0.5);
+        border: none;
+        color: white;
+        font-size: 24px;
+        padding: 10px;
+        box-sizing: border-box;
+        display: none;
+      }
     </style>
   </head>
   <body>
     <canvas id="screen" width="1280" height="720"></canvas>
+    <input type="text" id="input" />
     <p id="info">Entity appears.</p>
     <p id="info2"></p>
     <div id="timer">00:00</div>

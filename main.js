@@ -620,6 +620,7 @@ async function RUN() {
   let absoluteSpeed = false;
   let limit = false;
   let upPressCount = 0;
+  let inputOpen = false;
   document.addEventListener("keydown", (e) => {
     if (e.key === "/") {
       upPressCount++;
@@ -707,6 +708,131 @@ async function RUN() {
         basic = false;
       }
     }
+    if (e.key === "Enter") {
+      if (!inputOpen) {
+        inputOpen = true;
+        document.getElementById("input").style.display = "block";
+        document.getElementById("input").focus();
+      } else {
+        inputOpen = false;
+        document.getElementById("input").style.display = "none";
+        let value = document.getElementById("input").value.toLowerCase();
+        document.getElementById("input").value = "";
+        if (value == ".carnation") {
+          setTimeout(async () => {
+            const modCarnation = await import(
+              `./entity/carnation.js?cacheBust=${Date.now()}`
+            );
+            modCarnation.setup(hostAPI);
+          }, 500);
+        } else if (value == ".goatman") {
+          setTimeout(async () => {
+            const modGoatman = await import(
+              `./entity/goatman.js?cacheBust=${Date.now()}`
+            );
+            modGoatman.setup(hostAPI);
+          }, 500);
+        } else if (value == ".slight") {
+          setTimeout(async () => {
+            const modSlight = await import(
+              `./entity/slight.js?cacheBust=${Date.now()}`
+            );
+            modSlight.setup(hostAPI);
+          }, 500);
+        } else if (value == ".slugfish") {
+          setTimeout(async () => {
+            const modSlugfish = await import(
+              `./entity/slugfish.js?cacheBust=${Date.now()}`
+            );
+            modSlugfish.setup(hostAPI);
+          }, 500);
+        } else if (value == ".elkman") {
+          setTimeout(async () => {
+            const modElkman = await import(
+              `./entity/elkman.js?cacheBust=${Date.now()}`
+            );
+            modElkman.setup(hostAPI);
+          }, 500);
+        } else if (value == ".heed") {
+          setTimeout(async () => {
+            const modHeed = await import(
+              `./entity/heed.js?cacheBust=${Date.now()}`
+            );
+            modHeed.setup(hostAPI);
+          }, 500);
+        } else if (value == ".dozer") {
+          setTimeout(async () => {
+            const modDozer = await import(
+              `./entity/dozer.js?cacheBust=${Date.now()}`
+            );
+            modDozer.setup(hostAPI);
+          }, 500);
+        } else if (value == ".sorrow") {
+          setTimeout(async () => {
+            const modSorrow = await import(
+              `./entity/sorrow.js?cacheBust=${Date.now()}`
+            );
+            modSorrow.setup(hostAPI);
+          }, 500);
+        } else if (value == ".litany") {
+          setTimeout(async () => {
+            const modLitany = await import(
+              `./entity/litany.js?cacheBust=${Date.now()}`
+            );
+            modLitany.setup(hostAPI);
+          }, 500);
+        } else if (value == ".doppel") {
+          setTimeout(async () => {
+            const modDoppel = await import(
+              `./entity/doppel.js?cacheBust=${Date.now()}`
+            );
+            modDoppel.setup(hostAPI);
+          }, 500);
+        } else if (value == ".kookoo") {
+          setTimeout(async () => {
+            const modKookoo = await import(
+              `./entity/kookoo.js?cacheBust=${Date.now()}`
+            );
+            modKookoo.setup(hostAPI);
+          }, 500);
+        } else if (value == ".doombringer") {
+          setTimeout(async () => {
+            const modDoombringer = await import(
+              `./entity/doombringer.js?cacheBust=${Date.now()}`
+            );
+            modDoombringer.setup(hostAPI);
+          }, 500);
+        } else if (value == ".rue") {
+          setTimeout(async () => {
+            const modRue = await import(
+              `./entity/rue.js?cacheBust=${Date.now()}`
+            );
+            modRue.setup(hostAPI);
+          }, 500);
+        } else if (value == ".drain") {
+          setTimeout(async () => {
+            const modDrain = await import(
+              `./entity/drain.js?cacheBust=${Date.now()}`
+            );
+            modDrain.setup(hostAPI);
+          }, 500);
+        } else if (value == ".ire") {
+          setTimeout(async () => {
+            const modIre = await import(
+              `./entity/ire.js?cacheBust=${Date.now()}`
+            );
+            modIre.setup(hostAPI);
+          }, 500);
+        } else if (value == ".mime") {
+          setTimeout(async () => {
+            const modMime = await import(
+              `./entity/mime.js?cacheBust=${Date.now()}`
+            );
+            modMime.setup(hostAPI);
+          }, 500);
+        }
+      }
+    }
   });
 }
 RUN();
@@ -761,7 +887,6 @@ function checkPixelUnderCursor() {
   if (death) return;
   const pixel = ctx.getImageData(mouse.x, mouse.y, 1, 1).data;
   const hex = rgbaToHex(pixel[0], pixel[1], pixel[2], pixel[3]);
-  // console.log(hex);
   if (targetColors.includes(hex.slice(0, 7)) && pixel[3] >= 229) {
     onColorTouched(hex);
   }
