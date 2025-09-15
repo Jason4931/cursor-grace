@@ -102,7 +102,12 @@ Ire
 Spawn: 10-20s
 Duration: 5s (fast)
 Indicator: Black eye
-Location: Cursor
+Location: Cursor (delayed)
 Get out of the circle before it opens fully
 
-Mime -?-
+Mime
+Spawn: 10-20s
+Duration: Permanent
+Indicator: X mark
+Location: Near Cursor
+Dont touch it and careful of your movement

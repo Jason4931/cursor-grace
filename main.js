@@ -488,7 +488,30 @@ async function RUN() {
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
     );
   }
-  // mime
+  function runMime() {
+    let delay = goatman
+      ? Math.floor(Math.random() * 5000) + 5000
+      : Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(
+      async () => {
+        if (!death) {
+          if (combos <= 5 && Math.random() < 0.9) {
+            const modMime = await import(
+              `./entity/mime.js?cacheBust=${Date.now()}`
+            );
+            modMime.setup(hostAPI);
+            combos++;
+            setTimeout(() => {
+              combos--;
+            }, 20000);
+          } else {
+            runMime();
+          }
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
+  }
 
   setInterval(() => {
     extraLife = true;
@@ -525,8 +548,7 @@ async function RUN() {
   }, 300000);
 
   let arrayTime = [
-    360000, 420000, 480000, 540000, 600000, 660000,
-    // 720000,
+    360000, 420000, 480000, 540000, 600000, 660000, 720000,
     // 780000,
   ];
   shuffle(arrayTime);
@@ -561,7 +583,11 @@ async function RUN() {
     runIre();
     entitySpawnInfo("Ire", "#ffffff");
   }, arrayTime.pop());
-  // mime
+  let mimeTimeout = setTimeout(() => {
+    if (death) return;
+    runMime();
+    entitySpawnInfo("Mime", "#ffffff");
+  }, arrayTime.pop());
 
   let basic = true;
   let absoluteSpeed = false;
@@ -631,7 +657,11 @@ async function RUN() {
             runIre();
             entitySpawnInfo("Ire", "#ffffff");
           }
-          // mime
+          if (!runned.includes("Mime")) {
+            clearTimeout(mimeTimeout);
+            runMime();
+            entitySpawnInfo("Mime", "#ffffff");
+          }
           if (absoluteSpeed) {
             limit = true;
           }
