@@ -977,21 +977,8 @@ function checkPixelUnderCursor() {
   if (death) return;
   const pixel = ctx.getImageData(mouse.x, mouse.y, 1, 1).data;
   const hex = rgbaToHex(pixel[0], pixel[1], pixel[2], pixel[3]);
-  const tolerance = 20;
-  for (const target of targetColors) {
-    const tr = parseInt(target.slice(1, 3), 16);
-    const tg = parseInt(target.slice(3, 5), 16);
-    const tb = parseInt(target.slice(5, 7), 16);
-    const pr = pixel[0],
-      pg = pixel[1],
-      pb = pixel[2];
-    const distance = Math.sqrt(
-      (pr - tr) ** 2 + (pg - tg) ** 2 + (pb - tb) ** 2
-    );
-    if (distance <= tolerance && pixel[3] >= 229) {
-      onColorTouched(hex);
-      break;
-    }
+  if (targetColors.includes(hex.slice(0, 7)) && pixel[3] >= 229) {
+    onColorTouched(hex);
   }
 }
 
