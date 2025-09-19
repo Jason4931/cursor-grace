@@ -28,19 +28,8 @@ export function setup(host, { fadeOut = true } = {}) {
 
     //process
     if (state.clicks < 20) {
-      let color = [
-        "#3c3d03",
-        "#3d2e02",
-        "#3f1f01",
-        "#3f0f01",
-        "#400000",
-        "#3f1f01",
-        "#3f0f01",
-        "#400000",
-        "#3f0f01",
-        "#400000",
-      ];
-      host.canvas.style.backgroundColor = color[Math.floor(Math.random() * 10)];
+      let color = ["#3c3d03", "#3d2e02", "#3f1f01", "#3f0f01", "#400000"];
+      host.canvas.style.backgroundColor = color[Math.floor(Math.random() * 5)];
     } else {
       unregister();
       host.canvas.style.backgroundColor = "#111";

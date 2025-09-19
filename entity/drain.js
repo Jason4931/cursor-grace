@@ -12,6 +12,7 @@ export function setup(host, { fadeOut = true } = {}) {
     rotationDelay: 0.1,
     pulseY: 0,
     pulseSpeed: 200,
+    die: false,
   };
 
   const edges = ["top", "bottom", "left", "right"];
@@ -19,20 +20,20 @@ export function setup(host, { fadeOut = true } = {}) {
   switch (edge) {
     case "top":
       state.x = Math.random() * host.canvas.width;
-      state.y = -state.size / 1.333 + 10;
+      state.y = -state.size / 4;
       state.rotation = Math.PI * 0.5;
       break;
     case "bottom":
       state.x = Math.random() * host.canvas.width;
-      state.y = host.canvas.height + 5;
+      state.y = host.canvas.height - state.size / 4;
       state.rotation = Math.PI * 0.5;
       break;
     case "left":
-      state.x = -state.size + 10;
+      state.x = -state.size / 2;
       state.y = Math.random() * host.canvas.height;
       break;
     case "right":
-      state.x = host.canvas.width - 10;
+      state.x = host.canvas.width - state.size / 2;
       state.y = Math.random() * host.canvas.height;
       break;
   }
@@ -71,6 +72,12 @@ export function setup(host, { fadeOut = true } = {}) {
     }
 
     //process
+    if (Math.hypot(mouse.x - state.x, mouse.y - state.y) < state.size * 0.56) {
+      state.die = true;
+    } else {
+      state.die = false;
+    }
+
     const boxCenterX = state.x + state.size / 2;
     const boxCenterY = state.y + state.size / 4;
     const cursorDist = Math.hypot(mouse.x - boxCenterX, mouse.y - boxCenterY);
@@ -92,7 +99,8 @@ export function setup(host, { fadeOut = true } = {}) {
       } else {
         state.rotationTimer -= dt;
         if (state.rotationTimer <= 0) {
-          state.rotation = Math.random() * Math.PI * 2;
+          let min = Math.random() < 0.5 ? -Math.random() : Math.random();
+          state.rotation = Math.atan2(dy, dx) + min;
           state.rotationTimer = state.rotationDelay;
         }
       }
@@ -115,25 +123,72 @@ export function setup(host, { fadeOut = true } = {}) {
     ctx.translate(cx, cy);
     ctx.rotate(state.rotation);
 
-    ctx.fillStyle = "black";
-    ctx.fillRect(-state.size / 2, -state.size / 4, state.size, state.size / 2);
+    if (state.touched) {
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = "gray";
+      ctx.beginPath();
+      ctx.moveTo(state.size / 10, -16);
+      ctx.lineTo(state.size * 0.3, -22);
+      ctx.lineTo(state.size * 0.6, -19);
+      ctx.strokeStyle = Math.random() < 0.9 ? "black" : "gray";
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(state.size / 10, -8);
+      ctx.lineTo(state.size * 0.3, -10);
+      ctx.lineTo(state.size * 0.75, -8);
+      ctx.strokeStyle = Math.random() < 0.9 ? "black" : "gray";
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(state.size / 10, 0);
+      ctx.lineTo(state.size * 0.8, 0);
+      ctx.strokeStyle = Math.random() < 0.9 ? "black" : "gray";
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(state.size / 10, 8);
+      ctx.lineTo(state.size * 0.4, 11);
+      ctx.lineTo(state.size * 0.7, 8);
+      ctx.strokeStyle = Math.random() < 0.9 ? "black" : "gray";
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(state.size / 10, 16);
+      ctx.lineTo(state.size * 0.3, 24);
+      ctx.lineTo(state.size * 0.55, 20);
+      ctx.strokeStyle = Math.random() < 0.9 ? "black" : "gray";
+      ctx.stroke();
+    }
 
-    ctx.strokeStyle = "gray";
+    ctx.fillStyle = state.die
+      ? Math.random() < 0.5
+        ? "gray"
+        : "black"
+      : "black";
+    ctx.fillRect(
+      -state.size / 4,
+      -state.size / 4,
+      state.size / 2,
+      state.size / 2
+    );
+
+    ctx.strokeStyle = Math.random() < 0.9 ? "black" : "gray";
     ctx.lineWidth = 2;
     ctx.strokeRect(
-      -state.size / 2,
       -state.size / 4,
-      state.size,
+      -state.size / 4,
+      state.size / 2,
       state.size / 2
     );
 
     if (state.touched) {
       const pulseHeight = state.size / 6;
-      ctx.fillStyle = "gray";
+      ctx.fillStyle = state.die
+        ? "gray"
+        : Math.random() < 0.9
+        ? "black"
+        : "gray";
       ctx.fillRect(
-        -state.size / 2,
+        -state.size / 4,
         state.pulseY - pulseHeight / 2,
-        state.size,
+        state.size / 2,
         pulseHeight
       );
     }

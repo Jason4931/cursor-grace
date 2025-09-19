@@ -7,6 +7,8 @@ export function setup(host, { fadeOut = true } = {}) {
     life: 5,
     fade: 0.3,
     ease: 1.5,
+    rotation: 0,
+    rotationSpeed: 0,
   };
 
   function update(dt) {
@@ -34,6 +36,9 @@ export function setup(host, { fadeOut = true } = {}) {
     const ease = state.ease;
     state.radius += diff * ease * dt;
     if (Math.abs(diff) < 0.1) state.radius = state.maxRadius;
+
+    state.rotationSpeed += state.life > 1 ? dt * 2 : -dt;
+    state.rotation += state.rotationSpeed * dt;
   }
 
   function draw(ctx) {
@@ -60,6 +65,32 @@ export function setup(host, { fadeOut = true } = {}) {
       ctx.fillStyle = "#f00";
       ctx.beginPath();
       ctx.arc(state.x, state.y, state.radius * 0.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.translate(state.x, state.y);
+    ctx.rotate(state.rotation);
+
+    const teethCount = 12;
+    const innerR =
+      state.maxRadius > 0 ? state.radius * 0.4 : state.radius * 0.5;
+    const outerR =
+      state.maxRadius > 0 ? state.radius * 0.7 : state.radius * 0.8;
+
+    ctx.fillStyle = state.maxRadius > 0 ? "#fff" : "#808080";
+    for (let i = 0; i < teethCount; i++) {
+      const angle = (i * 2 * Math.PI) / teethCount;
+      ctx.beginPath();
+      ctx.moveTo(innerR * Math.cos(angle), innerR * Math.sin(angle));
+      ctx.lineTo(
+        outerR * Math.cos(angle - 0.1),
+        outerR * Math.sin(angle - 0.1)
+      );
+      ctx.lineTo(
+        outerR * Math.cos(angle + 0.1),
+        outerR * Math.sin(angle + 0.1)
+      );
+      ctx.closePath();
       ctx.fill();
     }
 

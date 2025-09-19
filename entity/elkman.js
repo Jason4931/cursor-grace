@@ -105,15 +105,26 @@ export function setup(host, { fadeOut = true } = {}) {
       }
     }
 
-    const cx = state.x + state.size / 2;
-    const cy = state.y + state.size / 2;
+    const bodyW = state.size * 0.5;
+    const bodyH = state.size * 2;
+
+    const cx = rand ? state.x + bodyW * 1.5 : state.x + bodyW / 2;
+    const cy = state.y + bodyH / 4;
     ctx.translate(cx, cy);
-    ctx.rotate(state.rotation);
-    ctx.fillStyle = Math.random() < 0.9 ? "black" : "gray";
-    ctx.fillRect(-state.size / 2, -state.size / 2, state.size, state.size);
-    ctx.strokeStyle = Math.random() < 0.9 ? "white" : "black";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(-state.size / 2, -state.size / 2, state.size, state.size);
+    let min = Math.random() < 0.5 ? -1 : 1;
+    ctx.rotate((state.rotation / 10) * min);
+    if (!state.showWhite) {
+      ctx.strokeStyle = Math.random() < 0.1 ? "white" : "black";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(-bodyW / 2, -bodyH / 2, bodyW, bodyH);
+    }
+
+    for (let i = 0; i < 500; i++) {
+      const x = -bodyW / 2 + Math.random() * bodyW;
+      const y = -bodyH / 2 + Math.random() * bodyH;
+      ctx.fillStyle = Math.random() < 0.99 ? "white" : "black";
+      ctx.fillRect(x, y, 1, 1);
+    }
 
     ctx.restore();
   }

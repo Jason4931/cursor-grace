@@ -32,7 +32,7 @@ Get out of the circle before it went off
 03:00 - Elkman
 Spawn: 10-20s
 Duration: -5s+ (fast-relative)
-Indicator: Black square
+Indicator: Blurry square
 Location: Left/Right
 Try to not be near or get out of blur area
 
@@ -99,7 +99,7 @@ Click when the circle is red or delay at center
 Drain
 Spawn: 10-20s
 Duration: -5s+ (fast-relative)
-Indicator: Black rectangle
+Indicator: Black hand
 Location: Screen edge
 Dont be near and click before getting caught
 
