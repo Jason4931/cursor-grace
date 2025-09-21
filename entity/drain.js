@@ -128,31 +128,58 @@ export function setup(host, { fadeOut = true } = {}) {
       ctx.strokeStyle = "gray";
       ctx.beginPath();
       ctx.moveTo(state.size / 10, -16);
-      ctx.lineTo(state.size * 0.3, -22);
-      ctx.lineTo(state.size * 0.6, -19);
+      ctx.lineTo(
+        state.size * (Math.random() * 0.1 + 0.25),
+        Math.random() * 5 + -24.5
+      );
+      ctx.lineTo(
+        state.size * (Math.random() * 0.1 + 0.55),
+        Math.random() * 5 + -21.5
+      );
       ctx.strokeStyle = Math.random() < 0.9 ? "black" : "gray";
       ctx.stroke();
       ctx.beginPath();
       ctx.moveTo(state.size / 10, -8);
-      ctx.lineTo(state.size * 0.3, -10);
-      ctx.lineTo(state.size * 0.75, -8);
+      ctx.lineTo(
+        state.size * (Math.random() * 0.1 + 0.25),
+        Math.random() * 5 + -12.5
+      );
+      ctx.lineTo(
+        state.size * (Math.random() * 0.1 + 0.7),
+        Math.random() * 5 + -10.5
+      );
       ctx.strokeStyle = Math.random() < 0.9 ? "black" : "gray";
       ctx.stroke();
       ctx.beginPath();
       ctx.moveTo(state.size / 10, 0);
-      ctx.lineTo(state.size * 0.8, 0);
+      ctx.lineTo(
+        state.size * (Math.random() * 0.1 + 0.75),
+        Math.random() * 5 + -2.5
+      );
       ctx.strokeStyle = Math.random() < 0.9 ? "black" : "gray";
       ctx.stroke();
       ctx.beginPath();
       ctx.moveTo(state.size / 10, 8);
-      ctx.lineTo(state.size * 0.4, 11);
-      ctx.lineTo(state.size * 0.7, 8);
+      ctx.lineTo(
+        state.size * (Math.random() * 0.1 + 0.35),
+        Math.random() * 5 + 8.5
+      );
+      ctx.lineTo(
+        state.size * (Math.random() * 0.1 + 0.65),
+        Math.random() * 5 + 5.5
+      );
       ctx.strokeStyle = Math.random() < 0.9 ? "black" : "gray";
       ctx.stroke();
       ctx.beginPath();
       ctx.moveTo(state.size / 10, 16);
-      ctx.lineTo(state.size * 0.3, 24);
-      ctx.lineTo(state.size * 0.55, 20);
+      ctx.lineTo(
+        state.size * (Math.random() * 0.1 + 0.25),
+        Math.random() * 5 + 21.5
+      );
+      ctx.lineTo(
+        state.size * (Math.random() * 0.1 + 0.5),
+        Math.random() * 5 + 17.5
+      );
       ctx.strokeStyle = Math.random() < 0.9 ? "black" : "gray";
       ctx.stroke();
     }
