@@ -49,9 +49,9 @@ export function setup(host, { fadeOut = true } = {}) {
     if (state.life < lifeTime - 2) {
       state.timeCounter += dt;
     }
-    if (state.timeCounter >= 1) {
+    if (state.timeCounter >= 1.01) {
       state.currentNumber++;
-      state.timeCounter -= 1;
+      state.timeCounter -= 1.01;
     }
     if (state.timeCounter < 0.1) {
       const progress = state.timeCounter / 0.1;
@@ -92,6 +92,45 @@ export function setup(host, { fadeOut = true } = {}) {
     let arrowY;
 
     if (state.turn) {
+      const blurSteps = 10;
+
+      for (let i = 1; i <= blurSteps; i++) {
+        if (state.angle == Math.PI / 2) break;
+
+        const trailAngle = state.angle - i * 0.1;
+
+        const shaftStartX = w / 2 + Math.cos(trailAngle) * (centerRadius - 0.5);
+        const shaftStartY = h / 2 - Math.sin(trailAngle) * (centerRadius - 0.5);
+
+        const shaftEndX = w / 2 + Math.cos(trailAngle) * shaftLength;
+        const shaftEndY = h / 2 - Math.sin(trailAngle) * shaftLength;
+
+        const arrowX = w / 2 + Math.cos(trailAngle) * radius;
+        const arrowY = h / 2 - Math.sin(trailAngle) * radius;
+
+        ctx.strokeStyle = `rgba(255,255,255,${0.5 * (1 - i / blurSteps)})`;
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.moveTo(shaftStartX, shaftStartY);
+        ctx.lineTo(shaftEndX, shaftEndY);
+        ctx.stroke();
+
+        const angle = Math.atan2(h / 2 - arrowY, arrowX - w / 2);
+        ctx.beginPath();
+        ctx.moveTo(arrowX, arrowY);
+        ctx.lineTo(
+          arrowX - headLength * Math.cos(angle - Math.PI / 6),
+          arrowY + headLength * Math.sin(angle - Math.PI / 6)
+        );
+        ctx.lineTo(
+          arrowX - headLength * Math.cos(angle + Math.PI / 6),
+          arrowY + headLength * Math.sin(angle + Math.PI / 6)
+        );
+        ctx.closePath();
+        ctx.fillStyle = `rgba(255,255,255,${0.5 * (1 - i / blurSteps)})`;
+        ctx.fill();
+      }
+
       shaftStartX = w / 2 + Math.cos(state.angle) * (centerRadius - 0.5);
       shaftStartY = h / 2 - Math.sin(state.angle) * (centerRadius - 0.5);
 

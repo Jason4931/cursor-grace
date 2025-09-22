@@ -17,13 +17,13 @@ export function setup(host, { fadeOut = true } = {}) {
     }
     if (fadeOut && state.life < 1) {
       state.fade = Math.max(0, state.life / 1);
-    } else if (state.life < 1.1) {
+    } else if (state.life < 1.125) {
       state.fade = 0.3;
-    } else if (state.life < 1.2) {
+    } else if (state.life < 1.25) {
       state.fade = 0.25;
-    } else if (state.life < 1.3) {
+    } else if (state.life < 1.375) {
       state.fade = 0.2;
-    } else if (state.life < 1.4) {
+    } else if (state.life < 1.5) {
       state.fade = 0.15;
     }
 
@@ -55,6 +55,7 @@ export function setup(host, { fadeOut = true } = {}) {
         const x = Math.random() * w;
         const y = Math.random() * state.y;
         const redness = Math.floor(Math.random() * 256);
+        if (redness == 179) break;
         ctx.fillStyle = `rgb(${redness},0,0)`;
         ctx.fillRect(x, y, 3, 10);
       }
@@ -63,6 +64,7 @@ export function setup(host, { fadeOut = true } = {}) {
         const x = Math.random() * w;
         const y = state.y + Math.random() * (h - state.y);
         const redness = Math.floor(Math.random() * 256);
+        if (redness == 179) break;
         ctx.fillStyle = `rgb(${redness},0,0)`;
         ctx.fillRect(x, y, 3, 10);
       }
