@@ -18,7 +18,7 @@ export function setup(host, { fadeOut = true } = {}) {
   }
   host.canvas.addEventListener("mousemove", onMouseMove);
   function onMouseClick(e) {
-    if (state.life < 1.2) {
+    if (state.life < 2) {
       unregister();
       host.canvas.removeEventListener("mousemove", onMouseMove);
       host.canvas.removeEventListener("click", onMouseClick);
