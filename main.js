@@ -545,7 +545,7 @@ async function RUN() {
             const modPihsrow = await import(
               `./entity/pihsrow.js?cacheBust=${Date.now()}`
             );
-            combos++;
+            combos += 5;
             let i = 10;
             modPihsrow.setup(hostAPI, 10);
             let interval = setInterval(() => {
@@ -556,7 +556,7 @@ async function RUN() {
               modPihsrow.setup(hostAPI, i);
             }, 100);
             setTimeout(() => {
-              combos--;
+              combos -= 5;
               clearInterval(interval);
               runPihsrow();
             }, 10000);
