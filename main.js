@@ -536,11 +536,44 @@ async function RUN() {
       absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
     );
   }
+  function runPihsrow() {
+    let delay = Math.floor(Math.random() * 10000) + 10000;
+    setTimeout(
+      async () => {
+        if (!death) {
+          if (combos <= 5 && Math.random() < 0.01) {
+            const modPihsrow = await import(
+              `./entity/pihsrow.js?cacheBust=${Date.now()}`
+            );
+            combos++;
+            let i = 10;
+            modPihsrow.setup(hostAPI, 10);
+            let interval = setInterval(() => {
+              i -= 0.11;
+              if (i <= 0) {
+                clearInterval(interval);
+              }
+              modPihsrow.setup(hostAPI, i);
+            }, 100);
+            setTimeout(() => {
+              combos--;
+              clearInterval(interval);
+              runPihsrow();
+            }, 10000);
+          } else {
+            runPihsrow();
+          }
+        }
+      },
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+    );
+  }
 
   setInterval(() => {
     extraLife = true;
   }, 300000);
 
+  runPihsrow();
   runCarnation();
   entitySpawnInfo("Carnation", "#cf0693");
   let goatmanTimeout = setTimeout(() => {
