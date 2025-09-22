@@ -864,20 +864,22 @@ async function RUN() {
             modMime.setup(hostAPI);
           }, 500);
         } else if (value == ".pihsrow") {
-          setTimeout(async () => {
-            const modPihsrow = await import(
-              `./entity/pihsrow.js?cacheBust=${Date.now()}`
-            );
-            let i = 10;
-            modPihsrow.setup(hostAPI, 10);
-            let interval = setInterval(() => {
-              i -= 0.11;
-              if (i <= 0) {
-                clearInterval(interval);
-              }
-              modPihsrow.setup(hostAPI, i);
-            }, 100);
-          }, 500);
+          if (Math.random() < 0.2) {
+            setTimeout(async () => {
+              const modPihsrow = await import(
+                `./entity/pihsrow.js?cacheBust=${Date.now()}`
+              );
+              let i = 10;
+              modPihsrow.setup(hostAPI, 10);
+              let interval = setInterval(() => {
+                i -= 0.11;
+                if (i <= 0) {
+                  clearInterval(interval);
+                }
+                modPihsrow.setup(hostAPI, i);
+              }, 100);
+            }, 500);
+          }
         } else if (value == "s.goatman") {
           if (!runned.includes("Goatman")) {
             clearTimeout(goatmanTimeout);
