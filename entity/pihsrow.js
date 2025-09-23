@@ -20,7 +20,7 @@ export function setup(host, time) {
     const h = host.canvas.height;
 
     //setup
-    if (state.life < 8) {
+    if (state.life < 9) {
       ctx.fillStyle = "#000";
       ctx.beginPath();
       ctx.rect(0, 0, w, h);
