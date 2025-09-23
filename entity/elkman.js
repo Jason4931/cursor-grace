@@ -99,7 +99,7 @@ export function setup(host, { fadeOut = true } = {}) {
       for (let i = 0; i < state.grain; i++) {
         const x = startX + Math.random() * noiseW;
         const y = Math.random() * h;
-        const brightness = Math.random() * 255;
+        const brightness = Math.floor(Math.random() * 256);
         if (brightness == 255 || brightness == 128) break;
         ctx.fillStyle = `rgb(${brightness},${brightness},${brightness})`;
         ctx.fillRect(x, y, 1, 1);
