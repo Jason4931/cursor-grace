@@ -29,7 +29,7 @@ export function setup(host, { fadeOut = true } = {}) {
     const x = (e.clientX - rect.left) * scaleX;
     const y = (e.clientY - rect.top) * scaleY;
 
-    if (Math.hypot(mouse.x - state.x, mouse.y - state.y) < state.radius) {
+    if (Math.hypot(mouse.x - state.x, mouse.y - state.y) < state.radius + 1) {
       const angle = Math.atan2(y - state.y, x - state.x);
       const teleportDistance = 1000;
       state.x -= Math.cos(angle) * teleportDistance;
