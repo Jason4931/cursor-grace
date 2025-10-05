@@ -116,6 +116,7 @@ let goatman = false;
 let joey = false;
 let eyes = false;
 let absoluteNoDelay = false;
+let godmode = false;
 let extraLife = false;
 let extraLifeBroken = false;
 let combos = 0;
@@ -970,6 +971,10 @@ async function RUN() {
             runMime();
             entitySpawnInfo("Mime", "#ffffff");
           }
+        } else if (value == ".god") {
+          godmode = true;
+        } else if (value == ".ungod") {
+          godmode = false;
         }
       }
     }
@@ -998,7 +1003,7 @@ const targetColors = [
 ];
 function onColorTouched(hexColor) {
   if (death) return;
-  if (!extraLife) {
+  if (!extraLife && !godmode) {
     death = true;
     setTimeout(() => {
       setTimeout(() => {
