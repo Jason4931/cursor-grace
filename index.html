@@ -40,6 +40,7 @@
         display: block;
         margin: 0 auto;
         transition: background-color 0.2s ease;
+        animation: bg 60s infinite;
       }
       #death {
         position: absolute;
@@ -51,6 +52,32 @@
         align-items: center;
         justify-content: center;
         background-color: black;
+      }
+      @keyframes bg {
+        0% {
+          background: #111;
+        }
+        14% {
+          background: #211;
+        }
+        29% {
+          background: #121;
+        }
+        43% {
+          background: #112;
+        }
+        57% {
+          background: #221;
+        }
+        71% {
+          background: #212;
+        }
+        86% {
+          background: #122;
+        }
+        100% {
+          background: #111;
+        }
       }
       @keyframes shake {
         0% {

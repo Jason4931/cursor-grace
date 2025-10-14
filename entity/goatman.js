@@ -15,6 +15,7 @@ export function setup(host, { fadeOut = true } = {}) {
     if (state.life <= 0) {
       unregister();
       host.canvas.style.backgroundColor = "#111";
+      host.canvas.style.animation = "bg 60s infinite";
       host.canvas.removeEventListener("click", onMouseClick);
       return;
     }
@@ -30,9 +31,11 @@ export function setup(host, { fadeOut = true } = {}) {
     if (state.clicks < 20) {
       let color = ["#3c3d03", "#3d2e02", "#3f1f01", "#3f0f01", "#400000"];
       host.canvas.style.backgroundColor = color[Math.floor(Math.random() * 5)];
+      host.canvas.style.animation = "none";
     } else {
       unregister();
       host.canvas.style.backgroundColor = "#111";
+      host.canvas.style.animation = "bg 60s infinite";
       host.canvas.removeEventListener("click", onMouseClick);
       return;
     }
