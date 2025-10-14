@@ -55,7 +55,7 @@ export function setup(host, { fadeOut = true } = {}) {
         const x = Math.random() * w;
         const y = Math.random() * state.y;
         const redness = Math.floor(Math.random() * 256);
-        if (redness == 179) break;
+        if (redness == 179) continue;
         ctx.fillStyle = `rgb(${redness},0,0)`;
         ctx.fillRect(x, y, 3, 10);
       }
@@ -64,7 +64,7 @@ export function setup(host, { fadeOut = true } = {}) {
         const x = Math.random() * w;
         const y = state.y + Math.random() * (h - state.y);
         const redness = Math.floor(Math.random() * 256);
-        if (redness == 179) break;
+        if (redness == 179) continue;
         ctx.fillStyle = `rgb(${redness},0,0)`;
         ctx.fillRect(x, y, 3, 10);
       }

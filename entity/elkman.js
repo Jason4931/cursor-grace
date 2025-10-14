@@ -9,7 +9,7 @@ export function setup(host, { fadeOut = true } = {}) {
     fade: 1,
     targetX: rand ? -75 / 2 : host.canvas.width - 75 / 2,
     touched: false,
-    grain: 1500,
+    grain: 1000,
     showWhite: false,
     rotation: 0,
     rotationTimer: 0,
@@ -99,10 +99,10 @@ export function setup(host, { fadeOut = true } = {}) {
       for (let i = 0; i < state.grain; i++) {
         const x = startX + Math.random() * noiseW;
         const y = Math.random() * h;
-        const brightness = Math.min(Math.floor(Math.random() * 256) + 10, 254);
-        if (brightness == 255 || brightness == 128) break;
+        const brightness = Math.floor(Math.random() * 256);
+        if (brightness == 255 || brightness == 128) continue;
         ctx.fillStyle = `rgb(${brightness},${brightness},${brightness})`;
-        ctx.fillRect(x, y, 1, 1);
+        ctx.fillRect(x, y, 1 + Math.random(), 1 + Math.random());
       }
     }
 

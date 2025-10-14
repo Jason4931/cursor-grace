@@ -45,7 +45,7 @@ export function setup(host, time) {
         const y = Math.random() * h;
         const redness =
           Math.random() < 0.5 ? 255 : Math.floor(Math.random() * 256);
-        if (redness == 179) break;
+        if (redness == 179) continue;
         ctx.fillStyle = `rgb(${redness},0,0)`;
         ctx.fillRect(x, y, 3, 3);
       }

@@ -111,7 +111,7 @@ export function setup(host, { fadeOut = true } = {}) {
         ctx.lineWidth = state.lineWidth;
         ctx.stroke();
 
-        const grain = 1500 * (10 - state.life);
+        const grain = 1000 * (10 - state.life);
         for (let i = 0; i < grain; i++) {
           const gx = state.x + (Math.random() - 0.5) * state.radius * 2;
           const gy = state.y + (Math.random() - 0.5) * state.radius * 2;
