@@ -96,7 +96,7 @@ export function setup(host, { fadeOut = true } = {}) {
     }
 
     if (state.mouse) {
-      let ease = 2;
+      let ease = 2.5;
       if (
         Math.hypot(mouse.x - state.x, mouse.y - state.y) >
         state.maxRadius * 2
@@ -107,7 +107,7 @@ export function setup(host, { fadeOut = true } = {}) {
       ) {
         ease = 10;
       } else {
-        ease = 2;
+        ease = 2.5;
       }
 
       const diffX = state.targetX - state.x;
