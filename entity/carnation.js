@@ -28,7 +28,7 @@ export function setup(host, { fadeOut = true } = {}) {
       return;
     }
     if (fadeOut && state.life < 1) {
-      state.fade = Math.max(0, state.life * 2);
+      state.fade = Math.max(0, Math.min(1, state.life * 2));
     }
 
     //process
@@ -54,7 +54,7 @@ export function setup(host, { fadeOut = true } = {}) {
       state.inset,
       state.inset,
       w - state.inset * 2,
-      h - state.inset * 2
+      h - state.inset * 2,
     );
     ctx.fill("evenodd");
 
@@ -62,7 +62,7 @@ export function setup(host, { fadeOut = true } = {}) {
       1,
       (state.inset / (Math.min(host.canvas.width, host.canvas.height) / 2)) *
         state.fade *
-        1.5
+        1.5,
     );
     const limbCount = 30;
     const segmentLength = 8;

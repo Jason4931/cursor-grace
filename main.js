@@ -120,423 +120,249 @@ let godmode = false;
 let extraLife = false;
 let extraLifeBroken = false;
 let combos = 0;
+const ENTITY_LIST = [
+  {
+    type: "main",
+    name: "Carnation",
+    color: "#cf0693",
+    src: "./entity/carnation.js",
+    duration: 10000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+  },
+  {
+    type: "main",
+    name: "Goatman",
+    color: "#fbff08",
+    src: "./entity/goatman.js",
+    duration: 20000,
+    delayNormal: [10000, 20000],
+    chance: 0.2,
+    condition: () => !joey || Math.random() < 0.2,
+    onSpawn: () => {
+      joey = true;
+      goatman = true;
+    },
+    onEnd: () => {
+      joey = false;
+      goatman = false;
+    },
+  },
+  {
+    type: "main",
+    name: "Slight",
+    color: "#1304d1",
+    src: "./entity/slight.js",
+    duration: 10000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    condition: () => !eyes || Math.random() < 0.2,
+    onSpawn: () => {
+      eyes = true;
+    },
+    onEnd: () => {
+      eyes = false;
+    },
+  },
+  {
+    type: "main",
+    name: "Slugfish",
+    color: "#808080",
+    src: "./entity/slugfish.js",
+    duration: 5000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+  },
+  {
+    type: "main",
+    name: "Elkman",
+    color: "#ffffff",
+    src: "./entity/elkman.js",
+    duration: 10000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+  },
+  {
+    type: "main",
+    name: "Heed",
+    color: "#fe0102",
+    src: "./entity/heed.js",
+    duration: 10000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    condition: () => !eyes || Math.random() < 0.2,
+    onSpawn: () => {
+      eyes = true;
+    },
+    onEnd: () => {
+      eyes = false;
+    },
+  },
+  {
+    type: "main",
+    name: "Dozer",
+    color: "#f4ea37",
+    src: "./entity/dozer.js",
+    duration: 4000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+  },
+  {
+    type: "main",
+    name: "Sorrow",
+    color: "#b30000",
+    src: "./entity/sorrow.js",
+    duration: 5000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+  },
+
+  {
+    type: "modifier",
+    name: "Litany",
+    color: "#808080",
+    src: "./entity/litany.js",
+    duration: 10000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+  },
+  {
+    type: "modifier",
+    name: "Doppel",
+    color: "#ffffff",
+    src: "./entity/doppel.js",
+    duration: 20000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+  },
+  {
+    type: "modifier",
+    name: "Kookoo",
+    color: "#0000fd",
+    src: "./entity/kookoo.js",
+    duration: 16000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+  },
+  {
+    type: "modifier",
+    name: "Doombringer",
+    color: "#808080",
+    src: "./entity/doombringer.js",
+    duration: 5000,
+    delayNormal: [5000, 15000],
+    delayGoatman: [2500, 7500],
+    chance: 0.9,
+    condition: () => !joey || Math.random() < 0.2,
+    onSpawn: () => {
+      joey = true;
+    },
+    onEnd: () => {
+      joey = false;
+    },
+  },
+  {
+    type: "modifier",
+    name: "Rue",
+    color: "#ffffff",
+    src: "./entity/rue.js",
+    duration: 10000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+  },
+  {
+    type: "modifier",
+    name: "Drain",
+    color: "#808080",
+    src: "./entity/drain.js",
+    duration: 10000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+  },
+  {
+    type: "modifier",
+    name: "Ire",
+    color: "#ffffff",
+    src: "./entity/ire.js",
+    duration: 5000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+  },
+  {
+    type: "modifier",
+    name: "Mime",
+    color: "#ffffff",
+    src: "./entity/mime.js",
+    duration: 20000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+    loop: false,
+  },
+];
 async function RUN() {
   hostAPI.clearAll();
-  function runCarnation() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (combos <= 5) {
-            const modCarnation = await import(
-              `./entity/carnation.js?cacheBust=${Date.now()}`
-            );
-            modCarnation.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              runCarnation();
-            }, 10000);
-          } else {
-            runCarnation();
+
+  function rand(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  async function spawnEntity(entity) {
+    const mod = await import(`${entity.src}?cacheBust=${Date.now()}`);
+    mod.setup(hostAPI);
+  }
+
+  function runEntity(entity) {
+    const delayRange = goatman
+      ? entity.delayGoatman || entity.delayNormal
+      : entity.delayNormal;
+
+    const delay = absoluteNoDelay
+      ? Math.floor(Math.random() * 5000)
+      : rand(delayRange[0], delayRange[1]);
+
+    setTimeout(async () => {
+      if (!death) {
+        const chanceOK =
+          entity.chance === undefined || Math.random() < entity.chance;
+
+        const conditionOK = !entity.condition || entity.condition();
+
+        if (combos <= 5 && chanceOK && conditionOK) {
+          entity.onSpawn?.();
+
+          await spawnEntity(entity);
+
+          combos++;
+
+          setTimeout(() => {
+            combos--;
+
+            entity.onEnd?.();
+
+            if (entity.loop !== false) {
+              runEntity(entity);
+            }
+          }, entity.duration);
+        } else {
+          if (entity.loop !== false) {
+            runEntity(entity);
           }
         }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
+      }
+    }, delay);
   }
-  function runGoatman() {
-    let delay = Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (
-            (!joey || Math.random() < 0.2) &&
-            Math.random() < 0.2 &&
-            combos <= 5
-          ) {
-            joey = true;
-            goatman = true;
-            const modGoatman = await import(
-              `./entity/goatman.js?cacheBust=${Date.now()}`
-            );
-            modGoatman.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              joey = false;
-              goatman = false;
-              runGoatman();
-            }, 20000);
-          } else {
-            runGoatman();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runSlight() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if ((!eyes || Math.random() < 0.2) && combos <= 5) {
-            eyes = true;
-            const modSlight = await import(
-              `./entity/slight.js?cacheBust=${Date.now()}`
-            );
-            modSlight.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              eyes = false;
-              runSlight();
-            }, 10000);
-          } else {
-            runSlight();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runSlugfish() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (combos <= 5) {
-            const modSlugfish = await import(
-              `./entity/slugfish.js?cacheBust=${Date.now()}`
-            );
-            modSlugfish.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              runSlugfish();
-            }, 5000);
-          } else {
-            runSlugfish();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runElkman() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (combos <= 5) {
-            const modElkman = await import(
-              `./entity/elkman.js?cacheBust=${Date.now()}`
-            );
-            modElkman.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              runElkman();
-            }, 10000);
-          } else {
-            runElkman();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runHeed() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if ((!eyes || Math.random() < 0.2) && combos <= 5) {
-            eyes = true;
-            const modHeed = await import(
-              `./entity/heed.js?cacheBust=${Date.now()}`
-            );
-            modHeed.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              eyes = false;
-              runHeed();
-            }, 10000);
-          } else {
-            runHeed();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runDozer() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (combos <= 5) {
-            const modDozer = await import(
-              `./entity/dozer.js?cacheBust=${Date.now()}`
-            );
-            modDozer.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              runDozer();
-            }, 4000);
-          } else {
-            runDozer();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runSorrow() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (combos <= 5) {
-            const modSorrow = await import(
-              `./entity/sorrow.js?cacheBust=${Date.now()}`
-            );
-            modSorrow.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              runSorrow();
-            }, 5000);
-          } else {
-            runSorrow();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runLitany() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (combos <= 5 && Math.random() < 0.9) {
-            const modLitany = await import(
-              `./entity/litany.js?cacheBust=${Date.now()}`
-            );
-            modLitany.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              runLitany();
-            }, 10000);
-          } else {
-            runLitany();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runDoppel() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (combos <= 5 && Math.random() < 0.9) {
-            const modDoppel = await import(
-              `./entity/doppel.js?cacheBust=${Date.now()}`
-            );
-            modDoppel.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              runDoppel();
-            }, 20000);
-          } else {
-            runDoppel();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runKookoo() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (combos <= 5 && Math.random() < 0.9) {
-            const modKookoo = await import(
-              `./entity/kookoo.js?cacheBust=${Date.now()}`
-            );
-            modKookoo.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              runKookoo();
-            }, 16000);
-          } else {
-            runKookoo();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runDoombringer() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 2500
-      : Math.floor(Math.random() * 10000) + 5000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (
-            (!joey || Math.random() < 0.2) &&
-            combos <= 5 &&
-            Math.random() < 0.9
-          ) {
-            joey = true;
-            const modDoombringer = await import(
-              `./entity/doombringer.js?cacheBust=${Date.now()}`
-            );
-            modDoombringer.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              joey = false;
-              runDoombringer();
-            }, 5000);
-          } else {
-            runDoombringer();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runRue() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (combos <= 5 && Math.random() < 0.9) {
-            const modRue = await import(
-              `./entity/rue.js?cacheBust=${Date.now()}`
-            );
-            modRue.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              runRue();
-            }, 10000);
-          } else {
-            runRue();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runDrain() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (combos <= 5 && Math.random() < 0.9) {
-            const modDrain = await import(
-              `./entity/drain.js?cacheBust=${Date.now()}`
-            );
-            modDrain.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              runDrain();
-            }, 10000);
-          } else {
-            runDrain();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runIre() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (combos <= 5 && Math.random() < 0.9) {
-            const modIre = await import(
-              `./entity/ire.js?cacheBust=${Date.now()}`
-            );
-            modIre.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-              runIre();
-            }, 5000);
-          } else {
-            runIre();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
-  function runMime() {
-    let delay = goatman
-      ? Math.floor(Math.random() * 5000) + 5000
-      : Math.floor(Math.random() * 10000) + 10000;
-    setTimeout(
-      async () => {
-        if (!death) {
-          if (combos <= 5 && Math.random() < 0.9) {
-            const modMime = await import(
-              `./entity/mime.js?cacheBust=${Date.now()}`
-            );
-            modMime.setup(hostAPI);
-            combos++;
-            setTimeout(() => {
-              combos--;
-            }, 20000);
-          } else {
-            runMime();
-          }
-        }
-      },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
-    );
-  }
+
+  /* ---------------------------
+     PIHSROW (unchanged)
+  --------------------------- */
+
   function runPihsrow() {
     let delay = Math.floor(Math.random() * 10000) + 10000;
     setTimeout(
@@ -551,11 +377,10 @@ async function RUN() {
             modPihsrow.setup(hostAPI, 10);
             let interval = setInterval(() => {
               i -= 0.11;
-              if (i <= 0) {
-                clearInterval(interval);
-              }
+              if (i <= 0) clearInterval(interval);
               modPihsrow.setup(hostAPI, i);
             }, 100);
+
             setTimeout(() => {
               combos -= 5;
               clearInterval(interval);
@@ -566,414 +391,211 @@ async function RUN() {
           }
         }
       },
-      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay
+      absoluteNoDelay ? Math.floor(Math.random() * 5000) : delay,
     );
   }
+
+  runPihsrow();
+
+  /* ---------------------------
+     ENTITY LOOKUP
+  --------------------------- */
+
+  const ENTITY_MAP = Object.fromEntries(
+    ENTITY_LIST.map((e) => [e.name.toLowerCase(), e]),
+  );
+
+  /* ---------------------------
+     AUTOMATED ENTITY TIMERS
+  --------------------------- */
+
+  const START_TIMES = {
+    carnation: 0,
+    goatman: 60000,
+    slight: 120000,
+    slugfish: 180000,
+    elkman: 180000,
+    heed: 240000,
+    dozer: 300000,
+    sorrow: 300000,
+  };
+
+  const FIXED_ENTITIES = [
+    "carnation",
+    "goatman",
+    "slight",
+    "slugfish",
+    "elkman",
+    "heed",
+    "dozer",
+    "sorrow",
+  ];
+  const AFTER_SORROW = ENTITY_LIST.filter(
+    (e) => !FIXED_ENTITIES.includes(e.name.toLowerCase()),
+  );
+  const RANDOM_POOL = [];
+  let minute = 6;
+  for (let i = 0; i < AFTER_SORROW.length; i++) {
+    RANDOM_POOL.push(minute * 60000);
+    minute++;
+  }
+
+  shuffle(RANDOM_POOL);
+
+  for (const entity of ENTITY_LIST) {
+    let delay;
+
+    const name = entity.name.toLowerCase();
+
+    if (START_TIMES[name] !== undefined) {
+      delay = START_TIMES[name];
+    } else {
+      delay = RANDOM_POOL.pop();
+    }
+
+    setTimeout(() => {
+      if (death) return;
+
+      runEntity(entity);
+
+      entitySpawnInfo(entity.name, entity.color);
+    }, delay);
+  }
+
+  /* ---------------------------
+     EXTRA LIFE (unchanged)
+  --------------------------- */
 
   setInterval(() => {
     extraLife = true;
   }, 300000);
 
-  runPihsrow();
-  runCarnation();
-  entitySpawnInfo("Carnation", "#cf0693");
-  let goatmanTimeout = setTimeout(() => {
-    if (death) return;
-    runGoatman();
-    entitySpawnInfo("Goatman", "#fbff08");
-  }, 60000);
-  let slightTimeout = setTimeout(() => {
-    if (death) return;
-    runSlight();
-    entitySpawnInfo("Slight", "#1304d1");
-  }, 120000);
-  let slugfishElkmanTimeout = setTimeout(() => {
-    if (death) return;
-    runSlugfish();
-    runElkman();
-    entitySpawnInfo("Slugfish", "#808080", "Elkman", "#ffffff");
-  }, 180000);
-  let heedTimeout = setTimeout(() => {
-    if (death) return;
-    runHeed();
-    entitySpawnInfo("Heed", "#fe0102");
-  }, 240000);
-  let dozerSorrowTimeout = setTimeout(() => {
-    if (death) return;
-    runDozer();
-    runSorrow();
-    entitySpawnInfo("Dozer", "#f4ea37", "Sorrow", "#b30000");
-  }, 300000);
-
-  let arrayTime = [
-    360000, 420000, 480000, 540000, 600000, 660000, 720000, 780000,
-  ];
-  shuffle(arrayTime);
-  let litanyTimeout = setTimeout(() => {
-    if (death) return;
-    runLitany();
-    entitySpawnInfo("Litany", "#808080");
-  }, arrayTime.pop());
-  let doppelTimeout = setTimeout(() => {
-    if (death) return;
-    runDoppel();
-    entitySpawnInfo("Doppel", "#ffffff");
-  }, arrayTime.pop());
-  let kookooTimeout = setTimeout(() => {
-    if (death) return;
-    runKookoo();
-    entitySpawnInfo("Kookoo", "#0000fd");
-  }, arrayTime.pop());
-  let doombringerTimeout = setTimeout(() => {
-    if (death) return;
-    runDoombringer();
-    entitySpawnInfo("Doombringer", "#808080");
-  }, arrayTime.pop());
-  let rueTimeout = setTimeout(() => {
-    if (death) return;
-    runRue();
-    entitySpawnInfo("Rue", "#ffffff");
-  }, arrayTime.pop());
-  let drainTimeout = setTimeout(() => {
-    if (death) return;
-    runDrain();
-    entitySpawnInfo("Drain", "#808080");
-  }, arrayTime.pop());
-  let ireTimeout = setTimeout(() => {
-    if (death) return;
-    runIre();
-    entitySpawnInfo("Ire", "#ffffff");
-  }, arrayTime.pop());
-  let mimeTimeout = setTimeout(() => {
-    if (death) return;
-    runMime();
-    entitySpawnInfo("Mime", "#ffffff");
-  }, arrayTime.pop());
+  /* ---------------------------
+     KEYBINDS
+  --------------------------- */
 
   let basic = true;
   let absoluteSpeed = false;
-  let limit = false;
   let upPressCount = 0;
   let inputOpen = false;
-  document.addEventListener("keydown", (e) => {
+
+  document.addEventListener("keydown", async (e) => {
     if (e.key === "/") {
       upPressCount++;
-      if (upPressCount >= 5 && !limit) {
+
+      if (upPressCount >= 5) {
         upPressCount = 0;
-        if (!runned.includes("Goatman")) {
-          clearTimeout(goatmanTimeout);
-          runGoatman();
-          entitySpawnInfo("Goatman", "#fbff08");
-        }
-        if (!runned.includes("Slight")) {
-          clearTimeout(slightTimeout);
-          runSlight();
-          entitySpawnInfo("Slight", "#1304d1");
-        }
-        if (!runned.includes("Slugfish")) {
-          clearTimeout(slugfishElkmanTimeout);
-          runSlugfish();
-          runElkman();
-          entitySpawnInfo("Slugfish", "#808080", "Elkman", "#ffffff");
-        }
-        if (!runned.includes("Heed")) {
-          clearTimeout(heedTimeout);
-          runHeed();
-          entitySpawnInfo("Heed", "#fe0102");
-        }
-        if (!runned.includes("Dozer")) {
-          clearTimeout(dozerSorrowTimeout);
-          runDozer();
-          runSorrow();
-          entitySpawnInfo("Dozer", "#f4ea37", "Sorrow", "#b30000");
-        }
-        if (!basic) {
-          if (!runned.includes("Litany")) {
-            clearTimeout(litanyTimeout);
-            runLitany();
-            entitySpawnInfo("Litany", "#808080");
-          }
-          if (!runned.includes("Doppel")) {
-            clearTimeout(doppelTimeout);
-            runDoppel();
-            entitySpawnInfo("Doppel", "#ffffff");
-          }
-          if (!runned.includes("Kookoo")) {
-            clearTimeout(kookooTimeout);
-            runKookoo();
-            entitySpawnInfo("Kookoo", "#0000fd");
-          }
-          if (!runned.includes("Doombringer")) {
-            clearTimeout(doombringerTimeout);
-            runDoombringer();
-            entitySpawnInfo("Doombringer", "#808080");
-          }
-          if (!runned.includes("Rue")) {
-            clearTimeout(rueTimeout);
-            runRue();
-            entitySpawnInfo("Rue", "#ffffff");
-          }
-          if (!runned.includes("Drain")) {
-            clearTimeout(drainTimeout);
-            runDrain();
-            entitySpawnInfo("Drain", "#808080");
-          }
-          if (!runned.includes("Ire")) {
-            clearTimeout(ireTimeout);
-            runIre();
-            entitySpawnInfo("Ire", "#ffffff");
-          }
-          if (!runned.includes("Mime")) {
-            clearTimeout(mimeTimeout);
-            runMime();
-            entitySpawnInfo("Mime", "#ffffff");
-          }
-          if (absoluteSpeed) {
-            limit = true;
+
+        const targetType = basic ? "main" : "modifier";
+
+        for (const entity of ENTITY_LIST) {
+          if (
+            (entity.type || "modifier") === targetType &&
+            !runned.includes(entity.name)
+          ) {
+            runEntity(entity);
+
+            entitySpawnInfo(entity.name, entity.color);
           }
         }
+
         basic
           ? entitySpawnInfo("Every Main Entity", "#fff")
           : !absoluteSpeed
-          ? entitySpawnInfo("Every Modifier Entity", "#fff")
-          : ((absoluteNoDelay = true),
-            entitySpawnInfo("HARD MODE ENABLED", "#f00"));
+            ? entitySpawnInfo("Every Modifier Entity", "#fff")
+            : ((absoluteNoDelay = true),
+              entitySpawnInfo("HARD MODE ENABLED", "#f00"));
+
         if (!basic) absoluteSpeed = true;
+
         basic = false;
       }
     }
+
     if (e.key === "Enter") {
       if (!inputOpen) {
         inputOpen = true;
+
         document.getElementById("input").style.display = "block";
         document.getElementById("input").focus();
       } else {
         inputOpen = false;
+
         document.getElementById("input").style.display = "none";
+
         let value = document.getElementById("input").value.toLowerCase();
+
         document.getElementById("input").value = "";
-        if (value == ".carnation") {
-          setTimeout(async () => {
-            const modCarnation = await import(
-              `./entity/carnation.js?cacheBust=${Date.now()}`
-            );
-            modCarnation.setup(hostAPI);
-          }, 500);
-        } else if (value == ".goatman") {
-          setTimeout(async () => {
-            const modGoatman = await import(
-              `./entity/goatman.js?cacheBust=${Date.now()}`
-            );
-            modGoatman.setup(hostAPI);
-          }, 500);
-        } else if (value == ".slight") {
-          setTimeout(async () => {
-            const modSlight = await import(
-              `./entity/slight.js?cacheBust=${Date.now()}`
-            );
-            modSlight.setup(hostAPI);
-          }, 500);
-        } else if (value == ".slugfish") {
-          setTimeout(async () => {
-            const modSlugfish = await import(
-              `./entity/slugfish.js?cacheBust=${Date.now()}`
-            );
-            modSlugfish.setup(hostAPI);
-          }, 500);
-        } else if (value == ".elkman") {
-          setTimeout(async () => {
-            const modElkman = await import(
-              `./entity/elkman.js?cacheBust=${Date.now()}`
-            );
-            modElkman.setup(hostAPI);
-          }, 500);
-        } else if (value == ".heed") {
-          setTimeout(async () => {
-            const modHeed = await import(
-              `./entity/heed.js?cacheBust=${Date.now()}`
-            );
-            modHeed.setup(hostAPI);
-          }, 500);
-        } else if (value == ".dozer") {
-          setTimeout(async () => {
-            const modDozer = await import(
-              `./entity/dozer.js?cacheBust=${Date.now()}`
-            );
-            modDozer.setup(hostAPI);
-          }, 500);
-        } else if (value == ".sorrow") {
-          setTimeout(async () => {
-            const modSorrow = await import(
-              `./entity/sorrow.js?cacheBust=${Date.now()}`
-            );
-            modSorrow.setup(hostAPI);
-          }, 500);
-        } else if (value == ".litany") {
-          setTimeout(async () => {
-            const modLitany = await import(
-              `./entity/litany.js?cacheBust=${Date.now()}`
-            );
-            modLitany.setup(hostAPI);
-          }, 500);
-        } else if (value == ".doppel") {
-          setTimeout(async () => {
-            const modDoppel = await import(
-              `./entity/doppel.js?cacheBust=${Date.now()}`
-            );
-            modDoppel.setup(hostAPI);
-          }, 500);
-        } else if (value == ".kookoo") {
-          setTimeout(async () => {
-            const modKookoo = await import(
-              `./entity/kookoo.js?cacheBust=${Date.now()}`
-            );
-            modKookoo.setup(hostAPI);
-          }, 500);
-        } else if (value == ".doombringer") {
-          setTimeout(async () => {
-            const modDoombringer = await import(
-              `./entity/doombringer.js?cacheBust=${Date.now()}`
-            );
-            modDoombringer.setup(hostAPI);
-          }, 500);
-        } else if (value == ".rue") {
-          setTimeout(async () => {
-            const modRue = await import(
-              `./entity/rue.js?cacheBust=${Date.now()}`
-            );
-            modRue.setup(hostAPI);
-          }, 500);
-        } else if (value == ".drain") {
-          setTimeout(async () => {
-            const modDrain = await import(
-              `./entity/drain.js?cacheBust=${Date.now()}`
-            );
-            modDrain.setup(hostAPI);
-          }, 500);
-        } else if (value == ".ire") {
-          setTimeout(async () => {
-            const modIre = await import(
-              `./entity/ire.js?cacheBust=${Date.now()}`
-            );
-            modIre.setup(hostAPI);
-          }, 500);
-        } else if (value == ".mime") {
-          setTimeout(async () => {
-            const modMime = await import(
-              `./entity/mime.js?cacheBust=${Date.now()}`
-            );
-            modMime.setup(hostAPI);
-          }, 500);
-        } else if (value == ".pihsrow") {
-          if (Math.random() < 0.2) {
+
+        /* ---------------------------
+           .entity commands
+        --------------------------- */
+
+        if (value.startsWith(".")) {
+          const name = value.slice(1);
+
+          const entity = ENTITY_MAP[name];
+
+          if (entity) {
             setTimeout(async () => {
-              const modPihsrow = await import(
-                `./entity/pihsrow.js?cacheBust=${Date.now()}`
-              );
-              let i = 10;
-              modPihsrow.setup(hostAPI, 10);
-              let interval = setInterval(() => {
-                i -= 0.11;
-                if (i <= 0) {
-                  clearInterval(interval);
-                }
-                modPihsrow.setup(hostAPI, i);
-              }, 100);
+              await spawnEntity(entity);
             }, 500);
+
+            return;
           }
-        } else if (value == "s.goatman") {
-          if (!runned.includes("Goatman")) {
-            clearTimeout(goatmanTimeout);
-            runGoatman();
-            entitySpawnInfo("Goatman", "#fbff08");
+        }
+
+        /* ---------------------------
+           s.entity commands
+        --------------------------- */
+
+        if (value.startsWith("s.")) {
+          const name = value.slice(2);
+
+          const entity = ENTITY_MAP[name];
+
+          if (entity && !runned.includes(entity.name)) {
+            runEntity(entity);
+
+            entitySpawnInfo(entity.name, entity.color);
+
+            return;
           }
-        } else if (value == "s.slight") {
-          if (!runned.includes("Slight")) {
-            clearTimeout(slightTimeout);
-            runSlight();
-            entitySpawnInfo("Slight", "#1304d1");
-          }
-        } else if (value == "s.slugfish") {
-          if (!runned.includes("Slugfish")) {
-            clearTimeout(slugfishElkmanTimeout);
-            runSlugfish();
-            entitySpawnInfo("Slugfish", "#808080");
-          }
-        } else if (value == "s.elkman") {
-          if (!runned.includes("Elkman")) {
-            clearTimeout(slugfishElkmanTimeout);
-            runElkman();
-            entitySpawnInfo("Elkman", "#ffffff");
-          }
-        } else if (value == "s.heed") {
-          if (!runned.includes("Heed")) {
-            clearTimeout(heedTimeout);
-            runHeed();
-            entitySpawnInfo("Heed", "#fe0102");
-          }
-        } else if (value == "s.dozer") {
-          if (!runned.includes("Dozer")) {
-            clearTimeout(dozerSorrowTimeout);
-            runDozer();
-            entitySpawnInfo("Dozer", "#f4ea37");
-          }
-        } else if (value == "s.sorrow") {
-          if (!runned.includes("Sorrow")) {
-            clearTimeout(dozerSorrowTimeout);
-            runSorrow();
-            entitySpawnInfo("Sorrow", "#b30000");
-          }
-        } else if (value == "s.litany") {
-          if (!runned.includes("Litany")) {
-            clearTimeout(litanyTimeout);
-            runLitany();
-            entitySpawnInfo("Litany", "#808080");
-          }
-        } else if (value == "s.doppel") {
-          if (!runned.includes("Doppel")) {
-            clearTimeout(doppelTimeout);
-            runDoppel();
-            entitySpawnInfo("Doppel", "#ffffff");
-          }
-        } else if (value == "s.kookoo") {
-          if (!runned.includes("Kookoo")) {
-            clearTimeout(kookooTimeout);
-            runKookoo();
-            entitySpawnInfo("Kookoo", "#0000fd");
-          }
-        } else if (value == "s.doombringer") {
-          if (!runned.includes("Doombringer")) {
-            clearTimeout(doombringerTimeout);
-            runDoombringer();
-            entitySpawnInfo("Doombringer", "#808080");
-          }
-        } else if (value == "s.rue") {
-          if (!runned.includes("Rue")) {
-            clearTimeout(rueTimeout);
-            runRue();
-            entitySpawnInfo("Rue", "#ffffff");
-          }
-        } else if (value == "s.drain") {
-          if (!runned.includes("Drain")) {
-            clearTimeout(drainTimeout);
-            runDrain();
-            entitySpawnInfo("Drain", "#808080");
-          }
-        } else if (value == "s.ire") {
-          if (!runned.includes("Ire")) {
-            clearTimeout(ireTimeout);
-            runIre();
-            entitySpawnInfo("Ire", "#ffffff");
-          }
-        } else if (value == "s.mime") {
-          if (!runned.includes("Mime")) {
-            clearTimeout(mimeTimeout);
-            runMime();
-            entitySpawnInfo("Mime", "#ffffff");
-          }
-        } else if (value == ".god") {
+        }
+
+        /* ---------------------------
+           PIHSROW
+        --------------------------- */
+
+        if (value === ".pihsrow") {
+          setTimeout(async () => {
+            const mod = await import(
+              `./entity/pihsrow.js?cacheBust=${Date.now()}`
+            );
+
+            let i = 10;
+
+            mod.setup(hostAPI, 10);
+
+            let interval = setInterval(() => {
+              i -= 0.11;
+
+              if (i <= 0) clearInterval(interval);
+
+              mod.setup(hostAPI, i);
+            }, 100);
+          }, 500);
+        }
+
+        /* ---------------------------
+           GODMODE (unchanged)
+        --------------------------- */
+
+        if (value === ".god") {
           godmode = true;
-        } else if (value == ".ungod") {
+        }
+
+        if (value === ".ungod") {
           godmode = false;
         }
       }
@@ -1001,7 +623,7 @@ const targetColors = [
   "#b30000",
   "#0000fd",
 ];
-function onColorTouched(hexColor) {
+function onColorTouched() {
   if (death) return;
   if (!extraLife && !godmode) {
     death = true;

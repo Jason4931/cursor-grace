@@ -1,4 +1,4 @@
-00:00 - Carnation
+00:00 - Carnation [dozer & sorrow should stop progression]
 Spawn: 10-20s
 Duration: 10s (slow)
 Indicator: Pink border
@@ -74,13 +74,6 @@ Indicator: Cursor shape
 Location: Cursor (delayed)
 Try to move and dont touch the fake cursor
 
-Kookoo
-Spawn: 10-20s
-Duration: 7s-16s (relative)
-Indicator: Blue clock
-Location: None
-Dont click on the number shown at beginning
-
 Doombringer
 Spawn: 5-15s
 Chance Spawn when Goatman active: 20%
@@ -88,6 +81,15 @@ Duration: -5s (fast-relative)
 Indicator: Rising pulses
 Location: None
 Just click once and pay attention to background
+
+Kookoo
+Spawn: 10-20s
+Duration: 7s-16s (relative)
+Indicator: Blue clock
+Location: None
+Dont click on the number shown at beginning
+
+Tar [unfinished]
 
 Rue
 Spawn: 10-20s
@@ -103,6 +105,13 @@ Indicator: Black hand
 Location: Screen edge
 Dont be near and click before getting caught
 
+Mime
+Spawn: 10-20s
+Duration: Permanent
+Indicator: X mark
+Location: Near Cursor
+Dont touch it and careful of your movement
+
 Ire
 Spawn: 10-20s
 Duration: 5s (fast)
@@ -110,9 +119,19 @@ Indicator: Black eye
 Location: Cursor (delayed)
 Get out of the circle before it opens fully
 
-Mime
-Spawn: 10-20s
-Duration: Permanent
-Indicator: X mark
-Location: Near Cursor
-Dont touch it and careful of your movement
+Duk [unfinished]
+
+Craven [unfinished]
+
+Fool [unfinished]
+
+Stem [unfinished]
+
+Covet [unfinished]
+
+Seesay [unfinished]
+
+S.N.A.P. [unfinished]
+
+PIHSROW
+[REDACTED DOCUMENT]
