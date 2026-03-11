@@ -156,8 +156,8 @@ Stem [unfinished]
 Spawn: 10-20s
 Duration: 5s (fast) [Dozer & Litany stops progression]
 Indicator: Green roots
-Location: Cursor (delayed)
-Move your cursor fast enough when it went off
+Location: Cursor
+Dont stop moving your cursor when it went off
 
 Covet [unfinished]
 Spawn: 10-20s
