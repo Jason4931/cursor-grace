@@ -111,6 +111,8 @@ function shuffle(array) {
   }
 }
 
+export let carnation = { stop: false };
+
 let death = false;
 let goatman = false;
 let joey = false;

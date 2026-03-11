@@ -1,3 +1,4 @@
+import { carnation } from "../main.js";
 export function setup(host, { fadeOut = true } = {}) {
   const rand = Math.random() < 0.5;
   const state = {
@@ -16,6 +17,7 @@ export function setup(host, { fadeOut = true } = {}) {
       return;
     }
     if (fadeOut && state.life < 1) {
+      carnation.stop = false;
       state.fade = Math.max(0, state.life / 1);
     } else if (state.life < 1.125) {
       state.fade = 0.3;
@@ -26,6 +28,8 @@ export function setup(host, { fadeOut = true } = {}) {
     } else if (state.life < 1.5) {
       state.fade = 0.15;
     }
+
+    if (state.life < 5 && state.life > 1) carnation.stop = true;
 
     //process
     const diff = state.targetY - state.y;

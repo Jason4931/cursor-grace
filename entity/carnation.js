@@ -1,3 +1,4 @@
+import { carnation } from "../main.js";
 export function setup(host, { fadeOut = true } = {}) {
   const state = {
     inset: 0,
@@ -14,13 +15,14 @@ export function setup(host, { fadeOut = true } = {}) {
     mouse.x = (e.clientX - rect.left) * scaleX;
     mouse.y = (e.clientY - rect.top) * scaleY;
 
-    if (Math.random() < 0.9) {
+    if (Math.random() < 0.9 && !carnation.stop) {
       state.inset -= 1;
     }
   }
   host.canvas.addEventListener("mousemove", onMouseMove);
 
   function update(dt) {
+    if (carnation.stop) return;
     state.life -= dt;
     if (state.life <= 0) {
       unregister();

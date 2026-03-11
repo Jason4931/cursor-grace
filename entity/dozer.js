@@ -1,3 +1,4 @@
+import { carnation } from "../main.js";
 export function setup(host, { fadeOut = true } = {}) {
   const state = {
     x: 0,
@@ -26,6 +27,7 @@ export function setup(host, { fadeOut = true } = {}) {
   function update(dt) {
     if (state.mouse) state.life -= dt;
     if (state.life <= 0) {
+      carnation.stop = false;
       unregister();
       host.canvas.removeEventListener("mousemove", onMouseMove);
       return;
@@ -42,6 +44,8 @@ export function setup(host, { fadeOut = true } = {}) {
     } else if (state.life < 0.9) {
       state.fade = 0.5;
     }
+
+    if (state.life < 4 && state.life > 0) carnation.stop = true;
 
     //process
     if (mouse.x != 100000 && mouse.y != 100000) {
@@ -79,7 +83,7 @@ export function setup(host, { fadeOut = true } = {}) {
         Math.max(0, state.radius),
         0,
         Math.PI * 2,
-        true
+        true,
       );
       ctx.fill("evenodd");
       if (Math.random() < 0.2) {

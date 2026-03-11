@@ -1,6 +1,6 @@
-00:00 - Carnation [dozer & sorrow should stop progression]
+00:00 - Carnation
 Spawn: 10-20s
-Duration: 10s (slow)
+Duration: 10s (slow) [Dozer & Sorrow stops progression]
 Indicator: Pink border
 Location: Screen edge
 Dont stop moving and stay away from border
@@ -12,6 +12,7 @@ Chance Spawn when Doombringer active: 4%
 Duration: -20s (very slow-relative)
 Indicator: Flashing background
 Location: None
+Passive: Makes every entity spawn faster for 20s
 Click 20 times before the timer ran out
 
 02:00 - Slight
@@ -49,6 +50,7 @@ Spawn: 10-20s
 Duration: 4s (fast)
 Indicator: Yellow circle
 Location: Cursor
+Passive: Stops Carnation & Stem progression for 4s
 Do not move your cursor when it went off
 
 05:00 - Sorrow
@@ -56,6 +58,7 @@ Spawn: 10-20s
 Duration: 5s (fast)
 Indicator: Red rain
 Location: Up/Down
+Passive: Stops Carnation progression temporarily for 5s
 Get out of the rain before it went off
 
 -- 06:00 until 13:00 -- (random)
@@ -65,6 +68,7 @@ Spawn: 10-20s
 Duration: 10s (slow)
 Indicator: Gray ring
 Location: Cursor (delayed)
+Passive: Stops Stem progression temporarily for 10s
 Dont move too fast until it goes 3 times
 
 Doppel
@@ -90,13 +94,19 @@ Location: None
 Dont click on the number shown at beginning
 
 Tar [unfinished]
+Spawn: 10-20s
+Duration: 10s (slow)
+Indicator: Black goo
+Location: Random
+Passive: Makes every entity spawn faster on touch
+Dont be inside the goo area for too long
 
 Rue
 Spawn: 10-20s
 Duration: 10s+ (slow-relative)
 Indicator: White-Red circle
 Location: Center
-Click when the circle is red or delay at center
+Click when circle is red or delay at center
 
 Drain
 Spawn: 10-20s
@@ -120,18 +130,57 @@ Location: Cursor (delayed)
 Get out of the circle before it opens fully
 
 Duk [unfinished]
+Spawn: 10-20s
+Duration: Permanent
+Indicator: Spinning duck
+Location: Cursor
+Click when its near and dont let it touch you
 
 Craven [unfinished]
+Spawn: 10-20s
+Duration: Permanent-relative
+Indicator: Black chain
+Location: Near Cursor
+Passive: Spam click makes it dissapear and duplicates after 10s
+Dont forget to click on its direction occasionally
 
 Fool [unfinished]
+Spawn: 10-20s
+Duration: Permanent-relative
+Indicator: Gray chain
+Location: Near Cursor
+Passive: Spam click makes it dissapear and duplicates after 10s
+Dont look to its direction and click to reset
 
 Stem [unfinished]
+Spawn: 10-20s
+Duration: 5s (fast) [Dozer & Litany stops progression]
+Indicator: Green roots
+Location: Cursor (delayed)
+Move your cursor fast enough when it went off
 
 Covet [unfinished]
+Spawn: 10-20s
+Duration: Permanent
+Indicator: Yellow circle
+Location: Cursor
+Dodge from the yellow line and dont touch it
 
 Seesay [unfinished]
+Spawn: 10-20s
+Duration: 5s-10s (relative)
+Indicator: Closed eye
+Location: None
+Click when it opens its mouth and attacks fast
 
 S.N.A.P. [unfinished]
+Spawn: 5-15s
+Chance Spawn: 20%
+Chance Spawn when Carnation active: 100%
+Duration: -5s (fast-relative)
+Indicator: Flower mark
+Location: Random
+Click at the flower mark before it went off
 
 PIHSROW
 [REDACTED DOCUMENT]
