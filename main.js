@@ -114,7 +114,9 @@ function shuffle(array) {
 export function duplicateCraven() {
   setTimeout(() => {
     spawnEntity({ src: "./entity/craven.js" });
-    spawnEntity({ src: "./entity/craven.js" });
+    setTimeout(() => {
+      spawnEntity({ src: "./entity/craven.js" });
+    }, 1000);
   }, 10000);
 }
 
