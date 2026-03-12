@@ -111,6 +111,13 @@ function shuffle(array) {
   }
 }
 
+export function duplicateCraven() {
+  setTimeout(() => {
+    spawnEntity({ src: "./entity/craven.js" });
+    spawnEntity({ src: "./entity/craven.js" });
+  }, 10000);
+}
+
 export let carnation = { stop: false };
 export let tar = { inside: false };
 
@@ -329,17 +336,27 @@ const ENTITY_LIST = [
     chance: 0.9,
     loop: false,
   },
+  {
+    type: "modifier",
+    name: "Craven",
+    color: "#808080",
+    src: "./entity/craven.js",
+    duration: 20000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+    loop: false,
+  },
 ];
+async function spawnEntity(entity) {
+  const mod = await import(`${entity.src}?cacheBust=${Date.now()}`);
+  mod.setup(hostAPI);
+}
 async function RUN() {
   hostAPI.clearAll();
 
   function rand(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
-  }
-
-  async function spawnEntity(entity) {
-    const mod = await import(`${entity.src}?cacheBust=${Date.now()}`);
-    mod.setup(hostAPI);
   }
 
   function runEntity(entity) {
