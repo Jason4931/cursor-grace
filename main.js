@@ -112,6 +112,7 @@ function shuffle(array) {
 }
 
 export let carnation = { stop: false };
+export let tar = { inside: false };
 
 let death = false;
 let goatman = false;
@@ -241,16 +242,6 @@ const ENTITY_LIST = [
   },
   {
     type: "modifier",
-    name: "Kookoo",
-    color: "#0000fd",
-    src: "./entity/kookoo.js",
-    duration: 16000,
-    delayNormal: [10000, 20000],
-    delayGoatman: [5000, 10000],
-    chance: 0.9,
-  },
-  {
-    type: "modifier",
     name: "Doombringer",
     color: "#808080",
     src: "./entity/doombringer.js",
@@ -265,6 +256,26 @@ const ENTITY_LIST = [
     onEnd: () => {
       joey = false;
     },
+  },
+  {
+    type: "modifier",
+    name: "Kookoo",
+    color: "#0000fd",
+    src: "./entity/kookoo.js",
+    duration: 16000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+  },
+  {
+    type: "modifier",
+    name: "Tar",
+    color: "#808080",
+    src: "./entity/tar.js",
+    duration: 10000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
   },
   {
     type: "modifier",
@@ -288,6 +299,17 @@ const ENTITY_LIST = [
   },
   {
     type: "modifier",
+    name: "Mime",
+    color: "#ffffff",
+    src: "./entity/mime.js",
+    duration: 20000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+    loop: false,
+  },
+  {
+    type: "modifier",
     name: "Ire",
     color: "#ffffff",
     src: "./entity/ire.js",
@@ -298,9 +320,9 @@ const ENTITY_LIST = [
   },
   {
     type: "modifier",
-    name: "Mime",
-    color: "#ffffff",
-    src: "./entity/mime.js",
+    name: "Duk",
+    color: "#fdff00",
+    src: "./entity/duk.js",
     duration: 20000,
     delayNormal: [10000, 20000],
     delayGoatman: [5000, 10000],
@@ -321,9 +343,10 @@ async function RUN() {
   }
 
   function runEntity(entity) {
-    const delayRange = goatman
-      ? entity.delayGoatman || entity.delayNormal
-      : entity.delayNormal;
+    const delayRange =
+      tar.inside || goatman
+        ? entity.delayGoatman || entity.delayNormal
+        : entity.delayNormal;
 
     const delay = absoluteNoDelay
       ? Math.floor(Math.random() * 5000)
@@ -353,9 +376,7 @@ async function RUN() {
             }
           }, entity.duration);
         } else {
-          if (entity.loop !== false) {
-            runEntity(entity);
-          }
+          runEntity(entity);
         }
       }
     }, delay);
@@ -456,8 +477,9 @@ async function RUN() {
     }
 
     setTimeout(() => {
-      if (death) return;
+      if (death || runned.includes(entity.name)) return;
 
+      runned.push(entity.name);
       runEntity(entity);
 
       entitySpawnInfo(entity.name, entity.color);
@@ -624,6 +646,7 @@ const targetColors = [
   "#f4ea37",
   "#b30000",
   "#0000fd",
+  "#fdff00",
 ];
 function onColorTouched() {
   if (death) return;

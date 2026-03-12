@@ -93,7 +93,7 @@ Indicator: Blue clock
 Location: None
 Dont click on the number shown at beginning
 
-Tar [unfinished]
+Tar
 Spawn: 10-20s
 Duration: 10s (slow)
 Indicator: Black goo
@@ -129,10 +129,10 @@ Indicator: Black eye
 Location: Cursor (delayed)
 Get out of the circle before it opens fully
 
-Duk [unfinished]
+Duk
 Spawn: 10-20s
 Duration: Permanent
-Indicator: Spinning duck
+Indicator: Spinning triangle
 Location: Cursor
 Click when its near and dont let it touch you
 
