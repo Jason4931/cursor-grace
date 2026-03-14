@@ -71,7 +71,7 @@ Location: Up/Down
 Passive: Stops Carnation progression temporarily for 5s
 Get out of the rain before it went off
 
--- 06:00 until 16:00 -- (random)
+-- 06:00 until 17:00 -- (random)
 
 Litany
 Type: Movement
@@ -165,7 +165,7 @@ Location: Near Cursor
 Passive: Spam click makes it dissapear and duplicates after 10s
 Dont forget to click on its direction occasionally
 
-Fool [unfinished]
+Fool
 Type: Movement
 Spawn: 10-20s
 Duration: Permanent-relative

@@ -119,6 +119,14 @@ export function duplicateCraven() {
     }, 1000);
   }, 10000);
 }
+export function duplicateFool() {
+  setTimeout(() => {
+    spawnEntity({ src: "./entity/fool.js" });
+    setTimeout(() => {
+      spawnEntity({ src: "./entity/fool.js" });
+    }, 1000);
+  }, 10000);
+}
 
 export let carnation = { stop: false };
 export let tar = { inside: false };
@@ -343,6 +351,17 @@ const ENTITY_LIST = [
     name: "Craven",
     color: "#808080",
     src: "./entity/craven.js",
+    duration: 20000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+    loop: false,
+  },
+  {
+    type: "modifier",
+    name: "Fool",
+    color: "#808080",
+    src: "./entity/fool.js",
     duration: 20000,
     delayNormal: [10000, 20000],
     delayGoatman: [5000, 10000],

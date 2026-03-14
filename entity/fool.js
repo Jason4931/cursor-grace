@@ -1,4 +1,4 @@
-import { duplicateCraven } from "../main.js";
+import { duplicateFool } from "../main.js";
 export function setup(host, { fadeOut = true } = {}) {
   const state = {
     life: 1,
@@ -8,8 +8,9 @@ export function setup(host, { fadeOut = true } = {}) {
     y: -100,
     r: 18,
 
-    timer: 10,
+    timer: 5,
     knock: 0,
+    looking: false,
 
     agro: false,
     agroBurst: 0,
@@ -18,7 +19,14 @@ export function setup(host, { fadeOut = true } = {}) {
     speed: 0,
 
     redAlpha: 0,
+    dropletTimer: 0,
+    droplets: [
+      { x: 0, y: 0 },
+      { x: 0, y: 0 },
+      { x: 0, y: 0 }
+    ],
 
+    knockDelay: 1,
     angle: -Math.PI / 2 + (-1 + Math.random() * 2) * Math.PI,
     orbitR: 80,
     angleVel: 0,
@@ -80,7 +88,7 @@ export function setup(host, { fadeOut = true } = {}) {
           state.dissapear = true;
         }
       }
-      state.timer = 10;
+      state.timer = 5;
 
       const cross = mvnx * ndy - mvny * ndx;
 
@@ -97,7 +105,7 @@ export function setup(host, { fadeOut = true } = {}) {
     if (!state.mouse) return;
     if (state.dissapear) state.life -= dt;
     if (state.life <= 0) {
-      duplicateCraven();
+      duplicateFool();
       unregister();
       host.canvas.removeEventListener("mousemove", onMouseMove);
       host.canvas.removeEventListener("click", onMouseClick);
@@ -105,6 +113,18 @@ export function setup(host, { fadeOut = true } = {}) {
     }
 
     //process
+    state.dropletTimer += dt;
+    if (state.dropletTimer > 0.2) {
+      state.dropletTimer -= 0.2;
+
+      for (const d of state.droplets) {
+        const a = Math.random() * Math.PI * 2;
+        const r = 8 + Math.random() * 6;
+
+        d.x = Math.cos(a) * r;
+        d.y = Math.sin(a) * r;
+      }
+    }
     if (state.clickCooldown > 0) {
       state.clickCooldown -= dt;
     } else {
@@ -112,21 +132,66 @@ export function setup(host, { fadeOut = true } = {}) {
     }
     if (state.dissapear) return;
     if (!state.agro) {
+      state.knockDelay -= dt;
+
+      if (state.knockDelay <= 0) {
+        state.knockDelay = 1;
+
+        const mvx = mouse.x - prevMouseX;
+        const mvy = mouse.y - prevMouseY;
+        const md = Math.hypot(mvx, mvy) || 1;
+
+        const dx = state.x - mouse.x;
+        const dy = state.y - mouse.y;
+        const dist = Math.hypot(dx, dy);
+
+        const ndx = dx / dist;
+        const ndy = dy / dist;
+
+        const mvnx = mvx / md;
+        const mvny = mvy / md;
+        const cross = mvnx * ndy - mvny * ndx;
+
+        if (cross > 0) state.angleVel = -3;
+        else state.angleVel = 3;
+      }
+
       state.angle += state.angleVel * dt;
       state.angleVel *= 0.9;
 
       state.x = mouse.x + Math.cos(state.angle) * state.orbitR;
       state.y = mouse.y + Math.sin(state.angle) * state.orbitR;
 
-      state.timer -= dt;
+      const mvx = mouse.x - prevMouseX;
+      const mvy = mouse.y - prevMouseY;
+      const md = Math.hypot(mvx, mvy) || 1;
+
+      const dx = state.x - mouse.x;
+      const dy = state.y - mouse.y;
+      const dist = Math.hypot(dx, dy);
+
+      const ndx = dx / dist;
+      const ndy = dy / dist;
+
+      const mvnx = mvx / md;
+      const mvny = mvy / md;
+
+      const dot = mvnx * ndx + mvny * ndy;
+
+      if (dot > 0) {
+        state.looking = true;
+        state.timer -= dt;
+      } else {
+        state.looking = false;
+      }
 
       if (state.timer <= 0) {
         state.agro = true;
         state.agroBurst = 1;
       }
 
-      if (state.timer < 5) {
-        state.redAlpha = (5 - state.timer) / 5;
+      if (state.timer < 2.5) {
+        state.redAlpha = (2.5 - state.timer) / 2.5;
       } else {
         state.redAlpha = 0;
       }
@@ -173,12 +238,9 @@ export function setup(host, { fadeOut = true } = {}) {
     const h = host.canvas.height;
 
     //setup
-    ctx.globalAlpha =
-      state.timer > 9.5 && state.life == 1
-        ? state.fade * 0.5
-        : state.life != 1
-          ? state.fade * 0.9
-          : state.fade;
+    ctx.globalAlpha = (state.looking || state.agro) && state.life == 1
+      ? state.fade
+      : state.fade * 0.5
 
     ctx.translate(
       state.x + (Math.random() * 2 - 1) * state.redAlpha * (state.agro ? 2 : 1),
@@ -192,14 +254,39 @@ export function setup(host, { fadeOut = true } = {}) {
 
     ctx.save();
 
-    ctx.fillStyle = "red";
-    ctx.globalAlpha = state.redAlpha * state.fade;
+    if (!state.agro) {
+      const t = state.dropletTimer / 0.1;
 
-    ctx.beginPath();
-    ctx.arc(0, 0, r * (state.agro ? 0.25 : 0.5), 0, Math.PI * 2);
-    ctx.fill();
+      ctx.fillStyle = "white";
+      ctx.globalAlpha = state.fade;
 
+      const drops = [
+        { start: 0.833, i: 0 },
+        { start: 1.667, i: 1 },
+        { start: 2.5, i: 2 }
+      ];
+
+      for (const d of drops) {
+        if (state.timer <= d.start) {
+          const base = state.droplets[d.i];
+
+          const x = base.x;
+          const y = base.y + t * 6;
+
+          ctx.beginPath();
+          ctx.arc(x, y, 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
     if (state.agro) {
+      ctx.fillStyle = "red";
+      ctx.globalAlpha = state.redAlpha * state.fade;
+
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.25, 0, Math.PI * 2);
+      ctx.fill();
+
       const spikes = 26;
       const base = state.r * 0.25;
       const max = state.r * 2;
@@ -235,63 +322,6 @@ export function setup(host, { fadeOut = true } = {}) {
     }
     ctx.restore();
 
-    const links = 18;
-    ctx.strokeStyle = "white";
-    ctx.lineWidth = 2;
-
-    for (let i = 0; i < links; i++) {
-      const a = (i / links) * Math.PI * 2;
-
-      const x = Math.cos(a) * r;
-      const y = Math.sin(a) * r;
-
-      if (x === 0) continue;
-
-      if (state.life == 1 || x > 0) {
-        ctx.fillStyle = "black";
-        ctx.beginPath();
-        ctx.arc(x, y, 4, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.stroke();
-
-        const a2 = ((i + 1) / links) * Math.PI * 2;
-
-        const x2 = Math.cos(a2) * r;
-        const y2 = Math.sin(a2) * r;
-
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(x2, y2);
-        ctx.stroke();
-      }
-
-      if (state.life != 1 && x < 0) {
-        ctx.fillStyle = "black";
-        ctx.beginPath();
-        ctx.arc(
-          x - Math.min(1, (1 - state.life) * 2) * 20,
-          y,
-          4,
-          0,
-          Math.PI * 2,
-        );
-        ctx.fill();
-
-        ctx.stroke();
-
-        const a2 = ((i + 1) / links) * Math.PI * 2;
-
-        const x2 = Math.cos(a2) * r;
-        const y2 = Math.sin(a2) * r;
-
-        ctx.beginPath();
-        ctx.moveTo(x - Math.min(1, (1 - state.life) * 2) * 20, y);
-        ctx.lineTo(x2 - Math.min(1, (1 - state.life) * 2) * 20, y2);
-        ctx.stroke();
-      }
-    }
-
     if (state.agro && state.cursorInside) {
       ctx.fillStyle = "white";
 
@@ -299,6 +329,37 @@ export function setup(host, { fadeOut = true } = {}) {
       ctx.arc(0, 0, state.r * 0.75, 0, Math.PI * 2);
       ctx.fill();
     }
+
+    function drawEye(x, y, rot) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(rot + Math.PI / 2);
+
+      ctx.fillStyle = "white";
+
+      ctx.beginPath();
+      ctx.moveTo(-8, 0);
+      ctx.quadraticCurveTo(0, -4.5, 8, 0);
+      ctx.quadraticCurveTo(0, 4.5, -8, 0);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 1.5;
+
+      ctx.beginPath();
+
+      ctx.moveTo(0, -2.5);
+      ctx.lineTo(0, 2.5);
+
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    drawEye(-9, -8, -0.6, "left");
+    drawEye(9, -8, 0.6, "right");
+    drawEye(0, 8, 0, "mid");
 
     ctx.restore();
   }
