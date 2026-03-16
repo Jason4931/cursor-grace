@@ -711,6 +711,9 @@ function onColorTouched() {
       setTimeout(() => {
         document.getElementById("death").style.display = "flex";
         document.getElementById("white").style.display = "none";
+        setTimeout(() => {
+          window.location.reload();
+        }, 10000);
       }, 100);
       document.getElementById("white").style.display = "flex";
     }, 150);
