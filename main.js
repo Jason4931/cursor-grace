@@ -7,9 +7,14 @@ const registry = {
 };
 
 const hostAPI = {
-  register({ update, draw }) {
+  register({ update, draw, z = 1 }) {
     if (update) registry.updaters.add(update);
-    if (draw) registry.drawers.add(draw);
+    if (draw)
+      if (z != 1) {
+        registry.drawers = new Set([draw, ...registry.drawers]);
+      } else {
+        registry.drawers.add(draw);
+      }
     return () => {
       if (update) registry.updaters.delete(update);
       if (draw) registry.drawers.delete(draw);

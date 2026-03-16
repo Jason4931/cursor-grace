@@ -130,6 +130,6 @@ export function setup(host, { fadeOut = true } = {}) {
     ctx.restore();
   }
 
-  const unregister = host.register({ update, draw });
+  const unregister = host.register({ update, draw, z: 0 });
   return unregister;
 }
