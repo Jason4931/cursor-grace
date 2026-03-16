@@ -1,4 +1,4 @@
-import { carnation } from "../main.js";
+import { carnation, stem } from "../main.js";
 export function setup(host, { fadeOut = true } = {}) {
   const state = {
     x: 0,
@@ -28,6 +28,7 @@ export function setup(host, { fadeOut = true } = {}) {
     if (state.mouse) state.life -= dt;
     if (state.life <= 0) {
       carnation.stop = false;
+      stem.stop = false;
       unregister();
       host.canvas.removeEventListener("mousemove", onMouseMove);
       return;
@@ -45,7 +46,10 @@ export function setup(host, { fadeOut = true } = {}) {
       state.fade = 0.5;
     }
 
-    if (state.life < 4 && state.life > 0) carnation.stop = true;
+    if (state.life < 4 && state.life > 0) {
+      carnation.stop = true;
+      stem.stop = true;
+    }
 
     //process
     if (mouse.x != 100000 && mouse.y != 100000) {

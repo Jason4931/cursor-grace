@@ -1,3 +1,4 @@
+import { stem } from "../main.js";
 export function setup(host, { fadeOut = true } = {}) {
   const state = {
     x: 0,
@@ -29,6 +30,7 @@ export function setup(host, { fadeOut = true } = {}) {
   function update(dt) {
     if (state.mouse) state.life -= dt;
     if (state.life <= 0) {
+      stem.stop = false;
       unregister();
       host.canvas.removeEventListener("mousemove", onMouseMove);
       return;
@@ -84,6 +86,10 @@ export function setup(host, { fadeOut = true } = {}) {
           state.oneTimeRed++;
         }, 100);
       }
+    }
+
+    if (state.life < 10 && state.life > 0) {
+      stem.stop = true;
     }
 
     //process

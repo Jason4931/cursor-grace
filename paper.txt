@@ -71,7 +71,7 @@ Location: Up/Down
 Passive: Stops Carnation progression temporarily for 5s
 Get out of the rain before it went off
 
--- 06:00 until 17:00 -- (random)
+-- 06:00 until 18:00 -- (random)
 
 Litany
 Type: Movement
@@ -174,10 +174,10 @@ Location: Near Cursor
 Passive: Spam click makes it dissapear and duplicates after 10s
 Dont look to its direction and click to reset
 
-Stem [unfinished]
+Stem
 Type: Movement
 Spawn: 10-20s
-Duration: 5s (fast) [Dozer & Litany stops progression]
+Duration: 3s (very fast) [Dozer & Litany stops progression]
 Indicator: Green roots
 Location: Cursor
 Dont stop moving your cursor when it went off

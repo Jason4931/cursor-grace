@@ -15,14 +15,14 @@ export function setup(host, { fadeOut = true } = {}) {
     mouse.x = (e.clientX - rect.left) * scaleX;
     mouse.y = (e.clientY - rect.top) * scaleY;
 
-    if (Math.random() < 0.9 && !carnation.stop) {
+    if (Math.random() < 0.9 && (!carnation.stop || Math.random() < 0.1)) {
       state.inset -= 1;
     }
   }
   host.canvas.addEventListener("mousemove", onMouseMove);
 
   function update(dt) {
-    if (carnation.stop) return;
+    if (carnation.stop && Math.random() < 0.9) return;
     state.life -= dt;
     if (state.life <= 0) {
       unregister();

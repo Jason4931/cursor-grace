@@ -129,6 +129,7 @@ export function duplicateFool() {
 }
 
 export let carnation = { stop: false };
+export let stem = { stop: false };
 export let tar = { inside: false };
 
 let death = false;
@@ -367,6 +368,16 @@ const ENTITY_LIST = [
     delayGoatman: [5000, 10000],
     chance: 0.9,
     loop: false,
+  },
+  {
+    type: "modifier",
+    name: "Stem",
+    color: "#00b16c",
+    src: "./entity/stem.js",
+    duration: 3000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
   },
 ];
 async function spawnEntity(entity) {
@@ -685,6 +696,7 @@ const targetColors = [
   "#b30000",
   "#0000fd",
   "#fdff00",
+  "#00b16c",
 ];
 function onColorTouched() {
   if (death) return;
