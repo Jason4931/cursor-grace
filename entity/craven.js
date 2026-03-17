@@ -15,7 +15,7 @@ export function setup(host, { fadeOut = true } = {}) {
     agroBurst: 0,
     agroDelay: 1,
 
-    speed: 0,
+    speed: 40,
 
     redAlpha: 0,
 
@@ -183,9 +183,9 @@ export function setup(host, { fadeOut = true } = {}) {
     ctx.translate(
       state.x + (Math.random() * 2 - 1) * state.redAlpha * (state.agro ? 2 : 1),
       state.y +
-      13 +
-      (Math.random() * 2 - 1) * state.redAlpha * (state.agro ? 2 : 1) -
-      Math.pow(1 - state.life, 2) * 720,
+        13 +
+        (Math.random() * 2 - 1) * state.redAlpha * (state.agro ? 2 : 1) -
+        Math.pow(1 - state.life, 2) * 720,
     );
 
     const r = state.r;

@@ -16,14 +16,16 @@ export function setup(host, { fadeOut = true } = {}) {
     agroBurst: 0,
     agroDelay: 1,
 
-    speed: 0,
+    speed: 40,
+    teleportTimer: 0,
+    teleportDelay: 0.5,
 
     redAlpha: 0,
     dropletTimer: 0,
     droplets: [
       { x: 0, y: 0 },
       { x: 0, y: 0 },
-      { x: 0, y: 0 }
+      { x: 0, y: 0 },
     ],
 
     knockDelay: 1,
@@ -218,10 +220,20 @@ export function setup(host, { fadeOut = true } = {}) {
         const nx = dx / dist;
         const ny = dy / dist;
 
-        state.speed += dt * 40;
+        state.teleportTimer += dt;
 
-        state.x += nx * state.speed * dt;
-        state.y += ny * state.speed * dt;
+        if (state.teleportTimer >= state.teleportDelay) {
+          state.teleportTimer = 0;
+
+          const step = state.speed * state.teleportDelay;
+
+          const move = Math.min(step, dist);
+
+          state.x += nx * move;
+          state.y += ny * move;
+
+          state.speed += 40 * state.teleportDelay;
+        }
       }
 
       if (state.agroBurst > 0) {
@@ -238,16 +250,17 @@ export function setup(host, { fadeOut = true } = {}) {
     const h = host.canvas.height;
 
     //setup
-    ctx.globalAlpha = (state.looking || state.agro) && state.life == 1
-      ? state.fade
-      : state.fade * 0.5
+    ctx.globalAlpha =
+      (state.looking || state.agro) && state.life == 1
+        ? state.fade
+        : state.fade * 0.5;
 
     ctx.translate(
       state.x + (Math.random() * 2 - 1) * state.redAlpha * (state.agro ? 2 : 1),
       state.y +
-      13 +
-      (Math.random() * 2 - 1) * state.redAlpha * (state.agro ? 2 : 1) -
-      Math.pow(1 - state.life, 2) * 720,
+        13 +
+        (Math.random() * 2 - 1) * state.redAlpha * (state.agro ? 2 : 1) -
+        Math.pow(1 - state.life, 2) * 720,
     );
 
     const r = state.r;
@@ -263,7 +276,7 @@ export function setup(host, { fadeOut = true } = {}) {
       const drops = [
         { start: 0.833, i: 0 },
         { start: 1.667, i: 1 },
-        { start: 2.5, i: 2 }
+        { start: 2.5, i: 2 },
       ];
 
       for (const d of drops) {

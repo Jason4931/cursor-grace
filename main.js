@@ -28,6 +28,15 @@ const hostAPI = {
   ctx,
 };
 
+let cursorFacingState = {
+  arrowAlpha: 0,
+  arrowScale: 0,
+  arrowX: 0,
+  arrowY: 0,
+  arrowAngle: 0,
+};
+let prevMouseX = 0;
+let prevMouseY = 0;
 let last = performance.now();
 function loop(now) {
   const dt = (now - last) / 1000;
@@ -61,6 +70,37 @@ function loop(now) {
       ctx.globalAlpha = 1;
     }
   }
+
+  const mvx = mouse.x - prevMouseX;
+  const mvy = mouse.y - prevMouseY;
+  const speed = Math.hypot(mvx, mvy);
+  if (speed > 0.001) {
+    cursorFacingState.arrowAngle = Math.atan2(mvy, mvx);
+  }
+  const angle = cursorFacingState.arrowAngle;
+  const moving = speed > 0.5;
+  const targetAlpha = moving ? 1 : 0;
+  const targetScale = moving ? 1 : 0.6;
+  cursorFacingState.arrowAlpha +=
+    (targetAlpha - cursorFacingState.arrowAlpha) * dt * 10;
+  cursorFacingState.arrowScale +=
+    (targetScale - cursorFacingState.arrowScale) * dt * 10;
+  ctx.save();
+  ctx.globalAlpha = Math.min(0.1, Math.max(0.01, cursorFacingState.arrowAlpha));
+  ctx.translate(mouse.x, mouse.y);
+  ctx.rotate(angle);
+  ctx.translate(25, 0);
+  ctx.scale(cursorFacingState.arrowScale, cursorFacingState.arrowScale);
+  ctx.strokeStyle = "white";
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(-6, -6);
+  ctx.lineTo(6, 0);
+  ctx.lineTo(-6, 6);
+  ctx.stroke();
+  ctx.restore();
+  prevMouseX = mouse.x;
+  prevMouseY = mouse.y;
 
   for (const draw of registry.drawers) {
     try {
