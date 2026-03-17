@@ -71,6 +71,14 @@ function loop(now) {
     }
   }
 
+  for (const draw of registry.drawers) {
+    try {
+      draw(ctx);
+    } catch (e) {
+      console.error("draw err", e);
+    }
+  }
+
   const mvx = mouse.x - prevMouseX;
   const mvy = mouse.y - prevMouseY;
   const speed = Math.hypot(mvx, mvy);
@@ -101,14 +109,6 @@ function loop(now) {
   ctx.restore();
   prevMouseX = mouse.x;
   prevMouseY = mouse.y;
-
-  for (const draw of registry.drawers) {
-    try {
-      draw(ctx);
-    } catch (e) {
-      console.error("draw err", e);
-    }
-  }
 
   checkPixelUnderCursor();
 
