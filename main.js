@@ -661,14 +661,21 @@ async function RUN() {
         --------------------------- */
 
         if (value.startsWith(".")) {
-          const name = value.slice(1);
+          const parts = value.split(" ");
+          const name = parts[0].slice(1);
+          const count = parseInt(parts[1]) || 1;
 
           const entity = ENTITY_MAP[name];
 
           if (entity) {
-            setTimeout(async () => {
-              await spawnEntity(entity);
-            }, 500);
+            for (let i = 0; i < count; i++) {
+              setTimeout(
+                async () => {
+                  await spawnEntity(entity);
+                },
+                500 + i * 100,
+              ); // 100ms spacing
+            }
 
             return;
           }
