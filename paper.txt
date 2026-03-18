@@ -71,7 +71,7 @@ Location: Up/Down
 Passive: Stops Carnation progression temporarily for 5s
 Get out of the rain before it went off
 
--- 06:00 until 18:00 -- (random)
+-- 06:00 until 19:00 -- (random)
 
 Litany
 Type: Movement
@@ -182,7 +182,7 @@ Indicator: Green roots
 Location: Cursor
 Dont stop moving your cursor when it went off
 
-Covet [unfinished]
+Covet
 Type: Movement
 Spawn: 10-20s
 Duration: Permanent

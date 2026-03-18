@@ -424,6 +424,17 @@ const ENTITY_LIST = [
     delayGoatman: [5000, 10000],
     chance: 0.9,
   },
+  {
+    type: "modifier",
+    name: "Covet",
+    color: "#fbff08",
+    src: "./entity/covet.js",
+    duration: 20000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+    loop: false,
+  },
 ];
 async function spawnEntity(entity) {
   const mod = await import(`${entity.src}?cacheBust=${Date.now()}`);
