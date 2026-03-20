@@ -71,7 +71,7 @@ Location: Up/Down
 Passive: Stops Carnation progression temporarily for 5s
 Get out of the rain before it went off
 
--- 06:00 until 19:00 -- (random)
+-- 06:00 until 20:00 -- (random)
 
 Litany
 Type: Movement
@@ -190,10 +190,10 @@ Indicator: Yellow circle
 Location: Cursor
 Dodge from the yellow line and dont touch it
 
-Seesay [unfinished]
+Seesay
 Type: Click
 Spawn: 10-20s
-Duration: 7s-12s (relative)
+Duration: 8s-13s (relative)
 Indicator: Closed eye
 Location: None
 Click when it opens its mouth and attacks fast
@@ -211,7 +211,7 @@ Click at the flower mark before the screen cracks
 PIHSROW
 [REDACTED DOCUMENT]
 
--- starts from 05:00 -- (random)
+-- starts from 05:00 -- (random) [all unfinished]
 
 Some other entity ideas: (all of this is not permanent in duration and very rare to spawn)
 

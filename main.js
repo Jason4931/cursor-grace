@@ -435,6 +435,16 @@ const ENTITY_LIST = [
     chance: 0.9,
     loop: false,
   },
+  {
+    type: "modifier",
+    name: "Seesay",
+    color: "#fbff08",
+    src: "./entity/seesay.js",
+    duration: 13000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+  },
 ];
 async function spawnEntity(entity) {
   const mod = await import(`${entity.src}?cacheBust=${Date.now()}`);
