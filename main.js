@@ -580,24 +580,72 @@ async function RUN() {
 
   shuffle(RANDOM_POOL);
 
+  const handled = new Set();
+
   for (const entity of ENTITY_LIST) {
+    const name = entity.name;
+
+    if (handled.has(name)) continue;
+
     let delay;
+    const lower = name.toLowerCase();
 
-    const name = entity.name.toLowerCase();
-
-    if (START_TIMES[name] !== undefined) {
-      delay = START_TIMES[name];
+    if (START_TIMES[lower] !== undefined) {
+      delay = START_TIMES[lower];
     } else {
       delay = RANDOM_POOL.pop();
     }
 
-    setTimeout(() => {
-      if (death || runned.includes(entity.name)) return;
+    if (name === "Slugfish") {
+      const elk = ENTITY_MAP["elkman"];
+      handled.add("Slugfish");
+      handled.add("Elkman");
 
-      runned.push(entity.name);
+      setTimeout(() => {
+        if (death) return;
+        if (runned.includes("Slugfish") || runned.includes("Elkman")) return;
+
+        runned.push("Slugfish", "Elkman");
+
+        runEntity(entity);
+        runEntity(elk);
+
+        entitySpawnInfo("Slugfish", entity.color, "Elkman", elk.color);
+      }, delay);
+
+      continue;
+    }
+
+    if (name === "Dozer") {
+      const sorrow = ENTITY_MAP["sorrow"];
+      handled.add("Dozer");
+      handled.add("Sorrow");
+
+      setTimeout(() => {
+        if (death) return;
+        if (runned.includes("Dozer") || runned.includes("Sorrow")) return;
+
+        runned.push("Dozer", "Sorrow");
+
+        runEntity(entity);
+        runEntity(sorrow);
+
+        entitySpawnInfo("Dozer", entity.color, "Sorrow", sorrow.color);
+      }, delay);
+
+      continue;
+    }
+
+    handled.add(name);
+
+    setTimeout(() => {
+      if (death || runned.includes(name)) return;
+
+      runned.push(name);
+
       runEntity(entity);
 
-      entitySpawnInfo(entity.name, entity.color);
+      entitySpawnInfo(name, entity.color);
     }, delay);
   }
 
@@ -683,8 +731,8 @@ async function RUN() {
                 async () => {
                   await spawnEntity(entity);
                 },
-                500 + i * 100,
-              ); // 100ms spacing
+                500 + i * 200,
+              );
             }
 
             return;
