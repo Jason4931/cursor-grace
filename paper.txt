@@ -96,7 +96,7 @@ Spawn: 5-15s
 Chance Spawn when Goatman active: 20%
 Duration: -5s (fast-relative)
 Indicator: Rising pulses
-Location: None
+Location: Down
 Just click once and pay attention to background
 
 Kookoo
@@ -195,10 +195,10 @@ Type: Click
 Spawn: 10-20s
 Duration: 8s-13s (relative)
 Indicator: Closed eye
-Location: None
+Location: Center
 Click when it opens its mouth and attacks fast
 
-S.N.A.P. [unfinished]
+S.N.A.P.
 Type: Click
 Spawn: 5-15s
 Chance Spawn: 20%
@@ -208,24 +208,21 @@ Indicator: Flower mark
 Location: Random
 Click at the flower mark before the screen cracks
 
+Sundial
+Type: Click
+Spawn: 10-20s
+Duration: Permanent
+Indicator: Yellow Timer
+Location: Up
+Click the top when the timer is less than 5 sec
+
+Innego
+Type: Position
+Spawn: 10-20s
+Duration: Permanent
+Indicator: White Limb
+Location: Screen Edge
+Dont collect 5 limbs and its magnetic to cursor
+
 PIHSROW
 [REDACTED DOCUMENT]
-
--- starts from 05:00 -- (random) [all unfinished]
-
-Some other entity ideas: (all of this is not permanent in duration and very rare to spawn)
-
-sin - straight up chases cursor slowly (r u n)
------
-shame - chase cursor more faster but knockbackable (flash)
------
-flowerheads - chase cursor while 3 spawn at same time (flash or dodge)
-tainted soil - 2 spawn at same time at random spots (dodge)
-roots - red warning bold line across the screen quick time reaction (dodge)
------
-guilles - will closing in all across screen edge (dont touch the edges)
-giga litany - practically faster sorrow only taking up 50% up/down side (dodge)
------
-tragedy - even faster roots straight line quick time reaction (dodge)
-zapper - same as guilles but detects the cursor closer side being heightened (edge-dodge)
-nuke - is just a longer duration even bigger than slugfish (dodge)

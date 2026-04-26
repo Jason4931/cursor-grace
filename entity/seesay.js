@@ -1,7 +1,7 @@
 export function setup(host, { fadeOut = true } = {}) {
   const state = {
     life: 13,
-    fade: 1,
+    fade: 0.5,
 
     scale: 1,
     phase: "idle",
@@ -54,6 +54,7 @@ export function setup(host, { fadeOut = true } = {}) {
     } else if (state.phase === "opening") {
       const t = Math.min(1, state.timer / 2);
       state.scale = Math.pow(t, 10) * 10 + 1;
+      state.fade = Math.max(0.5, Math.min(1, t));
       if (state.timer >= 1.9) {
         state.off = true;
       }
@@ -263,36 +264,36 @@ export function setup(host, { fadeOut = true } = {}) {
       ctx.fillStyle = state.off ? "#fbff08" : "yellow";
       ctx.fill();
 
-      const size = r * 0.1;
-      const offset = r * 0.4;
+      // const size = r * 0.1;
+      // const offset = r * 0.4;
 
-      ctx.strokeStyle = "black";
-      ctx.lineWidth = 2;
+      // ctx.strokeStyle = "black";
+      // ctx.lineWidth = 2;
 
-      ctx.beginPath();
-      ctx.moveTo(-size * 0.5 - offset, -size * 0.5);
-      ctx.lineTo(size * 0.5 - offset, -size * 0.5);
-      ctx.moveTo(-offset, -size);
-      ctx.lineTo(-offset, size);
-      ctx.moveTo(-size * 0.5 + offset, -size * 0.5);
-      ctx.lineTo(size * 0.5 + offset, -size * 0.5);
-      ctx.moveTo(offset, -size);
-      ctx.lineTo(offset, size);
-      ctx.stroke();
+      // ctx.beginPath();
+      // ctx.moveTo(-size * 0.5 - offset, -size * 0.5);
+      // ctx.lineTo(size * 0.5 - offset, -size * 0.5);
+      // ctx.moveTo(-offset, -size);
+      // ctx.lineTo(-offset, size);
+      // ctx.moveTo(-size * 0.5 + offset, -size * 0.5);
+      // ctx.lineTo(size * 0.5 + offset, -size * 0.5);
+      // ctx.moveTo(offset, -size);
+      // ctx.lineTo(offset, size);
+      // ctx.stroke();
 
-      ctx.strokeStyle = state.off ? "white" : "#eee";
-      ctx.lineWidth = 1;
+      // ctx.strokeStyle = state.off ? "white" : "#eee";
+      // ctx.lineWidth = 1;
 
-      ctx.beginPath();
-      ctx.moveTo(-size * 0.5 - offset, -size * 0.5);
-      ctx.lineTo(size * 0.5 - offset, -size * 0.5);
-      ctx.moveTo(-offset, -size);
-      ctx.lineTo(-offset, size);
-      ctx.moveTo(-size * 0.5 + offset, -size * 0.5);
-      ctx.lineTo(size * 0.5 + offset, -size * 0.5);
-      ctx.moveTo(offset, -size);
-      ctx.lineTo(offset, size);
-      ctx.stroke();
+      // ctx.beginPath();
+      // ctx.moveTo(-size * 0.5 - offset, -size * 0.5);
+      // ctx.lineTo(size * 0.5 - offset, -size * 0.5);
+      // ctx.moveTo(-offset, -size);
+      // ctx.lineTo(-offset, size);
+      // ctx.moveTo(-size * 0.5 + offset, -size * 0.5);
+      // ctx.lineTo(size * 0.5 + offset, -size * 0.5);
+      // ctx.moveTo(offset, -size);
+      // ctx.lineTo(offset, size);
+      // ctx.stroke();
     }
 
     ctx.restore();

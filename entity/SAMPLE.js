@@ -2,6 +2,7 @@ export function setup(host, { fadeOut = true } = {}) {
   const state = {
     life: 10,
     fade: 1,
+    //state
   };
 
   const mouse = { x: 0, y: 0 };

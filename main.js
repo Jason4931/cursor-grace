@@ -180,6 +180,7 @@ export let tar = { inside: false };
 let death = false;
 let goatman = false;
 let joey = false;
+let snap = false;
 let eyes = false;
 let absoluteNoDelay = false;
 let godmode = false;
@@ -195,6 +196,12 @@ const ENTITY_LIST = [
     duration: 10000,
     delayNormal: [10000, 20000],
     delayGoatman: [5000, 10000],
+    onSpawn: () => {
+      snap = true;
+    },
+    onEnd: () => {
+      snap = false;
+    },
   },
   {
     type: "main",
@@ -444,6 +451,39 @@ const ENTITY_LIST = [
     delayNormal: [10000, 20000],
     delayGoatman: [5000, 10000],
     chance: 0.9,
+  },
+  {
+    type: "modifier",
+    name: "S.N.A.P.",
+    color: "#cf0693",
+    src: "./entity/SNAP.js",
+    duration: 5000,
+    delayNormal: [5000, 15000],
+    delayGoatman: [2500, 7500],
+    chance: 0.9,
+    condition: () => snap || Math.random() < 0.2,
+  },
+  {
+    type: "modifier",
+    name: "Sundial",
+    color: "#fbff08",
+    src: "./entity/sundial.js",
+    duration: 20000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+    loop: false,
+  },
+  {
+    type: "modifier",
+    name: "Innego",
+    color: "#ffffff",
+    src: "./entity/innego.js",
+    duration: 20000,
+    delayNormal: [10000, 20000],
+    delayGoatman: [5000, 10000],
+    chance: 0.9,
+    loop: false,
   },
 ];
 async function spawnEntity(entity) {
